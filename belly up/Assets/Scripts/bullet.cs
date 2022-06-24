@@ -6,6 +6,10 @@ public class bullet : MonoBehaviour
 {
    [SerializeField]Explodable _explodable;
 
+    void OnEnable()
+    {
+        Destroy(gameObject, 2f);
+    }
     void OnCollisionEnter2D(Collision2D collision)
     {
         if(collision.collider.tag == "fish")

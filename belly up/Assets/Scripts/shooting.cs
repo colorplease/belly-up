@@ -13,6 +13,7 @@ public class shooting : MonoBehaviour
     public float brakeCooldown;
     float nextTimeToFire;
     float brakeCooldownRemaining;
+    public float recoveryBounce;
 
    [SerializeField]Rigidbody2D player;
 
@@ -61,7 +62,7 @@ public class shooting : MonoBehaviour
    void Brake()
    {
      player.velocity = Vector2.zero;
-     player.AddForce(-player.transform.up * 0.75f, ForceMode2D.Impulse);
+     player.AddForce(-player.transform.up * recoveryBounce, ForceMode2D.Impulse);
    }
    
 }
