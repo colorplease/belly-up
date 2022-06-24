@@ -10,7 +10,9 @@ public class shooting : MonoBehaviour
    public float bulletForce = 20f;
    public float playerKnockbackForce;
     public float fireRate;
+    public float brakeCooldown;
     float nextTimeToFire;
+    float brakeCooldownRemaining;
 
    [SerializeField]Rigidbody2D player;
 
@@ -25,7 +27,12 @@ public class shooting : MonoBehaviour
         {
             Shoot();
             nextTimeToFire = Time.time + 1f/fireRate;
-            
+        }
+        if (Input.GetKeyDown(KeyCode.Space) && Time.time >= brakeCooldownRemaining)
+        {
+
+          Brake();
+          brakeCooldownRemaining = Time.time + brakeCooldown;
         }
    }
 
@@ -50,4 +57,11 @@ public class shooting : MonoBehaviour
             float angle = Mathf.Atan2(lookDir.y, lookDir.x) * Mathf.Rad2Deg  - difference;
            transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
    }
+
+   void Brake()
+   {
+     player.velocity = Vector2.zero;
+     player.AddForce(-player.transform.up * 0.75f, ForceMode2D.Impulse);
+   }
+   
 }
