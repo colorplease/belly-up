@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class bullet : MonoBehaviour
 {
-   [SerializeField]Explodable _explodable;
+   [SerializeField]fishai fish;
 
     void OnEnable()
     {
@@ -14,10 +14,8 @@ public class bullet : MonoBehaviour
     {
         if(collision.collider.tag == "fish")
         {
-             _explodable = collision.collider.gameObject.GetComponent<Explodable>();
-        _explodable.explode();
-		ExplosionForce ef = GameObject.FindObjectOfType<ExplosionForce>();
-        ef.doExplosion(transform.position);
+            fish = collision.gameObject.GetComponent<fishai>();
+            fish.hit();
         Destroy(gameObject);
 		
         }
