@@ -9,6 +9,9 @@ TagManager:
   - Boundary
   - swordfish
   - angler
+  - blob
+  - mommy
+  - bag
   layers:
   - Default
   - TransparentFX

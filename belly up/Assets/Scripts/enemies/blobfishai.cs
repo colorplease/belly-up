@@ -1,17 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
- using UnityEngine.Experimental.Rendering.Universal;
 
-public class anglerfishai : MonoBehaviour
+public class blobfishai : MonoBehaviour
 {
-     [SerializeField]Transform amongUs;
+    [SerializeField]Transform amongUs;
     [SerializeField]Rigidbody2D rb;
     public float speed;
     public float HP;
     gamemanager gameManager;
-    [SerializeField]Light2D light; 
-
+    public GameObject underlings;
+    public int dupeNumber;
+    bool dying;
 
     void Start()
     {
@@ -21,15 +21,47 @@ public class anglerfishai : MonoBehaviour
     }
     void FixedUpdate()
     {
-        anglerFish();
+        blobFish();
     }
 
-    void anglerFish()
+    void blobFish()
     {
         rb.AddRelativeForce(Vector2.right* speed, ForceMode2D.Force);
         Vector3 dir = amongUs.position - transform.position;
         float angle = Mathf.Atan2(dir.y,dir.x) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+    }
+
+    public void hit()
+    {
+        HP--;
+        StartCoroutine(flash());
+        rb.velocity = Vector2.zero;
+        if (HP <= 0)
+        {
+            die();
+            dying = true;
+        }
+    }
+
+    void die()
+    {
+        if (!dying)
+        {
+            if (dupeNumber < 2)
+        {
+            for(int i = 0; i<2;i++)
+         {
+            GameObject fish = Instantiate(underlings, new Vector2(transform.position.x + Random.Range(-0.3f, 0.3f), transform.position.y + Random.Range(-0.1f, 0.1f)), Quaternion.identity);
+            fish.transform.localScale = new Vector2(transform.localScale.x * 0.75f, transform.localScale.y  * 0.75f);
+            fish.GetComponent<blobfishai>().HP = HP/2;
+            fish.GetComponent<blobfishai>().speed = speed * 2;
+             fish.GetComponent<blobfishai>().dupeNumber += 1;
+         }
+        }
+        StartCoroutine(FadeTo(0f, 1f));
+        StartCoroutine(death());
+        }
     }
 
      IEnumerator flash()
@@ -42,24 +74,6 @@ public class anglerfishai : MonoBehaviour
         colorMe.color = Color.red;
         yield return new WaitForSeconds(0.1f);
         colorMe.color = Color.white;
-    }
-
-    public void hit()
-    {
-        HP--;
-        StartCoroutine(flash());
-        rb.velocity = Vector2.zero;
-        if (HP == 0)
-        {
-            die();
-        }
-    }
-
-    void die()
-    {
-        StartCoroutine(FadeTo(0f, 1f));
-        StartCoroutine(death());
-        StartCoroutine(FadeLight(0f, 1f));
     }
 
     IEnumerator death()
@@ -80,16 +94,6 @@ public class anglerfishai : MonoBehaviour
          }
      }
 
-     IEnumerator FadeLight(float aValue, float aTime)
-     {
-        float intensity = light.intensity;
-        for (float t= 0.0f; t<1.0f;t+= Time.deltaTime / aTime)
-        {
-            light.intensity = Mathf.Lerp(intensity, aValue, t);
-            yield return null;
-        }
-     }
-
      void OnTriggerEnter2D(Collider2D other)
      {
         if (other.tag == "Player")
@@ -97,6 +101,7 @@ public class anglerfishai : MonoBehaviour
             gameManager.hit();
             StartCoroutine(FadeTo(0f, 1f));
             StartCoroutine(death());
+            
         }
      }
 }

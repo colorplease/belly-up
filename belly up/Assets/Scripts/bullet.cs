@@ -7,6 +7,8 @@ public class bullet : MonoBehaviour
    [SerializeField]fishai fish;
    swordfishai fish2;
    anglerfishai fish3;
+   blobfishai fish4;
+   plasticbag bag;
 
     void OnEnable()
     {
@@ -31,6 +33,18 @@ public class bullet : MonoBehaviour
             fish3= collision.gameObject.GetComponent<anglerfishai>();
             fish3.hit();
         Destroy(gameObject);
+        }
+        if(collision.collider.tag == "blob")
+        {
+            fish4 = collision.gameObject.GetComponent<blobfishai>();
+            fish4.hit();
+            Destroy(gameObject);
+        }
+        if (collision.collider.tag == "bag")
+        {
+            bag = collision.gameObject.GetComponent<plasticbag>();
+            bag.hit();
+            Destroy(gameObject);
         }
     }
 }

@@ -43,6 +43,18 @@ public class swordfishai : MonoBehaviour
         }
     }
 
+     IEnumerator flash()
+    {
+        SpriteRenderer colorMe = gameObject.GetComponent<SpriteRenderer>();
+        colorMe.color = Color.red;
+        yield return new WaitForSeconds(0.1f);
+        colorMe.color = Color.white;
+        yield return new WaitForSeconds(0.1f);
+        colorMe.color = Color.red;
+        yield return new WaitForSeconds(0.1f);
+        colorMe.color = Color.white;
+    }
+
     IEnumerator charge()
     {
         rb.velocity = Vector2.zero;
@@ -62,6 +74,7 @@ public class swordfishai : MonoBehaviour
     public void hit()
     {
         HP--;
+        StartCoroutine(flash());
         rb.velocity = Vector2.zero;
         if (HP == 0)
         {

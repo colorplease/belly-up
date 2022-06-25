@@ -30,6 +30,15 @@ public class shooting : MonoBehaviour
     public bool usedPower;
     public int powerType;
     public bool outOfPower;
+    public Transform play;
+    public Transform cameraTransform;
+    public Vector3 originalPos;
+    public float shakeDuration;
+    public float decreaseFactor;
+    public float shakeAmount;
+    public bool shaking;
+    public bool shakeEnabled;
+    public bool control;
 
     void Start()
     {
@@ -38,7 +47,9 @@ public class shooting : MonoBehaviour
 
    void Update()
    {
-    Aim();
+    if (control)
+    {
+      play.position = transform.position;
       if (Input.GetKeyDown(KeyCode.Tab) && Time.time >= switchRate)
         {
           switch(gunType)
@@ -84,7 +95,35 @@ public class shooting : MonoBehaviour
         {
           player.drag = 0.1f;
         }
+        if (shaking && shakeEnabled)
+    {
+      if(shakeDuration > 0)
+    {
+      cameraTransform.localPosition = originalPos + UnityEngine.Random.insideUnitSphere * shakeAmount;
+    shakeDuration -= Time.deltaTime * decreaseFactor;
+    }
+    else
+    {
+      shakeDuration = 0;
+      cameraTransform.localPosition = originalPos;
+      shaking = false;
+    }
+    }
         
+   }
+   else
+   {
+    player.velocity = Vector2.zero;
+    rb.velocity = Vector2.zero;
+   }
+   }
+
+   void FixedUpdate()
+   {
+    if (control)
+    {
+      Aim();
+    }
    }
 
    void Shoot()
@@ -97,6 +136,9 @@ public class shooting : MonoBehaviour
       {
         playerKnockbackForce = 0.075f;
       fireRate = 5;
+      shakeAmount = 0.025f;
+      shakeDuration = 0.25f;
+      Shake();
       GameObject bullet = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
         Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
         rb.AddForce(firePoint.right* bulletForce, ForceMode2D.Impulse);
@@ -114,8 +156,11 @@ public class shooting : MonoBehaviour
       playerKnockbackForce = 0.05f;
            fireRate = 1.5f;
            bulletForce = 15;
+           shakeAmount = 0.075f;
+      shakeDuration = 0.25f;
+      Shake();
         GameObject bullet = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
-        float variation = Random.Range(-10,10);
+        float variation = Random.Range(-20,20);
         var x = firePoint.transform.position.x - player.transform.position.x;
         var y = firePoint.transform.position.y - player.transform.position.y;
         float rotateAngle = variation + (Mathf.Atan2(y,x) * Mathf.Rad2Deg - shotgunDifference);
@@ -127,9 +172,11 @@ public class shooting : MonoBehaviour
       }
      
     }
+    }
+    
         
 
-   }
+  
 
    void Aim()
    {
@@ -145,6 +192,12 @@ public class shooting : MonoBehaviour
      player.drag = 10;
      powerType = 0;
      usedPower = true;
+   }
+
+   void Shake()
+   {
+    originalPos = cameraTransform.position;
+      shaking = true;
    }
 
    

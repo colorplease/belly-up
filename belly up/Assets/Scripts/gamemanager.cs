@@ -43,6 +43,11 @@ public class gamemanager : MonoBehaviour
     public Light2D playerLight;
     public Light2D globalLight;
     [SerializeField]int limitManage;
+    public GameObject plasticBag;
+    public GameObject challengerDeepText;
+    public Transform mommy;
+    public bool spawning;
+    public GameObject plasticHealthBar;
 
     void Start()
     {
@@ -68,6 +73,10 @@ public class gamemanager : MonoBehaviour
             case 3:
             playerLight.intensity = Mathf.Lerp(playerLight.intensity,1,1*Time.deltaTime);
             globalLight.intensity = Mathf.Lerp(globalLight.intensity,0,1*Time.deltaTime);
+            break;
+            case 6:
+            playerLight.intensity = Mathf.Lerp(playerLight.intensity,0,1*Time.deltaTime);
+            globalLight.intensity = Mathf.Lerp(globalLight.intensity,1,1*Time.deltaTime);
             break;
         }
         if (Input.GetKeyDown(KeyCode.O))
@@ -142,7 +151,7 @@ public class gamemanager : MonoBehaviour
 
     void LateUpdate()
     {
-         if (currentDepth <= 10936f)
+         if (currentDepth <= 10935f)
         {
             cameraTransform.Translate(-Vector2.up * Time.deltaTime * scrollSpeed);
              currentDepth += Time.deltaTime * descentSpeed;
@@ -160,7 +169,7 @@ public class gamemanager : MonoBehaviour
             }
             else
             {
-                updatedMaxPower = maxPower + 10;
+                updatedMaxPower = maxPower + 20;
                 transition = true;
                 currentPowerCool = powerCool;
             }
@@ -178,9 +187,12 @@ public class gamemanager : MonoBehaviour
         UpdatePower();
         if (Time.time >= currentSpawnTime)
         {
-            GameObject spawn = Instantiate(egg, spawns[Random.Range(0, spawns.Length)].position, Quaternion.identity); 
+            if (spawning)
+            {
+                GameObject spawn = Instantiate(egg, spawns[Random.Range(0, spawns.Length)].position, Quaternion.identity); 
             spawn.GetComponent<egg>().Spawn(limitManage);
             currentSpawnTime = Time.time + Random.Range(minSpawnTime, maxSpawnTime);
+            }
         }
         switch(currentDepthRounded)
         {
@@ -219,7 +231,7 @@ public class gamemanager : MonoBehaviour
             maxSpawnTime = 4;
             scrollSpeed = 0.7f;
             descentSpeed = 16.66f;
-            limitManage = 4;
+            limitManage = 5;
             shooting.recoveryBounce = 0.8f;
             break;
             case 6000:
@@ -230,12 +242,45 @@ public class gamemanager : MonoBehaviour
             scrollSpeed = 0.9f;
             descentSpeed = 27.77f;
             shooting.recoveryBounce = 0.9f;
-            limitManage = 5;
             break;
-            case 10935:
+            case 10934:
+            zone = 6;
             textZone.SetText("CHALLENGER DEEP");
+            StartCoroutine(boss());
+            shooting.recoveryBounce = 0f;
+            int i = 0;
+            GameObject[] allChildren = new GameObject[mommy.childCount];
+            foreach(Transform child in mommy)
+            {
+                allChildren[i] = child.gameObject;
+                i+= 1;
+            }
+            foreach(GameObject child in allChildren)
+            {
+                DestroyImmediate(child.gameObject);
+            }
             break;
         }
+    }
+
+    IEnumerator boss()
+    {
+        spawning = false;
+        shooting.control = false;
+        yield return new WaitForSeconds(5);
+        plasticBag.SetActive(true);
+        yield return new WaitForSeconds(5);
+        challengerDeepText.SetActive(true);
+        yield return new WaitForSeconds(5);
+        challengerDeepText.GetComponent<Rigidbody2D>().gravityScale = 500;
+        shooting.control = true;
+        shooting.shakeAmount = 0.15f;
+        shooting.shakeDuration = 1;
+        shooting.shaking = true;
+        yield return new WaitForSeconds(1);
+        plasticBag.GetComponent<Animator>().SetBool("start", true);
+        spawning = true;
+        plasticHealthBar.SetActive(true);
     }
 
     void UpdatePower()
@@ -255,7 +300,7 @@ public class gamemanager : MonoBehaviour
 
     public void hit()
     {
-        updatedMaxPower = maxPower - 10;
+        updatedMaxPower = maxPower - 20;
         UpdatePower();
         currentPowerCool = powerCool;
         
