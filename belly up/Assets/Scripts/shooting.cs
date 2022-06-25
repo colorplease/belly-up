@@ -38,6 +38,7 @@ public class shooting : MonoBehaviour
 
    void Update()
    {
+    Aim();
       if (Input.GetKeyDown(KeyCode.Tab) && Time.time >= switchRate)
         {
           switch(gunType)
@@ -84,11 +85,6 @@ public class shooting : MonoBehaviour
           player.drag = 0.1f;
         }
         
-   }
-
-   void FixedUpdate()
-   {
-    Aim();
    }
 
    void Shoot()

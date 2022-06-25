@@ -18,10 +18,15 @@ public class fishai : MonoBehaviour
     }
     void FixedUpdate()
     {
-       Vector3 dir = amongUs.position - transform.position;
+        normalFish();
+    }
+
+    void normalFish()
+    {
+        rb.AddRelativeForce(Vector2.right* speed, ForceMode2D.Force);
+        Vector3 dir = amongUs.position - transform.position;
         float angle = Mathf.Atan2(dir.y,dir.x) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
-        rb.AddRelativeForce(Vector2.right* speed, ForceMode2D.Force);
     }
 
     public void hit()

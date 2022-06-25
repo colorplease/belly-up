@@ -5,6 +5,8 @@ using UnityEngine;
 public class bullet : MonoBehaviour
 {
    [SerializeField]fishai fish;
+   swordfishai fish2;
+   anglerfishai fish3;
 
     void OnEnable()
     {
@@ -17,7 +19,18 @@ public class bullet : MonoBehaviour
             fish = collision.gameObject.GetComponent<fishai>();
             fish.hit();
         Destroy(gameObject);
-		
+        }
+        if(collision.collider.tag == "swordfish")
+        {
+            fish2= collision.gameObject.GetComponent<swordfishai>();
+            fish2.hit();
+        Destroy(gameObject);
+        }
+        if(collision.collider.tag == "angler")
+        {
+            fish3= collision.gameObject.GetComponent<anglerfishai>();
+            fish3.hit();
+        Destroy(gameObject);
         }
     }
 }
