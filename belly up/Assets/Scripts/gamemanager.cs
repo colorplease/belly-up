@@ -31,16 +31,26 @@ public class gamemanager : MonoBehaviour
     public float powerRegenRate;
     public float currentPower;
     float powerDraw;
+    public float powerLerp;
+    public float chipSpeed;
+    public Slider chipSlider;
+    public float updatedPower;
+    float updatedMaxPower;
+    [SerializeField]bool transition;
 
     void Start()
     {
         currentSpawnTime = Random.Range(minSpawnTime, maxSpawnTime);
         currentPower = maxPower;
+        updatedMaxPower = maxPower;
+         slider.maxValue = maxPower; 
+         chipSlider.maxValue = maxPower;
         UpdatePower();
     }
 
     void Update()
     {
+        UpdatePower();
         if(shooting.usedPower)
         {
             switch(shooting.powerType)
@@ -54,8 +64,8 @@ public class gamemanager : MonoBehaviour
                 else
                 {
                     shooting.outOfPower = false;
-                    currentPower -= powerDraw;
-                    UpdatePower();
+                    updatedPower = currentPower - powerDraw;
+                    transition = true;
                 }
                 break;
                 case 1:
@@ -67,12 +77,12 @@ public class gamemanager : MonoBehaviour
                 else
                 {
                     shooting.outOfPower = false;
-                    currentPower -= powerDraw;
-                    UpdatePower();
+                    updatedPower = currentPower - powerDraw;
+                     transition = true;
                 }
                 break;
                 case 2:
-                powerDraw = 2;
+                powerDraw = 1;
                 if(currentPower - powerDraw < 0)
                 {
                      shooting.outOfPower = true;
@@ -80,8 +90,8 @@ public class gamemanager : MonoBehaviour
                 else
                 {
                     shooting.outOfPower = false;
-                    currentPower -= powerDraw;
-                    UpdatePower();
+                    updatedPower = currentPower - powerDraw;
+                     transition = true;
                 }
                 break;
                 case 3:
@@ -93,8 +103,8 @@ public class gamemanager : MonoBehaviour
                 else
                 {
                     shooting.outOfPower = false;
-                    currentPower -= powerDraw;
-                    UpdatePower();
+                    updatedPower = currentPower - powerDraw;
+                     transition = true;
                 }
                 break;
             }
@@ -103,7 +113,15 @@ public class gamemanager : MonoBehaviour
     }
     void FixedUpdate()
     {
-        currentPower += Time.deltaTime * powerRegenRate;
+        if (currentPower < maxPower && !transition)
+        {
+              currentPower += Time.deltaTime * powerRegenRate;
+        }
+         if(currentPower > updatedMaxPower)
+        {
+            updatedPower = updatedMaxPower;
+            transition = true;
+        }
         UpdatePower();
         if (Time.time >= currentSpawnTime)
         {
@@ -173,7 +191,30 @@ public class gamemanager : MonoBehaviour
 
     void UpdatePower()
     {
-        slider.maxValue = maxPower; 
+        maxPower = Mathf.Lerp(maxPower, updatedMaxPower, Time.deltaTime * powerLerp);
+        if (currentPower - updatedPower > 0.99f && transition)
+        {
+            currentPower = Mathf.Lerp(currentPower, updatedPower, Time.deltaTime * powerLerp * powerDraw);
+        }
+        else
+        {
+            transition = false;
+        }
         slider.value = currentPower;
+        chipSlider.value = maxPower;
+    }
+
+    public void hit()
+    {
+        updatedMaxPower = maxPower - 10;
+        UpdatePower();
+        StartCoroutine(recover());
+    }
+
+    IEnumerator recover()
+    {
+        yield return new WaitForSeconds(10);
+        updatedMaxPower = maxPower + 10;
+        transition = true;
     }
 }

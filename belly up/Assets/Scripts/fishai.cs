@@ -8,10 +8,13 @@ public class fishai : MonoBehaviour
     [SerializeField]Rigidbody2D rb;
     public float speed;
     public float HP;
+    gamemanager gameManager;
 
     void Start()
     {
         amongUs = GameObject.FindWithTag("Player").transform;
+        gameManager = GameObject.FindWithTag("GameManager").GetComponent<gamemanager>();
+
     }
     void FixedUpdate()
     {
@@ -53,5 +56,15 @@ public class fishai : MonoBehaviour
              transform.GetComponent<SpriteRenderer>().color = newColor;
              yield return null;
          }
+     }
+
+     void OnTriggerEnter2D(Collider2D other)
+     {
+        if (other.tag == "Player")
+        {
+            gameManager.hit();
+            StartCoroutine(FadeTo(0f, 1f));
+            StartCoroutine(death());
+        }
      }
 }

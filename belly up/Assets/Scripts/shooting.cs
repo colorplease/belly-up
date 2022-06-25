@@ -51,7 +51,7 @@ public class shooting : MonoBehaviour
           }
           nextTimeToSwitch = Time.time + switchRate;
         }
-        if(Input.GetButton("Fire1") && Time.time >= nextTimeToFire)
+        if(Input.GetButtonDown("Fire1") && Time.time >= nextTimeToFire)
         {
             Shoot();
             nextTimeToFire = Time.time + 1f/fireRate;
