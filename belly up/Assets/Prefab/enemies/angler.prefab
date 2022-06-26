@@ -363,6 +363,10 @@ MonoBehaviour:
   speed: 1.5
   HP: 4
   light: {fileID: 5326972902688380986}
+  powerUps:
+  - {fileID: 8065324607808081258, guid: a79482b0c1b957848bcc954b7a49640a, type: 3}
+  - {fileID: 8989180241096741125, guid: f3305f2a23cca204e9768de4992fe188, type: 3}
+  - {fileID: 8989180241096741125, guid: f3305f2a23cca204e9768de4992fe188, type: 3}
 --- !u!50 &5326972903601734084
 Rigidbody2D:
   serializedVersion: 4

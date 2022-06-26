@@ -13,6 +13,9 @@ public class swordfishai : MonoBehaviour
     bool ready;
     bool launch;
     public GameObject laser;
+    bool hitting;
+    public GameObject[] powerUps;
+    bool dying;
     
 
     void Start()
@@ -84,11 +87,21 @@ public class swordfishai : MonoBehaviour
 
     void die()
     {
+        dying = true;
+        Generate();
         StopAllCoroutines();
         laser.SetActive(false);
         StartCoroutine(FadeTo(0f, 1f));
         StartCoroutine(death());
     }
+    void Generate()
+   {
+    var chance = Random.Range(0, 4);
+    if (chance < 3)
+    {
+        Instantiate(powerUps[chance], transform.position, Quaternion.identity);
+    }
+   }
 
     IEnumerator death()
     {
@@ -112,9 +125,13 @@ public class swordfishai : MonoBehaviour
      {
         if (other.tag == "Player")
         {
-            gameManager.hit();
-            StartCoroutine(FadeTo(0f, 1f));
-            StartCoroutine(death());
+            if (!hitting && !dying)
+            {
+                hitting = true;
+                gameManager.hit();
+                StartCoroutine(FadeTo(0f, 1f));
+                StartCoroutine(death());
+            }
         }
      }
 }

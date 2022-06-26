@@ -35,9 +35,6 @@ public class gamemanager : MonoBehaviour
     public float powerLerp;
     public float chipSpeed;
     public Slider chipSlider;
-    public float updatedPower;
-    float updatedMaxPower;
-    [SerializeField]bool transition;
     float powerCool = 10;
     [SerializeField]float currentPowerCool;
     public Light2D playerLight;
@@ -48,12 +45,13 @@ public class gamemanager : MonoBehaviour
     public Transform mommy;
     public bool spawning;
     public GameObject plasticHealthBar;
+    public bool powerUpUsed;
+    public int powerUpType;
 
     void Start()
     {
         currentSpawnTime = Random.Range(minSpawnTime, maxSpawnTime);
         currentPower = maxPower;
-        updatedMaxPower = maxPower;
          slider.maxValue = maxPower; 
          chipSlider.maxValue = maxPower;
          currentPowerCool = powerCool;
@@ -62,6 +60,25 @@ public class gamemanager : MonoBehaviour
 
     void Update()
     {
+        currentPower = Mathf.Clamp(currentPower, 0, maxPower);
+        maxPower = Mathf.Clamp(maxPower, 0, 100);
+        if (powerUpUsed)
+        {
+            switch(powerUpType)
+            {
+                case 0:
+                Battery();
+                break;
+
+                case 1:
+                if (maxPower < 100)
+                {
+                    maxPower += 20;
+                }
+                powerUpUsed = false;
+                break;
+            }
+        }
         switch(zone)
         {
             case 1:
@@ -101,8 +118,7 @@ public class gamemanager : MonoBehaviour
                 else
                 {
                     shooting.outOfPower = false;
-                    updatedPower = currentPower - powerDraw;
-                    transition = true;
+                    currentPower -= powerDraw;
                 }
                 break;
                 case 1:
@@ -114,8 +130,7 @@ public class gamemanager : MonoBehaviour
                 else
                 {
                     shooting.outOfPower = false;
-                    updatedPower = currentPower - powerDraw;
-                     transition = true;
+                    currentPower -= powerDraw;
                 }
                 break;
                 case 2:
@@ -127,8 +142,7 @@ public class gamemanager : MonoBehaviour
                 else
                 {
                     shooting.outOfPower = false;
-                    updatedPower = currentPower - powerDraw;
-                     transition = true;
+                    currentPower -= powerDraw;
                 }
                 break;
                 case 3:
@@ -140,8 +154,7 @@ public class gamemanager : MonoBehaviour
                 else
                 {
                     shooting.outOfPower = false;
-                    updatedPower = currentPower - powerDraw;
-                     transition = true;
+                    currentPower -= powerDraw;
                 }
                 break;
             }
@@ -161,28 +174,10 @@ public class gamemanager : MonoBehaviour
     }
     void FixedUpdate()
     {
-        if (maxPower < 100)
-        {
-            if (currentPowerCool > 0)
-            {
-                currentPowerCool -= Time.deltaTime * 0.5f;
-            }
-            else
-            {
-                updatedMaxPower = maxPower + 20;
-                transition = true;
-                currentPowerCool = powerCool;
-            }
-        }
         
-        if (currentPower < maxPower && !transition)
+        if (currentPower < maxPower)
         {
               currentPower += Time.deltaTime * powerRegenRate;
-        }
-         if(currentPower > updatedMaxPower)
-        {
-            updatedPower = updatedMaxPower;
-            transition = true;
         }
         UpdatePower();
         if (Time.time >= currentSpawnTime)
@@ -285,24 +280,19 @@ public class gamemanager : MonoBehaviour
 
     void UpdatePower()
     {
-        maxPower = Mathf.Lerp(maxPower, updatedMaxPower, Time.deltaTime * powerLerp);
-        if (currentPower - updatedPower > 0.99f && transition)
-        {
-            currentPower = Mathf.Lerp(currentPower, updatedPower, Time.deltaTime * powerLerp * powerDraw);
-        }
-        else
-        {
-            transition = false;
-        }
-        slider.value = currentPower;
-        chipSlider.value = maxPower;
+        float currentVelocity = 0;
+        slider.value = Mathf.SmoothDamp(slider.value, currentPower, ref currentVelocity, powerLerp * powerDraw * Time.deltaTime);
+        chipSlider.value = Mathf.SmoothDamp(chipSlider.value, maxPower, ref currentVelocity, powerLerp * Time.deltaTime);
     }
 
     public void hit()
     {
-        updatedMaxPower = maxPower - 20;
-        UpdatePower();
-        currentPowerCool = powerCool;
-        
+        maxPower -= 20;
+    }
+
+    void Battery()
+    {
+            currentPower += 20;
+        powerUpUsed = false;
     }
 }

@@ -11,6 +11,9 @@ public class anglerfishai : MonoBehaviour
     public float HP;
     gamemanager gameManager;
     [SerializeField]Light2D light; 
+    bool hitting;
+    public GameObject[] powerUps;
+    bool dying;
 
 
     void Start()
@@ -57,10 +60,20 @@ public class anglerfishai : MonoBehaviour
 
     void die()
     {
+        dying = true;
+        Generate();
         StartCoroutine(FadeTo(0f, 1f));
         StartCoroutine(death());
         StartCoroutine(FadeLight(0f, 1f));
     }
+    void Generate()
+   {
+    var chance = Random.Range(0, 4);
+    if (chance < 3)
+    {
+        Instantiate(powerUps[chance], transform.position, Quaternion.identity);
+    }
+   }
 
     IEnumerator death()
     {
@@ -94,9 +107,13 @@ public class anglerfishai : MonoBehaviour
      {
         if (other.tag == "Player")
         {
-            gameManager.hit();
-            StartCoroutine(FadeTo(0f, 1f));
-            StartCoroutine(death());
+            if (!hitting && !dying)
+            {
+                hitting = true;
+                gameManager.hit();
+                StartCoroutine(FadeTo(0f, 1f));
+                StartCoroutine(death());
+            }
         }
      }
 }

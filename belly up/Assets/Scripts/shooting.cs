@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class shooting : MonoBehaviour
 {
@@ -39,6 +40,8 @@ public class shooting : MonoBehaviour
     public bool shaking;
     public bool shakeEnabled;
     public bool control;
+    public Animator weaponText;
+    public TextMeshProUGUI weaponTextText;
 
     void Start()
     {
@@ -56,9 +59,13 @@ public class shooting : MonoBehaviour
           {
             case 0:
             gunType = 1;
+            StartCoroutine(pulse());
+            weaponTextText.SetText("Shotgun");
             break;
             case 1:
             gunType = 0;
+            StartCoroutine(pulse());
+            weaponTextText.SetText("Single-Shot");
             break;
           }
           nextTimeToSwitch = Time.time + switchRate;
@@ -71,7 +78,7 @@ public class shooting : MonoBehaviour
         if(Input.GetMouseButtonDown(1))
         {
           powerType = 1;
-            usedPower = true;
+          usedPower = true;
           if (!outOfPower)
           {
             readyToDash = true;
@@ -173,9 +180,13 @@ public class shooting : MonoBehaviour
      
     }
     }
-    
-        
 
+  IEnumerator pulse()
+  {
+    weaponText.SetBool("goTime", true);
+    yield return new WaitForSeconds(0.1f);
+     weaponText.SetBool("goTime", false);
+  }
   
 
    void Aim()
