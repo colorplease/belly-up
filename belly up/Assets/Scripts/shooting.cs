@@ -46,6 +46,8 @@ public class shooting : MonoBehaviour
     public bool out2;
     public Transform outtaHere;
     public ParticleSystem bubbles;
+    public AudioSource speaker;
+    public AudioClip[] sounds;
 
     void Start()
     {
@@ -82,17 +84,20 @@ public class shooting : MonoBehaviour
     {
       if (Input.GetKeyDown(KeyCode.Tab) && Time.time >= switchRate)
         {
+
           switch(gunType)
           {
             case 0:
             gunType = 1;
             StartCoroutine(pulse());
             weaponTextText.SetText("Shotgun");
+            speaker.PlayOneShot(sounds[0]);
             break;
             case 1:
             gunType = 0;
             StartCoroutine(pulse());
             weaponTextText.SetText("Single-Shot");
+            speaker.PlayOneShot(sounds[1]);
             break;
           }
           nextTimeToSwitch = Time.time + switchRate;
@@ -163,6 +168,9 @@ public class shooting : MonoBehaviour
 
    void Shoot()
    {
+     speaker.pitch = Random.Range(0.8f, 1.2f);
+    speaker.PlayOneShot(sounds[2]);
+    speaker.PlayOneShot(sounds[3]);
     if (gunType == 0)
     {
       powerType = 2;

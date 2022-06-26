@@ -23,6 +23,9 @@ public class gameStartManager : MonoBehaviour
    public GameObject realBackDrop;
    public Animator black;
    public GameObject bubble;
+   public AudioSource audioSource;
+   public AudioClip drop;
+   public AudioClip drop2;
 
    public void StartGame()
    {
@@ -50,11 +53,14 @@ public class gameStartManager : MonoBehaviour
    {
      black.SetBool("trans", true);
          yield return new WaitForSeconds(1f);
-        Scene scene = SceneManager.GetActiveScene(); SceneManager.LoadScene(scene.name);
+        SceneManager.LoadScene(1);
    }
 
    IEnumerator startIt()
    {
+    audioSource.Stop();
+    audioSource.PlayOneShot(drop);
+    audioSource.PlayOneShot(drop2);
     GameManager.GetComponent<gamemanager>().canLose = false;
     transistion = true;
     GameManager.GetComponent<gamemanager>().spawning = false;
@@ -80,6 +86,7 @@ public class gameStartManager : MonoBehaviour
     startStuff.SetActive(false);
     yield return new WaitForSeconds(3f);
     GameManager.GetComponent<gamemanager>().canLose = true;
+    audioSource.Stop();
     Destroy(gameObject);
    }
 }

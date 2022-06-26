@@ -55,6 +55,8 @@ public class gamemanager : MonoBehaviour
     public CanvasGroup realUi;
     public CanvasGroup GameOver;
     public Animator black;
+    public AudioClip[] musics;
+    public AudioSource speaker;
 
     void Start()
     {
@@ -217,6 +219,8 @@ public class gamemanager : MonoBehaviour
             case 0:
             textZone.SetText("Sunlight Zone");
             zone = 1;
+            speaker.Stop();
+            speaker.PlayOneShot(musics[zone-1]);
             minSpawnTime = 3;
             maxSpawnTime = 6;
             scrollSpeed = 0.5f;
@@ -226,6 +230,8 @@ public class gamemanager : MonoBehaviour
             break;
             case 200:
             textZone.SetText("Twilight Zone");
+            speaker.Stop();
+            speaker.PlayOneShot(musics[zone-1]);
             minSpawnTime = 2;
             maxSpawnTime = 5;
             limitManage = 2;
@@ -235,6 +241,8 @@ public class gamemanager : MonoBehaviour
             shooting.recoveryBounce = 0.6f;
             break;
             case 1000:
+            speaker.Stop();
+            speaker.PlayOneShot(musics[zone-1]);
             textZone.SetText("Midnight Zone");
             zone = 3;
             scrollSpeed = 0.8f;
@@ -243,6 +251,8 @@ public class gamemanager : MonoBehaviour
             shooting.recoveryBounce = 0.7f;
             break;
             case 4000:
+            speaker.Stop();
+            speaker.PlayOneShot(musics[zone-1]);
             textZone.SetText("Abyssal Zone");
             zone = 4;
             minSpawnTime = 2;
@@ -253,6 +263,8 @@ public class gamemanager : MonoBehaviour
             shooting.recoveryBounce = 0.8f;
             break;
             case 6000:
+            speaker.Stop();
+            speaker.PlayOneShot(musics[zone-1]);
             textZone.SetText("Hadal Zone");
             zone = 5;
             scrollSpeed = 0.9f;
@@ -283,9 +295,10 @@ public class gamemanager : MonoBehaviour
     {
         spawning = false;
         shooting.control = false;
-        yield return new WaitForSeconds(5);
+        yield return new WaitForSeconds(4);
         plasticBag.SetActive(true);
-        yield return new WaitForSeconds(5);
+        yield return new WaitForSeconds(4);
+        speaker.PlayOneShot(musics[6]);
         challengerDeepText.SetActive(true);
         yield return new WaitForSeconds(5);
         challengerDeepText.GetComponent<Rigidbody2D>().gravityScale = 500;
