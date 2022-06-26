@@ -52,7 +52,6 @@ public class shooting : MonoBehaviour
    {
     if (control)
     {
-      play.position = transform.position;
       if (Input.GetKeyDown(KeyCode.Tab) && Time.time >= switchRate)
         {
           switch(gunType)
@@ -129,6 +128,7 @@ public class shooting : MonoBehaviour
    {
     if (control)
     {
+      play.position = transform.position;
       Aim();
     }
    }

@@ -122,7 +122,7 @@ MonoBehaviour:
   amongUs: {fileID: 1316037642270317040}
   rb: {fileID: 1316037641659203934}
   speed: 50
-  force: 0.5
+  force: 0.7
   HP: 2
   laser: {fileID: 1316037642270317055}
   powerUps:

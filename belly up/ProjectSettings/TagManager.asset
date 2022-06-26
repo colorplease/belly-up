@@ -12,6 +12,7 @@ TagManager:
   - blob
   - mommy
   - bag
+  - shoot
   layers:
   - Default
   - TransparentFX

@@ -5,6 +5,13 @@ using UnityEngine;
 public class powerUp : MonoBehaviour
 {
     public int type;
+
+    void OnEnable()
+    {
+        shooting publicShooting = GameObject.FindWithTag("shoot").GetComponent<shooting>();
+        gameObject.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+        gameObject.GetComponent<Rigidbody2D>().AddForce(-transform.up * publicShooting .recoveryBounce * publicShooting.recoveryBounceMultiplier, ForceMode2D.Impulse);
+    }
    void OnTriggerEnter2D(Collider2D other)
      {
         if (other.tag == "Player")

@@ -73,7 +73,7 @@ public class gamemanager : MonoBehaviour
                 case 1:
                 if (maxPower < 100)
                 {
-                    maxPower += 20;
+                    maxPower += 10;
                 }
                 powerUpUsed = false;
                 break;
@@ -287,7 +287,7 @@ public class gamemanager : MonoBehaviour
 
     public void hit()
     {
-        maxPower -= 20;
+        maxPower -= 10;
     }
 
     void Battery()

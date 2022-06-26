@@ -13,7 +13,6 @@ public class blobfishai : MonoBehaviour
     public int dupeNumber;
     bool dying;
     bool hitting;
-    public GameObject[] powerUps;
 
     void Start()
     {
@@ -48,32 +47,29 @@ public class blobfishai : MonoBehaviour
 
     void die()
     {
-        Generate();
         if (!dying)
         {
             if (dupeNumber < 2)
         {
             for(int i = 0; i<2;i++)
          {
-            GameObject fish = Instantiate(underlings, new Vector2(transform.position.x + Random.Range(-0.3f, 0.3f), transform.position.y + Random.Range(-0.1f, 0.1f)), Quaternion.identity);
-            fish.transform.localScale = new Vector2(transform.localScale.x * 0.75f, transform.localScale.y  * 0.75f);
-            fish.GetComponent<blobfishai>().HP = HP/2;
-            fish.GetComponent<blobfishai>().speed = speed * 2;
-             fish.GetComponent<blobfishai>().dupeNumber += 1;
+            StartCoroutine(summon());
          }
         }
         StartCoroutine(FadeTo(0f, 1f));
         StartCoroutine(death());
         }
     }
-    void Generate()
-   {
-    var chance = Random.Range(0, 4);
-    if (chance < 3)
+
+    IEnumerator summon()
     {
-        Instantiate(powerUps[chance], transform.position, Quaternion.identity);
+        yield return new WaitForSeconds(0.5f);
+        GameObject fish = Instantiate(underlings, new Vector2(transform.position.x + Random.Range(-0.3f, 0.3f), transform.position.y + Random.Range(-0.1f, 0.1f)), Quaternion.identity);
+            fish.transform.localScale = new Vector2(transform.localScale.x * 0.75f, transform.localScale.y  * 0.75f);
+            fish.GetComponent<blobfishai>().HP = HP/2;
+            fish.GetComponent<blobfishai>().speed = speed * 2;
+             fish.GetComponent<blobfishai>().dupeNumber += 1;
     }
-   }
 
      IEnumerator flash()
     {
