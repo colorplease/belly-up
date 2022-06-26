@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 8989180241096741126}
   - component: {fileID: 8989180241096741122}
   - component: {fileID: 5018852062930378269}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: energy refill
   m_TagString: Untagged
   m_Icon: {fileID: 0}
