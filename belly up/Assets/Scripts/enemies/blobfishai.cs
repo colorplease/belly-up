@@ -13,6 +13,7 @@ public class blobfishai : MonoBehaviour
     public int dupeNumber;
     bool dying;
     bool hitting;
+    public GameObject[] powerUps;
 
     void Start()
     {
@@ -44,12 +45,22 @@ public class blobfishai : MonoBehaviour
             dying = true;
         }
     }
+    void Generate()
+   {
+    var chance = Random.Range(0, 4);
+    if (chance < 3)
+    {
+        Instantiate(powerUps[chance], transform.position, Quaternion.identity);
+    }
+   }
+    
 
     void die()
     {
         if (!dying)
         {
-            if (dupeNumber < 2)
+            Generate();
+            if (dupeNumber < 1)
         {
             for(int i = 0; i<2;i++)
          {
@@ -60,6 +71,7 @@ public class blobfishai : MonoBehaviour
         StartCoroutine(death());
         }
     }
+   
 
     IEnumerator summon()
     {

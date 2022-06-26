@@ -66,7 +66,6 @@ public class fishai : MonoBehaviour
     void Generate()
    {
     var chance = Random.Range(0, 4);
-    Debug.Log(chance);
     if (chance < 3)
     {
         Instantiate(powerUps[chance], transform.position, Quaternion.identity);

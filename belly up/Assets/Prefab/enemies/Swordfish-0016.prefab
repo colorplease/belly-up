@@ -128,7 +128,7 @@ MonoBehaviour:
   powerUps:
   - {fileID: 8065324607808081258, guid: a79482b0c1b957848bcc954b7a49640a, type: 3}
   - {fileID: 8989180241096741125, guid: f3305f2a23cca204e9768de4992fe188, type: 3}
-  - {fileID: 8989180241096741125, guid: f3305f2a23cca204e9768de4992fe188, type: 3}
+  - {fileID: 8065324607808081258, guid: a79482b0c1b957848bcc954b7a49640a, type: 3}
 --- !u!60 &5463886328814113131
 PolygonCollider2D:
   m_ObjectHideFlags: 0
