@@ -22,6 +22,7 @@ public class gameStartManager : MonoBehaviour
    public float transSpeed;
    public GameObject realBackDrop;
    public Animator black;
+   public GameObject bubble;
 
    public void StartGame()
    {
@@ -62,6 +63,7 @@ public class gameStartManager : MonoBehaviour
     CameraFollow.bodyType = RigidbodyType2D.Dynamic;
     yield return new WaitForSeconds(1.2f);
     transistionTwo = true;
+    bubble.SetActive(true);
     GameManager.GetComponent<gamemanager>().spawning = true;
      CameraFollow.bodyType = RigidbodyType2D.Static;
     glock.transform.position = dummy.transform.position;

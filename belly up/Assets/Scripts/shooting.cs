@@ -45,6 +45,7 @@ public class shooting : MonoBehaviour
     public bool hit;
     public bool out2;
     public Transform outtaHere;
+    public ParticleSystem bubbles;
 
     void Start()
     {
@@ -168,6 +169,7 @@ public class shooting : MonoBehaviour
       usedPower = true;
       if (!outOfPower)
       {
+        bubbles.Play();
         playerKnockbackForce = 0.075f;
       fireRate = 5;
       shakeAmount = 0.025f;
@@ -181,6 +183,7 @@ public class shooting : MonoBehaviour
     }
     else
     {
+      bubbles.Play();
       for(int i = 0; i<Random.Range(10,15);i++)
       {
         powerType = 3;

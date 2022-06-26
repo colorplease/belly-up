@@ -102,7 +102,7 @@ public class gamemanager : MonoBehaviour
                 break;
 
                 case 1:
-                if (maxPower < 100)
+                if (maxPower < 150)
                 {
                     maxPower += 10;
                 }
