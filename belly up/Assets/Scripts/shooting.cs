@@ -21,7 +21,7 @@ public class shooting : MonoBehaviour
     public bool readyToDash;
     public GameObject arrow;
 
-   [SerializeField]Rigidbody2D player;
+   public Rigidbody2D player;
 
    Vector2 mousePos;
     public Rigidbody2D rb;
@@ -42,14 +42,41 @@ public class shooting : MonoBehaviour
     public bool control;
     public Animator weaponText;
     public TextMeshProUGUI weaponTextText;
+    public bool hit;
+    public bool out2;
+    public Transform outtaHere;
 
     void Start()
     {
       
     }
 
+    IEnumerator hitAnim()
+    {
+      play.gameObject.GetComponent<SpriteRenderer>().color = Color.red;
+      yield return new WaitForSeconds(0.1f);
+      play.gameObject.GetComponent<SpriteRenderer>().color = Color.white;
+      yield return new WaitForSeconds(0.1f);
+      play.gameObject.GetComponent<SpriteRenderer>().color = Color.red;
+      yield return new WaitForSeconds(0.1f);
+      play.gameObject.GetComponent<SpriteRenderer>().color = Color.white;
+    }
+
    void Update()
    {
+    if (hit)
+    {
+      StartCoroutine(hitAnim());
+      shakeAmount = 0.08f;
+      shakeDuration = 0.25f;
+      Shake();
+      hit = false;
+    }
+    if (Vector2.Distance(transform.position, outtaHere.position) > 10)
+    {
+      out2 = true;
+    }
+
     if (control)
     {
       if (Input.GetKeyDown(KeyCode.Tab) && Time.time >= switchRate)

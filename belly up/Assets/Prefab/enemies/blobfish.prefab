@@ -246,8 +246,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   amongUs: {fileID: 0}
   rb: {fileID: 8869147228293718385}
-  speed: 0.5
-  HP: 10
+  speed: 0.25
+  HP: 6
   underlings: {fileID: 8869147228293718397}
   dupeNumber: 0
   powerUps:

@@ -13,6 +13,7 @@ TagManager:
   - mommy
   - bag
   - shoot
+  - getOut
   layers:
   - Default
   - TransparentFX

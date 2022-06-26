@@ -4,6 +4,7 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
  using UnityEngine.Experimental.Rendering.Universal;
+ using UnityEngine.SceneManagement;
 //0: Brake
 //1: Dash
 //2: Auto
@@ -47,21 +48,51 @@ public class gamemanager : MonoBehaviour
     public GameObject plasticHealthBar;
     public bool powerUpUsed;
     public int powerUpType;
+    public Image powerFill;
+    Color ogColor;
+    public Transform center;
+    public bool canLose = false;
+    public CanvasGroup realUi;
+    public CanvasGroup GameOver;
+    public Animator black;
 
     void Start()
     {
+        minSpawnTime = 3;
+            maxSpawnTime = 6;
         currentSpawnTime = Random.Range(minSpawnTime, maxSpawnTime);
         currentPower = maxPower;
          slider.maxValue = maxPower; 
          chipSlider.maxValue = maxPower;
          currentPowerCool = powerCool;
         UpdatePower();
+        ogColor = powerFill.color;
+    }
+
+    IEnumerator outOfPowerGents()
+    {
+        shooting.shakeAmount = 0.05f;
+        shooting.shakeDuration = 0.25f;
+        shooting.shaking = true;
+        powerFill.color = Color.red;
+        yield return new WaitForSeconds(0.1f);
+        powerFill.color = ogColor;
     }
 
     void Update()
     {
         currentPower = Mathf.Clamp(currentPower, 0, maxPower);
-        maxPower = Mathf.Clamp(maxPower, 0, 100);
+        maxPower = Mathf.Clamp(maxPower, 0, 150);
+        
+        if (canLose && shooting.out2)
+        {
+            Lose();
+        }
+        
+        if (shooting.outOfPower)
+        {
+            StartCoroutine(outOfPowerGents());
+        }
         if (powerUpUsed)
         {
             switch(powerUpType)
@@ -95,14 +126,6 @@ public class gamemanager : MonoBehaviour
             playerLight.intensity = Mathf.Lerp(playerLight.intensity,0,1*Time.deltaTime);
             globalLight.intensity = Mathf.Lerp(globalLight.intensity,1,1*Time.deltaTime);
             break;
-        }
-        if (Input.GetKeyDown(KeyCode.O))
-        {
-            Time.timeScale += 1;
-        }
-        if (Input.GetKeyDown(KeyCode.K))
-        {
-            Time.timeScale -=1;
         }
         UpdatePower();
         if(shooting.usedPower)
@@ -222,7 +245,7 @@ public class gamemanager : MonoBehaviour
             case 4000:
             textZone.SetText("Abyssal Zone");
             zone = 4;
-            minSpawnTime = 1;
+            minSpawnTime = 2;
             maxSpawnTime = 4;
             scrollSpeed = 0.7f;
             descentSpeed = 16.66f;
@@ -232,8 +255,6 @@ public class gamemanager : MonoBehaviour
             case 6000:
             textZone.SetText("Hadal Zone");
             zone = 5;
-            minSpawnTime = 1;
-            maxSpawnTime = 3;
             scrollSpeed = 0.9f;
             descentSpeed = 27.77f;
             shooting.recoveryBounce = 0.9f;
@@ -287,12 +308,48 @@ public class gamemanager : MonoBehaviour
 
     public void hit()
     {
-        maxPower -= 10;
+        if (maxPower > 0)
+        {
+            maxPower -= 10;
+            shooting.hit = true;
+        }
+        else
+        {
+            if (canLose)
+            {
+                Lose();
+            }
+        }
     }
 
     void Battery()
     {
             currentPower += 20;
         powerUpUsed = false;
+    }
+
+    void Lose()
+    {
+        if(canLose)
+        {
+            shooting.control  = false;
+            maxPower = 0;
+             spawning = false;
+             realUi.alpha  = Mathf.Lerp(realUi.alpha, 0, Time.deltaTime * 5);
+             GameOver.gameObject.SetActive(true);
+            GameOver.alpha  = Mathf.Lerp(GameOver.alpha, 1, Time.deltaTime * 5);
+        }
+    }
+
+    public void Reload()
+    {
+       StartCoroutine(reloadAnime());
+    }
+
+    IEnumerator reloadAnime()
+    {
+         black.SetBool("trans", true);
+         yield return new WaitForSeconds(1f);
+        Scene scene = SceneManager.GetActiveScene(); SceneManager.LoadScene(scene.name);
     }
 }

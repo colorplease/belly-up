@@ -11,6 +11,7 @@ public class powerUp : MonoBehaviour
         shooting publicShooting = GameObject.FindWithTag("shoot").GetComponent<shooting>();
         gameObject.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
         gameObject.GetComponent<Rigidbody2D>().AddForce(-transform.up * publicShooting .recoveryBounce * publicShooting.recoveryBounceMultiplier, ForceMode2D.Impulse);
+        
     }
    void OnTriggerEnter2D(Collider2D other)
      {
@@ -33,6 +34,14 @@ public class powerUp : MonoBehaviour
              transform.GetComponent<SpriteRenderer>().color = newColor;
              yield return null;
          }
+     }
+
+     IEnumerator deathTimer()
+     {
+        yield return new WaitForSeconds(5);
+        StartCoroutine(FadeTo(0f, 0.5f));
+        StartCoroutine(death());
+
      }
     
      IEnumerator death()
