@@ -57,6 +57,11 @@ public class gamemanager : MonoBehaviour
     public Animator black;
     public AudioClip[] musics;
     public AudioSource speaker;
+    public plasticbag plasticScript;
+    public ParticleSystem buble;
+    public GameObject endText1;
+    public GameObject endText2;
+    public GameObject endBack;
 
     void Start()
     {
@@ -86,6 +91,11 @@ public class gamemanager : MonoBehaviour
         currentPower = Mathf.Clamp(currentPower, 0, maxPower);
         maxPower = Mathf.Clamp(maxPower, 0, 150);
         
+        if (plasticScript.death)
+        {
+            StartCoroutine(victory());
+            plasticScript.death = false;
+        }
         if (canLose && shooting.out2)
         {
             Lose();
@@ -97,13 +107,16 @@ public class gamemanager : MonoBehaviour
         }
         if (powerUpUsed)
         {
+            
             switch(powerUpType)
             {
                 case 0:
+                speaker.PlayOneShot(musics[7]);
                 Battery();
                 break;
 
                 case 1:
+                speaker.PlayOneShot(musics[8]);
                 if (maxPower < 150)
                 {
                     maxPower += 10;
@@ -268,15 +281,74 @@ public class gamemanager : MonoBehaviour
             textZone.SetText("Hadal Zone");
             zone = 5;
             scrollSpeed = 0.9f;
-            descentSpeed = 27.77f;
+            descentSpeed = 41.11f;
             shooting.recoveryBounce = 0.9f;
             break;
             case 10934:
             zone = 6;
+            endBack.SetActive(true);
             textZone.SetText("CHALLENGER DEEP");
             StartCoroutine(boss());
             shooting.recoveryBounce = 0f;
-            int i = 0;
+           Clear();
+            break;
+        }
+    }
+
+    IEnumerator boss()
+    {
+        minSpawnTime = 2;
+        maxSpawnTime = 3;
+        buble.Stop();
+        speaker.Stop();
+        spawning = false;
+        shooting.control = false;
+        yield return new WaitForSeconds(5);
+        plasticBag.SetActive(true);
+        speaker.PlayOneShot(musics[5]);
+        yield return new WaitForSeconds(5);
+        speaker.PlayOneShot(musics[5]);
+        challengerDeepText.SetActive(true);
+        yield return new WaitForSeconds(5);
+         speaker.PlayOneShot(musics[9]);
+        challengerDeepText.GetComponent<Rigidbody2D>().gravityScale = 500;
+        shooting.control = true;
+        shooting.shakeAmount = 0.15f;
+        shooting.shakeDuration = 2;
+        shooting.shaking = true;
+        yield return new WaitForSeconds(2);
+        speaker.Stop();
+        buble.Play();
+        speaker.PlayOneShot(musics[11]);
+        var bubles = buble.emission;
+        bubles.rateOverTime = 100;
+        plasticBag.GetComponent<Animator>().SetBool("start", true);
+        spawning = true;
+        plasticHealthBar.SetActive(true);
+    }
+
+    IEnumerator victory()
+    {
+        Clear();
+        buble.Stop();
+        speaker.Stop();
+        spawning = false;
+        shooting.control = false;
+        plasticHealthBar.GetComponent<Animator>().SetBool("done", true);
+        yield return new WaitForSeconds(1);
+        endText1.SetActive(true);
+        yield return new WaitForSeconds(4);
+        endText2.SetActive(true);
+        yield return new WaitForSeconds(4);
+        black.SetBool("trans", true);
+         yield return new WaitForSeconds(1f);
+         SceneManager.LoadScene(2);
+
+    }
+
+    void Clear()
+    {
+        int i = 0;
             GameObject[] allChildren = new GameObject[mommy.childCount];
             foreach(Transform child in mommy)
             {
@@ -287,29 +359,6 @@ public class gamemanager : MonoBehaviour
             {
                 DestroyImmediate(child.gameObject);
             }
-            break;
-        }
-    }
-
-    IEnumerator boss()
-    {
-        spawning = false;
-        shooting.control = false;
-        yield return new WaitForSeconds(4);
-        plasticBag.SetActive(true);
-        yield return new WaitForSeconds(4);
-        speaker.PlayOneShot(musics[6]);
-        challengerDeepText.SetActive(true);
-        yield return new WaitForSeconds(5);
-        challengerDeepText.GetComponent<Rigidbody2D>().gravityScale = 500;
-        shooting.control = true;
-        shooting.shakeAmount = 0.15f;
-        shooting.shakeDuration = 1;
-        shooting.shaking = true;
-        yield return new WaitForSeconds(1);
-        plasticBag.GetComponent<Animator>().SetBool("start", true);
-        spawning = true;
-        plasticHealthBar.SetActive(true);
     }
 
     void UpdatePower()
@@ -321,7 +370,8 @@ public class gamemanager : MonoBehaviour
 
     public void hit()
     {
-        if (maxPower > 0)
+        speaker.PlayOneShot(musics[10]);
+        if (maxPower - 10 > 0)
         {
             maxPower -= 10;
             shooting.hit = true;
@@ -330,7 +380,7 @@ public class gamemanager : MonoBehaviour
         {
             if (canLose)
             {
-                Lose();
+                shooting.out2 = true;
             }
         }
     }
@@ -345,6 +395,7 @@ public class gamemanager : MonoBehaviour
     {
         if(canLose)
         {
+            speaker.PlayOneShot(musics[6]);
             shooting.control  = false;
             maxPower = 0;
              spawning = false;

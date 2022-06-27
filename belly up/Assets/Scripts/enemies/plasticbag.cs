@@ -10,6 +10,7 @@ public class plasticbag : MonoBehaviour
     float currentVelocity;
     public float smooth;
     public Rigidbody2D rb;
+    public bool death;
 
     void Start()
     {
@@ -48,6 +49,7 @@ public class plasticbag : MonoBehaviour
     void die()
     {
         rb.bodyType = RigidbodyType2D.Dynamic;
+        death = true;
     }
 
 }
