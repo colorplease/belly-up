@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
- using UnityEngine.Experimental.Rendering.Universal;
+ 
 
 public class anglerfishai : MonoBehaviour
 {
@@ -10,7 +10,7 @@ public class anglerfishai : MonoBehaviour
     public float speed;
     public float HP;
     gamemanager gameManager;
-    [SerializeField]Light2D light; 
+    [SerializeField]UnityEngine.Rendering.Universal.Light2D light; 
     bool hitting;
     public GameObject[] powerUps;
     bool dying;

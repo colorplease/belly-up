@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
- using UnityEngine.Experimental.Rendering.Universal;
+ 
  using UnityEngine.SceneManagement;
 //0: Brake
 //1: Dash
@@ -38,8 +38,8 @@ public class gamemanager : MonoBehaviour
     public Slider chipSlider;
     float powerCool = 10;
     [SerializeField]float currentPowerCool;
-    public Light2D playerLight;
-    public Light2D globalLight;
+    public UnityEngine.Rendering.Universal.Light2D playerLight;
+    public UnityEngine.Rendering.Universal.Light2D globalLight;
     [SerializeField]int limitManage;
     public GameObject plasticBag;
     public GameObject challengerDeepText;
