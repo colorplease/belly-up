@@ -62,6 +62,7 @@ public class gamemanager : MonoBehaviour
     public GameObject endText1;
     public GameObject endText2;
     public GameObject endBack;
+    public bool isTutorial;
 
     void Start()
     {
@@ -90,11 +91,15 @@ public class gamemanager : MonoBehaviour
     {
         currentPower = Mathf.Clamp(currentPower, 0, maxPower);
         maxPower = Mathf.Clamp(maxPower, 0, 150);
-        
-        if (plasticScript.death)
+
+        if(!isTutorial)
+
+        {
+            if (plasticScript.death)
         {
             StartCoroutine(victory());
             plasticScript.death = false;
+        }
         }
         if (canLose && shooting.out2)
         {
@@ -125,7 +130,9 @@ public class gamemanager : MonoBehaviour
                 break;
             }
         }
-        switch(zone)
+        if (!isTutorial)
+        {
+            switch(zone)
         {
             case 1:
             background.color = Color.Lerp(background.color, colors[zone - 1], Time.deltaTime * 0.025f);
@@ -135,13 +142,15 @@ public class gamemanager : MonoBehaviour
             break;
             case 3:
             playerLight.intensity = Mathf.Lerp(playerLight.intensity,1,1*Time.deltaTime);
-            globalLight.intensity = Mathf.Lerp(globalLight.intensity,0,1*Time.deltaTime);
+            globalLight.intensity = Mathf.Lerp(globalLight.intensity,0.09f,1*Time.deltaTime);
             break;
             case 6:
             playerLight.intensity = Mathf.Lerp(playerLight.intensity,0,1*Time.deltaTime);
             globalLight.intensity = Mathf.Lerp(globalLight.intensity,1,1*Time.deltaTime);
             break;
         }
+        }
+        
         UpdatePower();
         if(shooting.usedPower)
         {
@@ -227,7 +236,9 @@ public class gamemanager : MonoBehaviour
             currentSpawnTime = Time.time + Random.Range(minSpawnTime, maxSpawnTime);
             }
         }
-        switch(currentDepthRounded)
+        if(!isTutorial)
+        {
+            switch(currentDepthRounded)
         {
             case 0:
             textZone.SetText("Sunlight Zone");
@@ -293,6 +304,8 @@ public class gamemanager : MonoBehaviour
            Clear();
             break;
         }
+        }
+        
     }
 
     IEnumerator boss()
@@ -371,16 +384,19 @@ public class gamemanager : MonoBehaviour
     public void hit()
     {
         speaker.PlayOneShot(musics[10]);
-        if (maxPower - 10 > 0)
+        shooting.hit = true;
+        if(!isTutorial)
         {
-            maxPower -= 10;
-            shooting.hit = true;
-        }
-        else
-        {
-            if (canLose)
+            if (maxPower - 10 > 0)
             {
-                shooting.out2 = true;
+                maxPower -= 5;
+            }
+            else
+            {
+                if (canLose)
+                {
+                    shooting.out2 = true;
+                }
             }
         }
     }

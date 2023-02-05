@@ -10,6 +10,9 @@ public class bullet : MonoBehaviour
    blobfishai fish4;
    plasticbag bag;
 
+   tutorialBox tutorialbox;
+
+
     void OnEnable()
     {
         Destroy(gameObject, 2f);
@@ -45,6 +48,12 @@ public class bullet : MonoBehaviour
             bag = collision.gameObject.GetComponent<plasticbag>();
             bag.hit();
             Destroy(gameObject);
+        }
+        if(collision.collider.tag == "tutorialBox")
+        {
+            tutorialbox = collision.gameObject.GetComponent<tutorialBox>();
+            tutorialbox.Hit();
+        Destroy(gameObject, 0.025f);
         }
     }
 }

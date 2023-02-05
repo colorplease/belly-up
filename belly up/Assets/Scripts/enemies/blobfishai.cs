@@ -14,12 +14,12 @@ public class blobfishai : MonoBehaviour
     bool dying;
     bool hitting;
     public GameObject[] powerUps;
+    public GameObject splitParticle;
 
     void Start()
     {
         amongUs = GameObject.FindWithTag("Player").transform;
         gameManager = GameObject.FindWithTag("GameManager").GetComponent<gamemanager>();
-
     }
     void FixedUpdate()
     {
@@ -67,20 +67,30 @@ public class blobfishai : MonoBehaviour
             StartCoroutine(summon());
          }
         }
-        StartCoroutine(FadeTo(0f, 1f));
-        StartCoroutine(death());
+        else
+        {
+            StartCoroutine(FadeTo(0f, 1f));
+            StartCoroutine(death());
+        }
+        StartCoroutine(FadeTo(0f, 0.25f));
+
         }
     }
    
 
     IEnumerator summon()
     {
-        yield return new WaitForSeconds(0.5f);
+        GameObject splitEffect = Instantiate(splitParticle, transform.position,Quaternion.identity);
+        Destroy(splitEffect, 5f);
+        yield return new WaitForSeconds(0.25f);
         GameObject fish = Instantiate(underlings, new Vector2(transform.position.x + Random.Range(-0.3f, 0.3f), transform.position.y + Random.Range(-0.1f, 0.1f)), Quaternion.identity);
-            fish.transform.localScale = new Vector2(transform.localScale.x * 0.75f, transform.localScale.y  * 0.75f);
-            fish.GetComponent<blobfishai>().HP = HP/2;
-            fish.GetComponent<blobfishai>().speed = speed * 2;
-             fish.GetComponent<blobfishai>().dupeNumber += 1;
+        fish.transform.localScale = new Vector2(transform.localScale.x * 0.75f, transform.localScale.y  * 0.75f);
+        Color transparencyFix = new Color(1f, 1f, 1f, 1f);
+        fish.GetComponent<SpriteRenderer>().color = transparencyFix;
+        fish.GetComponent<blobfishai>().HP = HP/2;
+        fish.GetComponent<blobfishai>().speed = speed * 2;
+        fish.GetComponent<blobfishai>().dupeNumber += 1;
+        Destroy(gameObject, 0.1f);
     }
 
      IEnumerator flash()
