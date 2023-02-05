@@ -57,12 +57,16 @@ public class gamemanager : MonoBehaviour
     public Animator black;
     public AudioClip[] musics;
     public AudioSource speaker;
+    public AudioSource speaker2;
+    public AudioSource speaker3;
     public plasticbag plasticScript;
     public ParticleSystem buble;
     public GameObject endText1;
     public GameObject endText2;
     public GameObject endBack;
     public bool isTutorial;
+    public GameObject lowPower;
+    bool concern = false;
 
     void Start()
     {
@@ -125,6 +129,9 @@ public class gamemanager : MonoBehaviour
                 if (maxPower < 150)
                 {
                     maxPower += 10;
+                    concern = false;
+                    speaker3.Stop();
+                    lowPower.SetActive(false);
                 }
                 powerUpUsed = false;
                 break;
@@ -256,6 +263,7 @@ public class gamemanager : MonoBehaviour
             textZone.SetText("Twilight Zone");
             speaker.Stop();
             speaker.PlayOneShot(musics[zone-1]);
+            speaker.PlayOneShot(musics[16]);
             minSpawnTime = 2;
             maxSpawnTime = 5;
             limitManage = 2;
@@ -267,6 +275,7 @@ public class gamemanager : MonoBehaviour
             case 1000:
             speaker.Stop();
             speaker.PlayOneShot(musics[zone-1]);
+            speaker.PlayOneShot(musics[17]);
             textZone.SetText("Midnight Zone");
             zone = 3;
             scrollSpeed = 0.8f;
@@ -277,6 +286,7 @@ public class gamemanager : MonoBehaviour
             case 4000:
             speaker.Stop();
             speaker.PlayOneShot(musics[zone-1]);
+            speaker.PlayOneShot(musics[18]);
             textZone.SetText("Abyssal Zone");
             zone = 4;
             minSpawnTime = 2;
@@ -289,6 +299,7 @@ public class gamemanager : MonoBehaviour
             case 6000:
             speaker.Stop();
             speaker.PlayOneShot(musics[zone-1]);
+            speaker.PlayOneShot(musics[19]);
             textZone.SetText("Hadal Zone");
             zone = 5;
             scrollSpeed = 0.9f;
@@ -332,7 +343,7 @@ public class gamemanager : MonoBehaviour
         yield return new WaitForSeconds(2);
         speaker.Stop();
         buble.Play();
-        speaker.PlayOneShot(musics[11]);
+        speaker2.Play();
         var bubles = buble.emission;
         bubles.rateOverTime = 100;
         plasticBag.GetComponent<Animator>().SetBool("start", true);
@@ -390,12 +401,27 @@ public class gamemanager : MonoBehaviour
             if (maxPower - 10 > 0)
             {
                 maxPower -= 5;
+                if(maxPower <= 30)
+                {
+                    if(!concern)
+                    {
+                        concern = true;;
+                        speaker3.Play();
+                        lowPower.SetActive(true);
+                    }
+                }
+                else
+                {
+                    concern = false;
+                }
             }
             else
             {
                 if (canLose)
                 {
                     shooting.out2 = true;
+                    speaker.Stop();
+                    speaker2.Stop();
                 }
             }
         }
@@ -431,5 +457,10 @@ public class gamemanager : MonoBehaviour
          black.SetBool("trans", true);
          yield return new WaitForSeconds(1f);
         Scene scene = SceneManager.GetActiveScene(); SceneManager.LoadScene(scene.name);
+    }
+
+    public void PlasticBagHit()
+    {
+         speaker.PlayOneShot(musics[Random.Range(12,14)], 0.3f);
     }
 }

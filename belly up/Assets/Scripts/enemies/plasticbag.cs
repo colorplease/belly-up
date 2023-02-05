@@ -11,15 +11,18 @@ public class plasticbag : MonoBehaviour
     public float smooth;
     public Rigidbody2D rb;
     public bool death;
+    public gamemanager gameManager;
 
     void Start()
     {
         healthBar.value = HP;
         healthBar.maxValue = HP;
+        gameManager = GameObject.FindWithTag("GameManager").GetComponent<gamemanager>();
     }
    
    public void hit()
     {
+        gameManager.PlasticBagHit();
         HP--;
         StartCoroutine(flash());
         if (HP <= 0)
