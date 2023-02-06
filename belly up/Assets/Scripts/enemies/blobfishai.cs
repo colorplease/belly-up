@@ -36,13 +36,18 @@ public class blobfishai : MonoBehaviour
 
     public void hit()
     {
-        HP--;
-        StartCoroutine(flash());
-        rb.velocity = Vector2.zero;
-        if (HP <= 0)
+        if(!dying)
         {
-            die();
-            dying = true;
+            HP--;
+            StartCoroutine(flash());
+            rb.velocity = Vector2.zero;
+            if (HP <= 0)
+            {
+                die();
+                PolygonCollider2D collider = GetComponent<PolygonCollider2D>();
+                collider.enabled = false;
+                dying = true;
+            }
         }
     }
     void Generate()

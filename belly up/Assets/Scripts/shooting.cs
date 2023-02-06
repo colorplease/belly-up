@@ -48,10 +48,16 @@ public class shooting : MonoBehaviour
     public ParticleSystem bubbles;
     public AudioSource speaker;
     public AudioClip[] sounds;
+    Renderer rd;
+    [SerializeField]GameObject indicator;
+    [SerializeField]Animator indicatorAnimator;
+    [SerializeField]GameObject indicatorText;
+    [SerializeField]Animator indicatorTextAnimator;
+    [SerializeField]float maxDistanceTillLoss;
 
     void Start()
     {
-      
+      rd = play.gameObject.GetComponent<Renderer>();
     }
 
     IEnumerator hitAnim()
@@ -65,8 +71,38 @@ public class shooting : MonoBehaviour
       play.gameObject.GetComponent<SpriteRenderer>().color = Color.white;
     }
 
+    IEnumerator quickFadeOut()
+    {
+      indicatorAnimator.SetBool("in", false);
+      indicatorTextAnimator.SetBool("in", false);
+      yield return new WaitForSeconds(0.01f);
+      indicator.SetActive(false);
+
+    }
+
    void Update()
    {
+    if(!rd.isVisible)
+    {
+        if(!indicator.activeSelf)
+        {
+          indicatorText.SetActive(true);
+          indicator.SetActive(true);
+          indicatorAnimator.SetBool("in", true);
+          indicatorTextAnimator.SetBool("in", true);
+        }
+      Vector3 dir = indicator.transform.position - transform.position;
+      float angle = Mathf.Atan2(dir.y,dir.x) * Mathf.Rad2Deg;
+      indicator.transform.rotation = Quaternion.AngleAxis(angle + 90, Vector3.forward);
+    }
+    else
+    {
+      if(indicator.activeSelf)
+      {
+        indicatorText.SetActive(false);
+        StartCoroutine(quickFadeOut());
+      }
+    }
     if (hit)
     {
       StartCoroutine(hitAnim());
@@ -75,7 +111,7 @@ public class shooting : MonoBehaviour
       Shake();
       hit = false;
     }
-    if (Vector2.Distance(transform.position, outtaHere.position) > 10)
+    if (Vector2.Distance(transform.position, outtaHere.position) > maxDistanceTillLoss)
     {
       out2 = true;
     }

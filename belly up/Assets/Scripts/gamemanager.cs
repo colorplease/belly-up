@@ -67,6 +67,7 @@ public class gamemanager : MonoBehaviour
     public bool isTutorial;
     public GameObject lowPower;
     bool concern = false;
+    [SerializeField]depthMeter DepthMeter;
 
     void Start()
     {
@@ -258,6 +259,7 @@ public class gamemanager : MonoBehaviour
             descentSpeed = 3.33f;
             limitManage = 1;
             shooting.recoveryBounce = 0.5f;
+            DepthMeter.UpdateDepth(0);
             break;
             case 200:
             textZone.SetText("Twilight Zone");
@@ -271,6 +273,7 @@ public class gamemanager : MonoBehaviour
             scrollSpeed = 0.6f;
             descentSpeed = 6.66f;
             shooting.recoveryBounce = 0.6f;
+            DepthMeter.UpdateDepth(1);
             break;
             case 1000:
             speaker.Stop();
@@ -282,6 +285,7 @@ public class gamemanager : MonoBehaviour
             descentSpeed = 25f;
             limitManage = 3;
             shooting.recoveryBounce = 0.7f;
+            DepthMeter.UpdateDepth(2);
             break;
             case 4000:
             speaker.Stop();
@@ -295,6 +299,7 @@ public class gamemanager : MonoBehaviour
             descentSpeed = 16.66f;
             limitManage = 5;
             shooting.recoveryBounce = 0.8f;
+            DepthMeter.UpdateDepth(3);
             break;
             case 6000:
             speaker.Stop();
@@ -305,6 +310,7 @@ public class gamemanager : MonoBehaviour
             scrollSpeed = 0.9f;
             descentSpeed = 41.11f;
             shooting.recoveryBounce = 0.9f;
+            DepthMeter.UpdateDepth(4);
             break;
             case 10934:
             zone = 6;
@@ -313,6 +319,7 @@ public class gamemanager : MonoBehaviour
             StartCoroutine(boss());
             shooting.recoveryBounce = 0f;
            Clear();
+           DepthMeter.UpdateDepth(5);
             break;
         }
         }
@@ -356,6 +363,8 @@ public class gamemanager : MonoBehaviour
         Clear();
         buble.Stop();
         speaker.Stop();
+        speaker2.Stop();
+        speaker3.Stop();
         spawning = false;
         shooting.control = false;
         plasticHealthBar.GetComponent<Animator>().SetBool("done", true);
@@ -461,6 +470,6 @@ public class gamemanager : MonoBehaviour
 
     public void PlasticBagHit()
     {
-         speaker.PlayOneShot(musics[Random.Range(12,14)], 0.3f);
+         speaker.PlayOneShot(musics[Random.Range(12,14)], 0.1f);
     }
 }
