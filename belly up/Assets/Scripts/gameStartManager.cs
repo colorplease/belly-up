@@ -26,9 +26,11 @@ public class gameStartManager : MonoBehaviour
    public AudioSource audioSource;
    public AudioClip drop;
    public AudioClip drop2;
+   public Button start;
 
    public void StartGame()
    {
+    start.enabled = false;
     StartCoroutine(startIt());
    }
 

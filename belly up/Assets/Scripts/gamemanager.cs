@@ -68,6 +68,7 @@ public class gamemanager : MonoBehaviour
     public GameObject lowPower;
     bool concern = false;
     [SerializeField]depthMeter DepthMeter;
+    [SerializeField]GameObject rocksObjects;
 
     void Start()
     {
@@ -122,11 +123,13 @@ public class gamemanager : MonoBehaviour
             {
                 case 0:
                 speaker.PlayOneShot(musics[7]);
+                shooting.PowerUpCollect(0);
                 Battery();
                 break;
 
                 case 1:
                 speaker.PlayOneShot(musics[8]);
+                shooting.PowerUpCollect(1);
                 if (maxPower < 150)
                 {
                     maxPower += 10;
@@ -302,6 +305,7 @@ public class gamemanager : MonoBehaviour
             DepthMeter.UpdateDepth(3);
             break;
             case 6000:
+            rocksObjects.SetActive(true);
             speaker.Stop();
             speaker.PlayOneShot(musics[zone-1]);
             speaker.PlayOneShot(musics[19]);
@@ -311,6 +315,9 @@ public class gamemanager : MonoBehaviour
             descentSpeed = 41.11f;
             shooting.recoveryBounce = 0.9f;
             DepthMeter.UpdateDepth(4);
+            break;
+            case 10500:
+            speaker.PlayOneShot(musics[20]);
             break;
             case 10934:
             zone = 6;

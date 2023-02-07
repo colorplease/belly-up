@@ -15,6 +15,7 @@ public class blobfishai : MonoBehaviour
     bool hitting;
     public GameObject[] powerUps;
     public GameObject splitParticle;
+    [SerializeField]float time;
 
     void Start()
     {
@@ -67,7 +68,7 @@ public class blobfishai : MonoBehaviour
             Generate();
             if (dupeNumber < 1)
         {
-            for(int i = 0; i<2;i++)
+            for(int i = 0; i<Random.Range(2,4);i++)
          {
             StartCoroutine(summon());
          }
@@ -77,7 +78,6 @@ public class blobfishai : MonoBehaviour
             StartCoroutine(FadeTo(0f, 1f));
             StartCoroutine(death());
         }
-        StartCoroutine(FadeTo(0f, 0.25f));
 
         }
     }
@@ -85,17 +85,27 @@ public class blobfishai : MonoBehaviour
 
     IEnumerator summon()
     {
+        StartCoroutine(split());
         GameObject splitEffect = Instantiate(splitParticle, transform.position,Quaternion.identity);
         Destroy(splitEffect, 5f);
         yield return new WaitForSeconds(0.25f);
         GameObject fish = Instantiate(underlings, new Vector2(transform.position.x + Random.Range(-0.3f, 0.3f), transform.position.y + Random.Range(-0.1f, 0.1f)), Quaternion.identity);
+        fish.GetComponent<SpriteRenderer>().enabled = true;
         fish.transform.localScale = new Vector2(transform.localScale.x * 0.75f, transform.localScale.y  * 0.75f);
         Color transparencyFix = new Color(1f, 1f, 1f, 1f);
+        fish.GetComponent<SpriteRenderer>().enabled = true;
+        fish.GetComponent<PolygonCollider2D>().enabled = true;
         fish.GetComponent<SpriteRenderer>().color = transparencyFix;
-        fish.GetComponent<blobfishai>().HP = HP/2;
-        fish.GetComponent<blobfishai>().speed = speed * 2;
+        fish.GetComponent<blobfishai>().HP = 2;
+        fish.GetComponent<blobfishai>().speed = speed * Random.Range(2,4);
         fish.GetComponent<blobfishai>().dupeNumber += 1;
         Destroy(gameObject, 0.1f);
+    }
+
+    IEnumerator split()
+    {
+        yield return new WaitForSeconds(time);
+        gameObject.GetComponent<SpriteRenderer>().enabled = false;
     }
 
      IEnumerator flash()

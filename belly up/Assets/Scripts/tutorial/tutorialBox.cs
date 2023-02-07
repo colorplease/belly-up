@@ -33,25 +33,37 @@ public class tutorialBox : MonoBehaviour
             break;
 
             case 1:
-            StartCoroutine(flash());
-            GameObject spawnedFish = Instantiate(lightFish, spawn.position, Quaternion.identity);
-            spawnedFish.GetComponent<SpriteRenderer>().flipY = true;
+            if(spawn.childCount < 4)
+            {
+                StartCoroutine(flash());
+                GameObject spawnedFish = Instantiate(lightFish, spawn.position, Quaternion.identity,spawn);
+                spawnedFish.GetComponent<SpriteRenderer>().flipY = true;
+            }
             break;
 
             case 2:
+            if(spawn.childCount < 4)
+            {
             StartCoroutine(flash());
-            GameObject spawnedFish2 = Instantiate(sword, spawn.position, Quaternion.identity);
+            GameObject spawnedFish2 = Instantiate(sword, spawn.position, Quaternion.identity,spawn);
             spawnedFish2.GetComponent<SpriteRenderer>().flipY = true;
+            }
             break;
 
             case 3:
+            if(spawn.childCount < 4)
+            {
             StartCoroutine(flash());
-            GameObject spawnedFish3 = Instantiate(angler, spawn.position, Quaternion.identity);
+            GameObject spawnedFish3 = Instantiate(angler, spawn.position, Quaternion.identity,spawn);
+            }
             break;
 
             case 4:
+            if(spawn.childCount < 4)
+            {
             StartCoroutine(flash());
-            GameObject spawnedFish4 = Instantiate(blob, spawn.position, Quaternion.identity);
+            GameObject spawnedFish4 = Instantiate(blob, spawn.position, Quaternion.identity,spawn);
+            }
             break;
         }
 

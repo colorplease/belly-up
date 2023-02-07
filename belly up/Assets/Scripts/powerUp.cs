@@ -20,7 +20,7 @@ public class powerUp : MonoBehaviour
             gamemanager gameManager = GameObject.FindWithTag("GameManager").GetComponent<gamemanager>();
             gameManager.powerUpType = type;
             gameManager.powerUpUsed = true;
-            StartCoroutine(FadeTo(0f, 0.5f));
+            StartCoroutine(FadeTo(0f, 0.1f));
             StartCoroutine(death());
         }
      }
@@ -46,7 +46,7 @@ public class powerUp : MonoBehaviour
     
      IEnumerator death()
     {
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.1f);
         Destroy(gameObject);
     }
 }

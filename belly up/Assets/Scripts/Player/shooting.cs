@@ -54,10 +54,15 @@ public class shooting : MonoBehaviour
     [SerializeField]GameObject indicatorText;
     [SerializeField]Animator indicatorTextAnimator;
     [SerializeField]float maxDistanceTillLoss;
+    [SerializeField]bool canShoot = true;
+    Animator animator;
+    [SerializeField]Color energyUp;
+    [SerializeField]Color maxEnergyUp;
 
     void Start()
     {
       rd = play.gameObject.GetComponent<Renderer>();
+      animator = play.gameObject.GetComponent<Animator>();
     }
 
     IEnumerator hitAnim()
@@ -138,7 +143,7 @@ public class shooting : MonoBehaviour
           }
           nextTimeToSwitch = Time.time + switchRate;
         }
-        if(Input.GetButtonDown("Fire1") && Time.time >= nextTimeToFire)
+        if(Input.GetButtonDown("Fire1") && Time.time >= nextTimeToFire && canShoot)
         {
             Shoot();
             nextTimeToFire = Time.time + 1f/fireRate;
@@ -169,6 +174,9 @@ public class shooting : MonoBehaviour
         else if(Input.GetKeyUp(KeyCode.Space))
         {
           player.drag = 0.1f;
+          StopCoroutine(canShootTimer());
+          canShoot = true;
+          animator.SetBool("isBraking", false);
         }
         if (shaking && shakeEnabled)
     {
@@ -273,8 +281,9 @@ public class shooting : MonoBehaviour
 
    void Brake()
    {
+    StartCoroutine(canShootTimer());
     player.AddForce(-player.transform.up * recoveryBounce * recoveryBounceMultiplier, ForceMode2D.Impulse);
-     player.drag = 10;
+     player.drag = 8;
      powerType = 0;
      usedPower = true;
    }
@@ -283,6 +292,40 @@ public class shooting : MonoBehaviour
    {
     originalPos = cameraTransform.position;
       shaking = true;
+   }
+
+   public void PowerUpCollect(int powerType)
+   {
+    Color currentColor = new Color(1, 1, 1, 1);
+    switch(powerType)
+    {
+      case 0:
+      currentColor = energyUp;
+      break;
+      case 1:
+      currentColor = maxEnergyUp;
+      break;
+    }
+    StartCoroutine(powerCollected(currentColor));
+   }
+
+   IEnumerator canShootTimer()
+   {
+    animator.SetBool("isBraking", true);
+    yield return new WaitForSeconds(0.5f);
+    if(animator.GetBool("isBraking") == true)
+    {
+      canShoot = false;
+    }
+   }
+
+   IEnumerator powerCollected(Color currentColor)
+   {
+    play.GetComponent<SpriteRenderer>().color = currentColor;
+    animator.SetBool("collected", true);
+    yield return new WaitForSeconds(0.2f);
+    animator.SetBool("collected", false);
+    play.GetComponent<SpriteRenderer>().color = Color.white;
    }
 
    

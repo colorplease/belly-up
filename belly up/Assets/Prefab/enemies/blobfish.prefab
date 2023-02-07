@@ -257,3 +257,4 @@ MonoBehaviour:
   - {fileID: 8989180241096741125, guid: f3305f2a23cca204e9768de4992fe188, type: 3}
   - {fileID: 8989180241096741125, guid: f3305f2a23cca204e9768de4992fe188, type: 3}
   splitParticle: {fileID: 893661437352076173, guid: 69188d3054e462a4483e6240573d1270, type: 3}
+  time: 0.172
