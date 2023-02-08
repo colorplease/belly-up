@@ -95,6 +95,14 @@ public class gamemanager : MonoBehaviour
 
     void Update()
     {
+        if(Input.GetKeyDown(KeyCode.C))
+        {
+            Time.timeScale += 1;
+        }
+        if(Input.GetKeyDown(KeyCode.V))
+        {
+            Time.timeScale = 1;
+        }
         currentPower = Mathf.Clamp(currentPower, 0, maxPower);
         maxPower = Mathf.Clamp(maxPower, 0, 150);
 
