@@ -12152,7 +12152,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 723fc15f0d86d7f4088da00fefdc3f5f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HP: 150
+  HP: 250
   healthBar: {fileID: 1157457808}
   smooth: 15
   rb: {fileID: 1664598481}
