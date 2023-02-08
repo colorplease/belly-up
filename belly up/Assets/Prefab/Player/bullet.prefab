@@ -256,3 +256,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fish: {fileID: 0}
+  minBulletFallOff: 0.1
+  maxBulletFallOff: 0.3
+  drag: 50

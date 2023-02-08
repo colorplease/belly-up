@@ -11,11 +11,14 @@ public class bullet : MonoBehaviour
    plasticbag bag;
 
    tutorialBox tutorialbox;
+   [SerializeField]float minBulletFallOff;
+   [SerializeField]float maxBulletFallOff;
+   [SerializeField]float killDrag;
 
 
     void OnEnable()
     {
-        Destroy(gameObject, 2f);
+        StartCoroutine(bulletFalloff());
     }
     void OnCollisionEnter2D(Collision2D collision)
     {
@@ -55,5 +58,12 @@ public class bullet : MonoBehaviour
             tutorialbox.Hit();
         Destroy(gameObject, 0.025f);
         }
+    }
+
+    IEnumerator bulletFalloff()
+    {
+        yield return new WaitForSeconds(Random.Range(minBulletFallOff, maxBulletFallOff));
+        gameObject.GetComponent<Rigidbody2D>().drag = killDrag;
+        Destroy(gameObject, 0.5f);
     }
 }

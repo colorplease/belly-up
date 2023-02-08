@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-
+using TMPro;
 public class gameStartManager : MonoBehaviour
 {
    public GameObject UI;
@@ -27,11 +27,32 @@ public class gameStartManager : MonoBehaviour
    public AudioClip drop;
    public AudioClip drop2;
    public Button start;
+   [Header("Tip Of The Day")]
+   [SerializeField]string[] tips;
+   [SerializeField]int currentTip;
+   [SerializeField]TextMeshProUGUI tipText;
 
    public void StartGame()
    {
     start.enabled = false;
     StartCoroutine(startIt());
+    PlayerPrefs.SetInt("lastTip", currentTip);
+    print(PlayerPrefs.GetInt("lastTip"));
+   }
+
+   void OnEnable()
+   {
+    TipOfTheDay();
+   }
+
+   void TipOfTheDay()
+   {
+    while(currentTip == PlayerPrefs.GetInt("lastTip"))
+    {
+        currentTip = Random.Range(0, tips.Length);
+    }
+    currentTip = Random.Range(0, tips.Length);
+    tipText.SetText(tips[currentTip]);
    }
 
    void Update()
