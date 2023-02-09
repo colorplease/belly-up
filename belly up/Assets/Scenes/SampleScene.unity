@@ -619,6 +619,16 @@ MonoBehaviour:
   - If you have lost many times, try getting better at the game.
   - Three to Thirty One
   - colorplease spent his valentine's day working on this game.
+  - Blobfish are tanky, slow behemoths found much deeper in to a run. They reward
+    many powerups upon death.
+  - The Single-Shot does little damage, however it has a higher fire-rate and lower
+    power consumption.
+  - Anglerfish are scary, high damage fish. However, they are easily spotted because
+    of their laterns.
+  - Light Cods are small and weak alone, but in numbers they become a much larger
+    threat.
+  - Power management is important! If you're low on power, try to avoid fish.
+  - I should study for my spanish test instead of working on this.
   - 
   currentTip: 0
   tipText: {fileID: 991041790}
@@ -9281,7 +9291,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: colorplease spent his valentine's day working on this game.
+  m_text: Power management is important! If you're low on power, try to avoid fish.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 5204869161eef27468f5089f59d35cb1, type: 2}
   m_sharedMaterial: {fileID: -2045239741070033876, guid: 5204869161eef27468f5089f59d35cb1, type: 2}
@@ -9308,8 +9318,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36.1
-  m_fontSizeBase: 36.1
+  m_fontSize: 31.34
+  m_fontSizeBase: 31.34
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -10833,8 +10843,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   firePoint: {fileID: 359601554}
-  bulletPrefab: {fileID: 8115362602949084708, guid: 7fe68928c92ee1e48a1ece4ccb40af9e, type: 3}
+  bulletPrefab: {fileID: 8115362602949084708, guid: ad8bda193c26f9146b31fb6d8da3b502, type: 3}
+  shotgunBulletPrefab: {fileID: 8115362602949084708, guid: 7fe68928c92ee1e48a1ece4ccb40af9e, type: 3}
   bulletForce: 20
+  shotgunBulletForce: 20
   playerKnockbackForce: 0.075
   fireRate: 5
   switchRate: 0
@@ -11886,7 +11898,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: -588, y: -541.89}
-  m_SizeDelta: {x: 746.9, y: 291}
+  m_SizeDelta: {x: 759.8, y: 291}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1588201611
 MonoBehaviour:

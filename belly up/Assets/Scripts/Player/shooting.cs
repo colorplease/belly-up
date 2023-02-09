@@ -7,8 +7,10 @@ public class shooting : MonoBehaviour
 {
     public Transform firePoint;
    public GameObject bulletPrefab;
+   public GameObject shotgunBulletPrefab;
 
    public float bulletForce = 20f;
+   public float shotgunBulletForce = 20f;
    public float playerKnockbackForce;
     public float fireRate;
     public float switchRate;
@@ -129,12 +131,14 @@ public class shooting : MonoBehaviour
           switch(gunType)
           {
             case 0:
+            //shotgun
             gunType = 1;
             StartCoroutine(pulse());
             weaponTextText.SetText("Shotgun");
             speaker.PlayOneShot(sounds[0]);
             break;
             case 1:
+            //single
             gunType = 0;
             StartCoroutine(pulse());
             weaponTextText.SetText("Single-Shot");
@@ -239,7 +243,7 @@ public class shooting : MonoBehaviour
       for(int i = 0; i<Random.Range(10,15);i++)
       {
         powerType = 3;
-     usedPower = true;
+        usedPower = true;
      if (!outOfPower)
      {
       playerKnockbackForce = 0.05f;
@@ -248,14 +252,14 @@ public class shooting : MonoBehaviour
            shakeAmount = 0.075f;
       shakeDuration = 0.25f;
       Shake();
-        GameObject bullet = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
+        GameObject bullet = Instantiate(shotgunBulletPrefab, firePoint.position, firePoint.rotation);
         float variation = Random.Range(-20,20);
         var x = firePoint.transform.position.x - player.transform.position.x;
         var y = firePoint.transform.position.y - player.transform.position.y;
         float rotateAngle = variation + (Mathf.Atan2(y,x) * Mathf.Rad2Deg - shotgunDifference);
         var MovementDirection = new Vector2(Mathf.Cos(rotateAngle * Mathf.Deg2Rad), Mathf.Sin(rotateAngle*Mathf.Deg2Rad)).normalized;
         Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
-        rb.AddForce(MovementDirection* bulletForce, ForceMode2D.Impulse);
+        rb.AddForce(MovementDirection* shotgunBulletForce, ForceMode2D.Impulse);
         player.AddForce(-lookDir * playerKnockbackForce, ForceMode2D.Impulse);
      }
       }

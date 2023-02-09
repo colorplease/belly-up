@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 1638151656844206406}
   - component: {fileID: -4686102008633349530}
   m_Layer: 7
-  m_Name: bullet
+  m_Name: singleShotBullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -256,6 +256,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fish: {fileID: 0}
-  minBulletFallOff: 0.1
-  maxBulletFallOff: 0.3
-  drag: 50
+  minBulletFallOff: 0
+  maxBulletFallOff: 0
+  killDrag: 0
+  hasFallOff: 0

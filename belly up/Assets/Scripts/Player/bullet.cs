@@ -14,11 +14,19 @@ public class bullet : MonoBehaviour
    [SerializeField]float minBulletFallOff;
    [SerializeField]float maxBulletFallOff;
    [SerializeField]float killDrag;
+   [SerializeField]bool hasFallOff;
 
 
     void OnEnable()
     {
-        StartCoroutine(bulletFalloff());
+        if(hasFallOff)
+        {
+            StartCoroutine(bulletFalloff());
+        }
+        else
+        {
+            Destroy(gameObject, 5f);
+        }
     }
     void OnCollisionEnter2D(Collision2D collision)
     {
@@ -64,6 +72,7 @@ public class bullet : MonoBehaviour
     {
         yield return new WaitForSeconds(Random.Range(minBulletFallOff, maxBulletFallOff));
         gameObject.GetComponent<Rigidbody2D>().drag = killDrag;
-        Destroy(gameObject, 0.5f);
+        gameObject.GetComponent<BoxCollider2D>().enabled = false;
+        Destroy(gameObject, 1f);
     }
 }
