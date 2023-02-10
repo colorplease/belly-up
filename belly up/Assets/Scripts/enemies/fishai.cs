@@ -32,11 +32,11 @@ public class fishai : MonoBehaviour
         transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
     }
 
-    public void hit()
+    public void hit(float dmg)
     {
         if(!dying)
         {
-            HP--;
+            HP -= dmg;
             StartCoroutine(flash());
             rb.velocity = Vector2.zero;
             if (HP <= 0)

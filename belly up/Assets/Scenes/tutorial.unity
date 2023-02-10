@@ -6094,7 +6094,7 @@ SpriteRenderer:
   m_Size: {x: 20, y: 12.8}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!4 &315145075
@@ -6124,6 +6124,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e6bfc548ccc53046aaeb2793c7820a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  speed: 0
+  currentPos: 0
 --- !u!50 &315145077
 Rigidbody2D:
   serializedVersion: 4
@@ -9306,8 +9308,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   firePoint: {fileID: 359601554}
-  bulletPrefab: {fileID: 8115362602949084708, guid: 7fe68928c92ee1e48a1ece4ccb40af9e, type: 3}
+  bulletPrefab: {fileID: 8115362602949084708, guid: ad8bda193c26f9146b31fb6d8da3b502, type: 3}
+  shotgunBulletPrefab: {fileID: 8115362602949084708, guid: 7fe68928c92ee1e48a1ece4ccb40af9e, type: 3}
   bulletForce: 20
+  shotgunBulletForce: 20
   playerKnockbackForce: 0.075
   fireRate: 5
   switchRate: 0
@@ -11821,7 +11825,7 @@ SpriteRenderer:
   m_Size: {x: 20, y: 12.8}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!60 &1862177012
@@ -11898,6 +11902,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e6bfc548ccc53046aaeb2793c7820a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  speed: 0
+  currentPos: 0
 --- !u!50 &1862177014
 Rigidbody2D:
   serializedVersion: 4
@@ -12498,6 +12504,7 @@ MonoBehaviour:
   isTutorial: 1
   lowPower: {fileID: 0}
   DepthMeter: {fileID: 0}
+  rocksObjects: {fileID: 0}
 --- !u!4 &2048835608
 Transform:
   m_ObjectHideFlags: 0

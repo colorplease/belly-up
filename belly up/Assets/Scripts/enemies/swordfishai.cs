@@ -74,11 +74,11 @@ public class swordfishai : MonoBehaviour
         launch = false;
     }
 
-    public void hit()
+    public void hit(float dmg)
     {
         if(!dying)
         {
-            HP--;
+            HP -= dmg;
             StartCoroutine(flash());
             rb.velocity = Vector2.zero;
             if (HP <= 0)

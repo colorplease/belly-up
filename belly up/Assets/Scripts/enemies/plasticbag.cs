@@ -20,10 +20,10 @@ public class plasticbag : MonoBehaviour
         gameManager = GameObject.FindWithTag("GameManager").GetComponent<gamemanager>();
     }
    
-   public void hit()
+   public void hit(float dmg)
     {
         gameManager.PlasticBagHit();
-        HP--;
+        HP -= dmg;
         StartCoroutine(flash());
         if (HP <= 0)
         {

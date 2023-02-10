@@ -260,3 +260,4 @@ MonoBehaviour:
   maxBulletFallOff: 0.3
   killDrag: 50
   hasFallOff: 1
+  damage: 1

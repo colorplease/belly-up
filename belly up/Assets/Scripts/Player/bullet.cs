@@ -15,6 +15,7 @@ public class bullet : MonoBehaviour
    [SerializeField]float maxBulletFallOff;
    [SerializeField]float killDrag;
    [SerializeField]bool hasFallOff;
+   [SerializeField]float damage;
 
 
     void OnEnable()
@@ -33,31 +34,31 @@ public class bullet : MonoBehaviour
         if(collision.collider.tag == "fish")
         {
             fish = collision.gameObject.GetComponent<fishai>();
-            fish.hit();
+            fish.hit(damage);
         Destroy(gameObject);
         }
         if(collision.collider.tag == "swordfish")
         {
             fish2= collision.gameObject.GetComponent<swordfishai>();
-            fish2.hit();
+            fish2.hit(damage);
         Destroy(gameObject);
         }
         if(collision.collider.tag == "angler")
         {
             fish3= collision.gameObject.GetComponent<anglerfishai>();
-            fish3.hit();
+            fish3.hit(damage);
         Destroy(gameObject);
         }
         if(collision.collider.tag == "blob")
         {
             fish4 = collision.gameObject.GetComponent<blobfishai>();
-            fish4.hit();
+            fish4.hit(damage);
             Destroy(gameObject);
         }
         if (collision.collider.tag == "bag")
         {
             bag = collision.gameObject.GetComponent<plasticbag>();
-            bag.hit();
+            bag.hit(damage);
             Destroy(gameObject);
         }
         if(collision.collider.tag == "tutorialBox")
