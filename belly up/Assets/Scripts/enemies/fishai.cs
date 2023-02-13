@@ -12,6 +12,10 @@ public class fishai : MonoBehaviour
     bool hitting;
      public GameObject[] powerUps;
      bool dying;
+    
+    [SerializeField]float minChance;
+    [SerializeField]float maxChance;
+    [SerializeField]float realChance;
 
     void Start()
     {
@@ -71,9 +75,11 @@ public class fishai : MonoBehaviour
 
     void Generate()
    {
-    var chance = Random.Range(0, 4);
-    if (chance < 3)
+    realChance = gameManager.maxPower - 50;
+    var dropPowerChance = Random.Range(minChance, maxChance);
+    if (dropPowerChance >= realChance)
     {
+        var chance = Random.Range(0, 4);
         Instantiate(powerUps[chance], transform.position, Quaternion.identity);
     }
    }

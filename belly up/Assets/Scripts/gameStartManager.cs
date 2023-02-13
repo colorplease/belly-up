@@ -37,7 +37,6 @@ public class gameStartManager : MonoBehaviour
     start.enabled = false;
     StartCoroutine(startIt());
     PlayerPrefs.SetInt("lastTip", currentTip);
-    print(PlayerPrefs.GetInt("lastTip"));
    }
 
    void OnEnable()

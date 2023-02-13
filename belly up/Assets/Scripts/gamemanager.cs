@@ -69,11 +69,23 @@ public class gamemanager : MonoBehaviour
     bool concern = false;
     [SerializeField]depthMeter DepthMeter;
     [SerializeField]GameObject rocksObjects;
+    [Header("Difficulty Scaling")]
+    int struggleMinSpawnTime;
+    int struggleMaxSpawnTime;
+    int currentMinSpawnTime;
+    int currentMaxSpawnTime;
+    [Header("Pause")]
+    int pauseIndex = 0;
+    [SerializeField]GameObject pauseMenu;
+    bool isPaused;
+
 
     void Start()
     {
         minSpawnTime = 3;
-            maxSpawnTime = 6;
+        maxSpawnTime = 6;
+        struggleMinSpawnTime = 3;
+        struggleMaxSpawnTime = 6;
         currentSpawnTime = Random.Range(minSpawnTime, maxSpawnTime);
         currentPower = maxPower;
          slider.maxValue = maxPower; 
@@ -93,15 +105,48 @@ public class gamemanager : MonoBehaviour
         powerFill.color = ogColor;
     }
 
-    void Update()
+    public void UnPause()
     {
-        if(Input.GetKeyDown(KeyCode.C))
-        {
-            Time.timeScale += 1;
-        }
-        if(Input.GetKeyDown(KeyCode.V))
+        if(isPaused)
         {
             Time.timeScale = 1;
+        pauseMenu.SetActive(false);
+       speaker.Play();
+       speaker2.Play();
+       speaker3.Play(); 
+       isPaused = false;
+        pauseIndex = 0;
+        }
+    }
+
+    void Pause()
+    {
+        if(!isPaused)
+        {
+            Time.timeScale = 0;
+        pauseMenu.SetActive(true);
+        speaker.Pause();
+        speaker2.Pause();
+        speaker3.Pause();
+        isPaused = true;
+        pauseIndex = 1;
+        }
+    }
+
+    void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.Escape))
+        {
+            if(pauseIndex == 1)
+            {
+                UnPause();
+                Debug.Log("no");
+            }
+            if(pauseIndex == 0)
+            {
+                Pause();
+                Debug.Log("yes");
+            }
         }
         currentPower = Mathf.Clamp(currentPower, 0, maxPower);
         maxPower = Mathf.Clamp(maxPower, 0, 150);
@@ -266,6 +311,8 @@ public class gamemanager : MonoBehaviour
             speaker.PlayOneShot(musics[zone-1]);
             minSpawnTime = 3;
             maxSpawnTime = 6;
+            currentMinSpawnTime = 3;
+            currentMaxSpawnTime = 6;
             scrollSpeed = 0.5f;
             descentSpeed = 3.33f;
             limitManage = 1;
@@ -279,6 +326,8 @@ public class gamemanager : MonoBehaviour
             speaker.PlayOneShot(musics[16]);
             minSpawnTime = 2;
             maxSpawnTime = 5;
+            currentMinSpawnTime = 2;
+            currentMaxSpawnTime = 5;
             limitManage = 2;
             zone = 2;
             scrollSpeed = 0.6f;
@@ -306,6 +355,8 @@ public class gamemanager : MonoBehaviour
             zone = 4;
             minSpawnTime = 2;
             maxSpawnTime = 4;
+            currentMinSpawnTime = 2;
+            currentMaxSpawnTime = 4;
             scrollSpeed = 0.7f;
             descentSpeed = 16.66f;
             limitManage = 5;
@@ -432,11 +483,15 @@ public class gamemanager : MonoBehaviour
                         concern = true;;
                         speaker3.Play();
                         lowPower.SetActive(true);
+                        minSpawnTime = struggleMinSpawnTime;
+                        maxSpawnTime = struggleMaxSpawnTime;
                     }
                 }
                 else
                 {
                     concern = false;
+                    minSpawnTime = currentMinSpawnTime;
+                    maxSpawnTime = currentMaxSpawnTime;
                 }
             }
             else
@@ -453,7 +508,7 @@ public class gamemanager : MonoBehaviour
 
     void Battery()
     {
-            currentPower += 20;
+            currentPower += 35;
         powerUpUsed = false;
     }
 

@@ -60,6 +60,8 @@ public class shooting : MonoBehaviour
     Animator animator;
     [SerializeField]Color energyUp;
     [SerializeField]Color maxEnergyUp;
+    [Header("Max Speed")]
+    [SerializeField]float maxSpeed;
 
     void Start()
     {
@@ -89,6 +91,11 @@ public class shooting : MonoBehaviour
 
    void Update()
    {
+    if(player.velocity.magnitude > maxSpeed)
+    {
+     player.velocity = Vector2.ClampMagnitude(player.velocity, maxSpeed);
+    }
+
     if(!rd.isVisible)
     {
         if(!indicator.activeSelf)
