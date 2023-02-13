@@ -75,9 +75,8 @@ public class gamemanager : MonoBehaviour
     int currentMinSpawnTime;
     int currentMaxSpawnTime;
     [Header("Pause")]
-    int pauseIndex = 0;
     [SerializeField]GameObject pauseMenu;
-    bool isPaused;
+    public bool isPaused;
 
 
     void Start()
@@ -107,45 +106,35 @@ public class gamemanager : MonoBehaviour
 
     public void UnPause()
     {
-        if(isPaused)
-        {
             Time.timeScale = 1;
         pauseMenu.SetActive(false);
-       speaker.Play();
-       speaker2.Play();
-       speaker3.Play(); 
+       speaker.UnPause();
+       speaker2.UnPause();
+       speaker3.UnPause();
        isPaused = false;
-        pauseIndex = 0;
-        }
     }
 
     void Pause()
     {
-        if(!isPaused)
-        {
-            Time.timeScale = 0;
+        Time.timeScale = 0;
         pauseMenu.SetActive(true);
         speaker.Pause();
         speaker2.Pause();
         speaker3.Pause();
         isPaused = true;
-        pauseIndex = 1;
-        }
     }
 
     void Update()
     {
         if(Input.GetKeyDown(KeyCode.Escape))
         {
-            if(pauseIndex == 1)
-            {
-                UnPause();
-                Debug.Log("no");
-            }
-            if(pauseIndex == 0)
+            if(!isPaused)
             {
                 Pause();
-                Debug.Log("yes");
+            }
+            else
+            {
+                UnPause();
             }
         }
         currentPower = Mathf.Clamp(currentPower, 0, maxPower);

@@ -62,6 +62,8 @@ public class shooting : MonoBehaviour
     [SerializeField]Color maxEnergyUp;
     [Header("Max Speed")]
     [SerializeField]float maxSpeed;
+    [Header("Pausing")]
+    [SerializeField]gamemanager gameManager;
 
     void Start()
     {
@@ -91,6 +93,8 @@ public class shooting : MonoBehaviour
 
    void Update()
    {
+    if(!gameManager.isPaused)
+    {
     if(player.velocity.magnitude > maxSpeed)
     {
      player.velocity = Vector2.ClampMagnitude(player.velocity, maxSpeed);
@@ -209,6 +213,7 @@ public class shooting : MonoBehaviour
    {
     player.velocity = Vector2.zero;
     rb.velocity = Vector2.zero;
+   }
    }
    }
 
