@@ -16,6 +16,9 @@ public class blobfishai : MonoBehaviour
     public GameObject[] powerUps;
     public GameObject splitParticle;
     [SerializeField]float time;
+    [SerializeField]float minChance;
+    [SerializeField]float maxChance = 150;
+    [SerializeField]float realChance;
 
     void Start()
     {
@@ -53,9 +56,11 @@ public class blobfishai : MonoBehaviour
     }
     void Generate()
    {
-    var chance = Random.Range(0, 4);
-    if (chance < 3)
+    realChance = gameManager.maxPower - 50;
+    var dropPowerChance = Random.Range(minChance, maxChance);
+    if (dropPowerChance >= realChance)
     {
+        var chance = Random.Range(0, 4);
         Instantiate(powerUps[chance], transform.position, Quaternion.identity);
     }
    }
