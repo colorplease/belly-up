@@ -14,7 +14,7 @@ public class fishai : MonoBehaviour
      bool dying;
     
     [SerializeField]float minChance;
-    [SerializeField]float maxChance;
+    [SerializeField]float maxChance = 150;
     [SerializeField]float realChance;
 
     void Start()

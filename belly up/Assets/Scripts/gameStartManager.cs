@@ -31,6 +31,8 @@ public class gameStartManager : MonoBehaviour
    [SerializeField]string[] tips;
    [SerializeField]int currentTip;
    [SerializeField]TextMeshProUGUI tipText;
+   [Header("Roadmap Menu")]
+   [SerializeField]GameObject roadmapMenu;
 
    public void StartGame()
    {
@@ -69,6 +71,18 @@ public class gameStartManager : MonoBehaviour
    public void Tutorial()
    {
         StartCoroutine(tutorialIt());
+   }
+
+   public void RoadmapMenu()
+   {
+        if(roadmapMenu.activeSelf)
+        {
+            roadmapMenu.SetActive(false);
+        }
+        else
+        {
+            roadmapMenu.SetActive(true);
+        }
    }
 
    IEnumerator tutorialIt()

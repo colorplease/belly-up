@@ -9356,6 +9356,8 @@ MonoBehaviour:
   canShoot: 1
   energyUp: {r: 0.96862745, g: 0.73333335, b: 0.015686275, a: 1}
   maxEnergyUp: {r: 0.84313726, g: 0.4509804, b: 0.050980393, a: 1}
+  maxSpeed: 10
+  gameManager: {fileID: 2048835607}
 --- !u!1 &1380652132
 GameObject:
   m_ObjectHideFlags: 0
@@ -12505,6 +12507,8 @@ MonoBehaviour:
   lowPower: {fileID: 0}
   DepthMeter: {fileID: 0}
   rocksObjects: {fileID: 0}
+  pauseMenu: {fileID: 0}
+  isPaused: 0
 --- !u!4 &2048835608
 Transform:
   m_ObjectHideFlags: 0
