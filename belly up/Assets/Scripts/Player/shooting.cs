@@ -56,7 +56,7 @@ public class shooting : MonoBehaviour
     [SerializeField]GameObject indicatorText;
     [SerializeField]Animator indicatorTextAnimator;
     [SerializeField]float maxDistanceTillLoss;
-    [SerializeField]bool canShoot = true;
+    public bool canShoot = true;
     Animator animator;
     [SerializeField]Color energyUp;
     [SerializeField]Color maxEnergyUp;
@@ -69,6 +69,7 @@ public class shooting : MonoBehaviour
     public bool canDash;
     public bool canBrake;
     public bool canSwap;
+    public bool canKB;
 
     void Start()
     {
@@ -168,7 +169,7 @@ public class shooting : MonoBehaviour
             Shoot();
             nextTimeToFire = Time.time + 1f/fireRate;
         }
-        if(Input.GetMouseButtonDown(1))
+        if(Input.GetMouseButtonDown(1) && canDash)
         {
           powerType = 1;
           usedPower = true;
@@ -178,7 +179,7 @@ public class shooting : MonoBehaviour
           arrow.SetActive(true);
           }
         }
-        if (Input.GetMouseButtonUp(1) && canDash)
+        if (Input.GetMouseButtonUp(1))
         {
           arrow.SetActive(false);
           if (readyToDash == true)
@@ -251,7 +252,10 @@ public class shooting : MonoBehaviour
       GameObject bullet = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
         Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
         rb.AddForce(firePoint.right* bulletForce, ForceMode2D.Impulse);
-        player.AddForce(-lookDir * playerKnockbackForce, ForceMode2D.Impulse);
+        if(canKB)
+        {
+          player.AddForce(-lookDir * playerKnockbackForce, ForceMode2D.Impulse);
+        }
       }
     }
     else

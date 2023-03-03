@@ -24,8 +24,13 @@ public class tutorialDialogueManager : MonoBehaviour
     [SerializeField]Animator checkmeboxesParent;
     [Header("Aim Tutorial Reqs")]
     float lastGlockRotation;
+    //used for other reqs btw 
     public float currentAimScore;
     public float aimReq;
+    [Header("Shoot Tutorial Basic Reqs")]
+    public float shootBasicReq;
+    
+
     // Start is called before the first frame update
     void Start()
     {
@@ -61,6 +66,9 @@ public class tutorialDialogueManager : MonoBehaviour
                 case 1:
                 AimTutorialCheck();
                 break;
+                case 2:
+                ShootBasicTutorialCheck();
+                break;
             }
         }
     }
@@ -81,16 +89,45 @@ public class tutorialDialogueManager : MonoBehaviour
             {
                 checkmeboxes[tutorialScore].GetComponent<Animator>().SetBool("done", true);
                 StartCoroutine(Complete());
+                tutorialScore = 0;
             }
         }
         
     }
 
+    void ShootBasicTutorialCheck()
+    {
+         if(Input.GetButtonDown("Fire1"))
+         {
+            currentAimScore++;
+         }
+          if(currentAimScore >= aimReq)
+        {
+            if(tutorialScore < 2)
+            {
+                checkmeboxes[tutorialScore].GetComponent<Animator>().SetBool("done", true);
+                tutorialScore++;
+                currentAimScore = 0;
+            }
+            else
+            {
+                checkmeboxes[tutorialScore].GetComponent<Animator>().SetBool("done", true);
+                StartCoroutine(Complete());
+            }
+        }
+    }
+
     IEnumerator Complete()
     {
+        tutorialScore = 0;
         yield return new WaitForSeconds(0.5f);
         checkmeboxesParent.SetBool("here", false);
         cumplete = true;
+        currentAimScore = 0;
+        for(int i = 0; i < checkmeboxes.Length; i++)
+        {
+            checkmeboxes[i].GetComponent<Animator>().SetBool("done", false);
+        }
         NextLine();
     }
     void StartDialogue()
@@ -105,7 +142,6 @@ public class tutorialDialogueManager : MonoBehaviour
         {
             if(lines[index].userInteractable == true || cumplete == true)
             {
-                StopCoroutine(TypeLine());
                 index++;
                 textComponent.text = string.Empty;
                 StartCoroutine(TypeLine());
@@ -119,11 +155,16 @@ public class tutorialDialogueManager : MonoBehaviour
 
     void ExecuteAction()
     {
+        tutorialScore = 0;
         checkmeboxesParent.SetBool("here", true);
         switch(lines[index].id)
         {
             case 1:
             shoot.canAim = true;
+            break;
+            case 2:
+            shoot.canShoot = true;
+            shoot.canKB = false;
             break;
         }
     }

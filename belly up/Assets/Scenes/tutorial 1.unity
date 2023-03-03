@@ -8643,6 +8643,7 @@ MonoBehaviour:
   canDash: 0
   canBrake: 0
   canSwap: 0
+  canKB: 0
 --- !u!1 &1380652132
 GameObject:
   m_ObjectHideFlags: 0
@@ -10206,9 +10207,24 @@ MonoBehaviour:
   - dialogueText: AIM by using the mouse.
     userInteractable: 0
     id: 1
-  - dialogueText: i used to say
+  - dialogueText: that is only half the protection.
     userInteractable: 1
     id: 1
+  - dialogueText: you must learn how to harm fish.
+    userInteractable: 1
+    id: 1
+  - dialogueText: SHOOT by tapping Left Click on the Mouse.
+    userInteractable: 0
+    id: 2
+  - dialogueText: you cannot harm fish without discipline.
+    userInteractable: 1
+    id: 2
+  - dialogueText: must learn to harm fish accurately.
+    userInteractable: 1
+    id: 2
+  - dialogueText: AIM & SHOOT the toy fish.
+    userInteractable: 1
+    id: 3
   textSpeed: 0.025
   shoot: {fileID: 1373237219}
   tutorialScore: 0
@@ -10218,7 +10234,8 @@ MonoBehaviour:
   - {fileID: 112405702}
   checkmeboxesParent: {fileID: 1406128466}
   currentAimScore: 0
-  aimReq: 5
+  aimReq: 4
+  shootBasicReq: 3
 --- !u!114 &1718563926
 MonoBehaviour:
   m_ObjectHideFlags: 0
