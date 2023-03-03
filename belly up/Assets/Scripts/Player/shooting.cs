@@ -64,6 +64,11 @@ public class shooting : MonoBehaviour
     [SerializeField]float maxSpeed;
     [Header("Pausing")]
     [SerializeField]gamemanager gameManager;
+    [Header("Tutorial Locks")]
+    public bool canAim;
+    public bool canDash;
+    public bool canBrake;
+    public bool canSwap;
 
     void Start()
     {
@@ -136,7 +141,7 @@ public class shooting : MonoBehaviour
 
     if (control)
     {
-      if (Input.GetKeyDown(KeyCode.Tab) && Time.time >= switchRate)
+      if (Input.GetKeyDown(KeyCode.Tab) && Time.time >= switchRate && canSwap)
         {
 
           switch(gunType)
@@ -173,7 +178,7 @@ public class shooting : MonoBehaviour
           arrow.SetActive(true);
           }
         }
-        if (Input.GetMouseButtonUp(1))
+        if (Input.GetMouseButtonUp(1) && canDash)
         {
           arrow.SetActive(false);
           if (readyToDash == true)
@@ -289,19 +294,25 @@ public class shooting : MonoBehaviour
 
    void Aim()
    {
-            mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+    if(canAim)
+    {
+      mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
              lookDir = mousePos - rb.position;
             float angle = Mathf.Atan2(lookDir.y, lookDir.x) * Mathf.Rad2Deg  - difference;
            transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+    }
    }
 
    void Brake()
    {
-    StartCoroutine(canShootTimer());
+    if(canBrake)
+    {
+      StartCoroutine(canShootTimer());
     player.AddForce(-player.transform.up * recoveryBounce * recoveryBounceMultiplier, ForceMode2D.Impulse);
      player.drag = 8;
      powerType = 0;
      usedPower = true;
+    }
    }
 
    void Shake()

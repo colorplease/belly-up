@@ -116,12 +116,15 @@ public class gamemanager : MonoBehaviour
 
     void Pause()
     {
-        Time.timeScale = 0;
-        pauseMenu.SetActive(true);
-        speaker.Pause();
-        speaker2.Pause();
-        speaker3.Pause();
-        isPaused = true;
+        if(!isTutorial)
+        {
+            Time.timeScale = 0;
+            pauseMenu.SetActive(true);
+            speaker.Pause();
+            speaker2.Pause();
+            speaker3.Pause();
+            isPaused = true;
+        }
     }
 
     void Update()
