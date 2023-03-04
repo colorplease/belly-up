@@ -25,6 +25,7 @@ public class tutorialDialogueManager : MonoBehaviour
     [SerializeField]Animator checkmeboxesParent;
     [SerializeField]Transform fishSpawn;
     [SerializeField]GameObject dummy;
+    [SerializeField]Transform[] dummySpawnPoints;
     [Header("Aim Tutorial Reqs")]
     float lastGlockRotation;
     //used for other reqs btw 
@@ -133,11 +134,7 @@ public class tutorialDialogueManager : MonoBehaviour
     {
         if(fishSpawn.childCount == 0)
         {
-            currentAimScore++;
-            if(tutorialScore < 2)
-            {
-                Instantiate(dummy, fishSpawn.position ,Quaternion.identity,fishSpawn);
-            }
+            Instantiate(dummy, dummySpawnPoints[Random.Range(0, dummySpawnPoints.Length)].position, Quaternion.Euler(0f, 0f, Random.Range(0,360)),fishSpawn);
         }
         if(currentAimScore >= shootDummySingleReq)
         {
@@ -150,9 +147,16 @@ public class tutorialDialogueManager : MonoBehaviour
             else
             {
                 checkmeboxes[tutorialScore].GetComponent<Animator>().SetBool("done", true);
-                GameObject.FindWithTag("Dummy").GetComponent<dummyTarget>().Hit();
                 StartCoroutine(Complete());
             }
+        }
+    }
+
+    public void ScoreBoostSingleTutorialCheck()
+    {
+        if(cumplete != true)
+        {
+            currentAimScore++;
         }
     }
 
@@ -178,7 +182,7 @@ public class tutorialDialogueManager : MonoBehaviour
     void NextLine()
     {
         helpAnimator.SetBool("help", false);
-        StopCoroutine(needHelpTimer());
+        StopAllCoroutines();
         if(index < lines.Length - 1)
         {
             if(lines[index].userInteractable == true || cumplete == true)
