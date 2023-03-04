@@ -17,11 +17,14 @@ public class tutorialDialogueManager : MonoBehaviour
     public float textSpeed;
     private int index;
     [SerializeField]shooting shoot;
+    [SerializeField]Animator helpAnimator;
     [Header("General Tutorial Stuff")]
     public int tutorialScore;
     public GameObject[] checkmeboxes;
     bool cumplete;
     [SerializeField]Animator checkmeboxesParent;
+    [SerializeField]Transform fishSpawn;
+    [SerializeField]GameObject dummy;
     [Header("Aim Tutorial Reqs")]
     float lastGlockRotation;
     //used for other reqs btw 
@@ -29,6 +32,8 @@ public class tutorialDialogueManager : MonoBehaviour
     public float aimReq;
     [Header("Shoot Tutorial Basic Reqs")]
     public float shootBasicReq;
+    [Header("Shoot Tutorial Dummy Single Reqs")]
+    public float shootDummySingleReq;
     
 
     // Start is called before the first frame update
@@ -57,6 +62,10 @@ public class tutorialDialogueManager : MonoBehaviour
             {
                 ExecuteAction(); 
             }
+            else
+            {
+                StartCoroutine(needHelpTimer());
+            }
             }
         }
         if(!lines[index].userInteractable)
@@ -68,6 +77,9 @@ public class tutorialDialogueManager : MonoBehaviour
                 break;
                 case 2:
                 ShootBasicTutorialCheck();
+                break;
+                case 3:
+                ShootDummySingleTutorialCheck();
                 break;
             }
         }
@@ -117,6 +129,33 @@ public class tutorialDialogueManager : MonoBehaviour
         }
     }
 
+    void ShootDummySingleTutorialCheck()
+    {
+        if(fishSpawn.childCount == 0)
+        {
+            currentAimScore++;
+            if(tutorialScore < 2)
+            {
+                Instantiate(dummy, fishSpawn.position ,Quaternion.identity,fishSpawn);
+            }
+        }
+        if(currentAimScore >= shootDummySingleReq)
+        {
+            if(tutorialScore < 2)
+            {
+                checkmeboxes[tutorialScore].GetComponent<Animator>().SetBool("done", true);
+                tutorialScore++;
+                currentAimScore = 0;
+            }
+            else
+            {
+                checkmeboxes[tutorialScore].GetComponent<Animator>().SetBool("done", true);
+                GameObject.FindWithTag("Dummy").GetComponent<dummyTarget>().Hit();
+                StartCoroutine(Complete());
+            }
+        }
+    }
+
     IEnumerator Complete()
     {
         tutorialScore = 0;
@@ -138,6 +177,8 @@ public class tutorialDialogueManager : MonoBehaviour
 
     void NextLine()
     {
+        helpAnimator.SetBool("help", false);
+        StopCoroutine(needHelpTimer());
         if(index < lines.Length - 1)
         {
             if(lines[index].userInteractable == true || cumplete == true)
@@ -145,6 +186,7 @@ public class tutorialDialogueManager : MonoBehaviour
                 index++;
                 textComponent.text = string.Empty;
                 StartCoroutine(TypeLine());
+                cumplete = false;
             }
         }
         else
@@ -155,6 +197,7 @@ public class tutorialDialogueManager : MonoBehaviour
 
     void ExecuteAction()
     {
+        StopCoroutine(needHelpTimer());
         tutorialScore = 0;
         checkmeboxesParent.SetBool("here", true);
         switch(lines[index].id)
@@ -170,7 +213,7 @@ public class tutorialDialogueManager : MonoBehaviour
     }
 
     IEnumerator TypeLine()
-    {;
+    {
         //types out each char one by one
         foreach(char c in lines[index].dialogueText.ToCharArray())
         {
@@ -181,5 +224,16 @@ public class tutorialDialogueManager : MonoBehaviour
         {
             ExecuteAction(); 
         }
+        else
+        {
+            StartCoroutine(needHelpTimer());
+        }
+    }
+
+    IEnumerator needHelpTimer()
+    {
+        yield return new WaitForSeconds(3);
+        helpAnimator.SetBool("help", true);
+
     }
 }

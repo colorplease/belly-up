@@ -9,6 +9,7 @@ public class bullet : MonoBehaviour
    anglerfishai fish3;
    blobfishai fish4;
    plasticbag bag;
+   dummyTarget dummytarget;
 
    tutorialBox tutorialbox;
    [SerializeField]float minBulletFallOff;
@@ -66,6 +67,12 @@ public class bullet : MonoBehaviour
             tutorialbox = collision.gameObject.GetComponent<tutorialBox>();
             tutorialbox.Hit();
         Destroy(gameObject, 0.025f);
+        }
+        if(collision.collider.tag == "Dummy")
+        {
+            dummytarget = collision.gameObject.GetComponent<dummyTarget>();
+            dummytarget.Hit();
+            Destroy(gameObject);
         }
     }
 
