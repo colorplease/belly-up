@@ -148,6 +148,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rb: {fileID: 7535244820811468660}
+  meCollider: {fileID: 7535244820811468663}
 --- !u!95 &221570756367612626
 Animator:
   serializedVersion: 5

@@ -5,13 +5,20 @@ using UnityEngine;
 public class dummyTarget : MonoBehaviour
 {
     [SerializeField]Rigidbody2D rb;
+    [SerializeField]Collider2D meCollider;
     tutorialDialogueManager tutorialmanager;
+    bool tagged;
     public void Hit()
     {
         tutorialmanager = GameObject.FindWithTag("dialogueManager").GetComponent<tutorialDialogueManager>();
-        tutorialmanager.ScoreBoostSingleTutorialCheck();
+        if(!tagged)
+        {
+            tutorialmanager.ScoreBoostSingleTutorialCheck();
+        }
+        tagged = true;
         StartCoroutine(FadeTo(0f, 0.2f));
         StartCoroutine(death());
+        meCollider.enabled = false;
     }
 
     IEnumerator death()

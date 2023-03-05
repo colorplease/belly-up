@@ -281,7 +281,10 @@ public class shooting : MonoBehaviour
         var MovementDirection = new Vector2(Mathf.Cos(rotateAngle * Mathf.Deg2Rad), Mathf.Sin(rotateAngle*Mathf.Deg2Rad)).normalized;
         Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
         rb.AddForce(MovementDirection* shotgunBulletForce, ForceMode2D.Impulse);
-        player.AddForce(-lookDir * playerKnockbackForce, ForceMode2D.Impulse);
+        if(canKB)
+        {
+          player.AddForce(-lookDir * playerKnockbackForce, ForceMode2D.Impulse);
+        }
      }
       }
      

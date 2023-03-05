@@ -18,11 +18,14 @@ public class tutorialDialogueManager : MonoBehaviour
     private int index;
     [SerializeField]shooting shoot;
     [SerializeField]Animator helpAnimator;
+    [SerializeField]Animator skiptitle;
+    [SerializeField]Animator skiptitleflavor;
     [Header("General Tutorial Stuff")]
     public int tutorialScore;
     public GameObject[] checkmeboxes;
     bool cumplete;
     [SerializeField]Animator checkmeboxesParent;
+    [SerializeField]Animator gunSwapUI;
     [SerializeField]Transform fishSpawn;
     [SerializeField]GameObject dummy;
     [SerializeField]Transform[] dummySpawnPoints;
@@ -34,7 +37,10 @@ public class tutorialDialogueManager : MonoBehaviour
     [Header("Shoot Tutorial Basic Reqs")]
     public float shootBasicReq;
     [Header("Shoot Tutorial Dummy Single Reqs")]
+    //also used for the shotgun tutorial
     public float shootDummySingleReq;
+    [Header("Dash Tutorial")]
+    public float dashTutorialReq;
     
 
     // Start is called before the first frame update
@@ -49,6 +55,8 @@ public class tutorialDialogueManager : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.Return))
         {
+            skiptitle.SetBool("bad", true);
+            skiptitleflavor.SetBool("bad", true);
             if(textComponent.text == lines[index].dialogueText)
             {
                 NextLine();
@@ -62,6 +70,10 @@ public class tutorialDialogueManager : MonoBehaviour
             if(!lines[index].userInteractable)
             {
                 ExecuteAction(); 
+                if(cumplete)
+                {
+                    NextLine();
+                }
             }
             else
             {
@@ -81,6 +93,12 @@ public class tutorialDialogueManager : MonoBehaviour
                 break;
                 case 3:
                 ShootDummySingleTutorialCheck();
+                break;
+                case 4:
+                ShootDummySingleTutorialCheck();
+                break;
+                case 5:
+                DashTutorialCheck();
                 break;
             }
         }
@@ -143,6 +161,37 @@ public class tutorialDialogueManager : MonoBehaviour
                 checkmeboxes[tutorialScore].GetComponent<Animator>().SetBool("done", true);
                 tutorialScore++;
                 currentAimScore = 0;
+                
+            }
+            else
+            {
+                StartCoroutine(cleanUpDummy());
+                checkmeboxes[tutorialScore].GetComponent<Animator>().SetBool("done", true);
+                StartCoroutine(Complete());
+            }
+        }
+    }
+
+    IEnumerator cleanUpDummy()
+    {
+        yield return new WaitForSeconds(0.5f);
+        dummyTarget scam = fishSpawn.GetChild(0).gameObject.GetComponent<dummyTarget>();
+        scam.Hit();
+    }
+
+    void DashTutorialCheck()
+    {
+        if (Input.GetMouseButtonDown(1))
+        {
+            currentAimScore++;
+        }
+        if(currentAimScore >= dashTutorialReq)
+        {
+            if(tutorialScore < 2)
+            {
+                checkmeboxes[tutorialScore].GetComponent<Animator>().SetBool("done", true);
+                tutorialScore++;
+                currentAimScore = 0;
             }
             else
             {
@@ -171,6 +220,7 @@ public class tutorialDialogueManager : MonoBehaviour
         {
             checkmeboxes[i].GetComponent<Animator>().SetBool("done", false);
         }
+        shoot.control = false;
         NextLine();
     }
     void StartDialogue()
@@ -182,7 +232,6 @@ public class tutorialDialogueManager : MonoBehaviour
     void NextLine()
     {
         helpAnimator.SetBool("help", false);
-        StopAllCoroutines();
         if(index < lines.Length - 1)
         {
             if(lines[index].userInteractable == true || cumplete == true)
@@ -204,6 +253,7 @@ public class tutorialDialogueManager : MonoBehaviour
         StopCoroutine(needHelpTimer());
         tutorialScore = 0;
         checkmeboxesParent.SetBool("here", true);
+        shoot.control = true;
         switch(lines[index].id)
         {
             case 1:
@@ -212,6 +262,13 @@ public class tutorialDialogueManager : MonoBehaviour
             case 2:
             shoot.canShoot = true;
             shoot.canKB = false;
+            break;
+            case 4:
+            shoot.canSwap = true;
+            gunSwapUI.SetBool("canvasg", true);
+            break;
+            case 5:
+            shoot.canDash = true;
             break;
         }
     }
