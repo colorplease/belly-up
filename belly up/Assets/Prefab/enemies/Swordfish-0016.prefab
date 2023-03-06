@@ -127,6 +127,8 @@ MonoBehaviour:
   force: 0.7
   HP: 2
   laser: {fileID: 1316037642270317055}
+  preFire: {r: 1, g: 0.791047, b: 0.3339622, a: 1}
+  afterFire: {r: 1, g: 0.2679245, b: 0.2679245, a: 1}
   powerUps:
   - {fileID: 8065324607808081258, guid: a79482b0c1b957848bcc954b7a49640a, type: 3}
   - {fileID: 8989180241096741125, guid: f3305f2a23cca204e9768de4992fe188, type: 3}
@@ -398,7 +400,7 @@ Transform:
   m_GameObject: {fileID: 1316037642270317055}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -226.876, y: -0.4523, z: 0}
-  m_LocalScale: {x: 430.4104, y: 0.12271726, z: 1}
+  m_LocalScale: {x: 430.4104, y: 0.15, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1316037641659203921}

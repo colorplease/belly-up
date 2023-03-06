@@ -94,13 +94,18 @@ public class gamemanager : MonoBehaviour
         ogColor = powerFill.color;
     }
 
-    IEnumerator outOfPowerGents()
+    public IEnumerator outOfPowerGents()
     {
         shooting.shakeAmount = 0.05f;
         shooting.shakeDuration = 0.25f;
         shooting.shaking = true;
-        powerFill.color = Color.red;
-        yield return new WaitForSeconds(0.1f);
+        Color iloveRed = new Color(1f, 70f/255f, 56f/255f);
+        powerFill.color = iloveRed;
+        yield return new WaitForSeconds(0.075f);
+        powerFill.color = ogColor;
+        yield return new WaitForSeconds(0.075f);
+        powerFill.color = iloveRed;
+        yield return new WaitForSeconds(0.075f);
         powerFill.color = ogColor;
     }
 
@@ -155,11 +160,6 @@ public class gamemanager : MonoBehaviour
         if (canLose && shooting.out2)
         {
             Lose();
-        }
-        
-        if (shooting.outOfPower)
-        {
-            StartCoroutine(outOfPowerGents());
         }
         if (powerUpUsed)
         {

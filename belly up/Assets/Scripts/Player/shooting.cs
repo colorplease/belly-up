@@ -56,7 +56,7 @@ public class shooting : MonoBehaviour
     [SerializeField]GameObject indicatorText;
     [SerializeField]Animator indicatorTextAnimator;
     [SerializeField]float maxDistanceTillLoss;
-    public bool canShoot = true;
+    public bool canShoot;
     Animator animator;
     [SerializeField]Color energyUp;
     [SerializeField]Color maxEnergyUp;
@@ -70,6 +70,9 @@ public class shooting : MonoBehaviour
     public bool canBrake;
     public bool canSwap;
     public bool canKB;
+    [Header("Braking Indicator")]
+    [SerializeField]TextMeshProUGUI brakingIndicator;
+    [SerializeField]bool isTutorialReal;
 
     void Start()
     {
@@ -164,20 +167,37 @@ public class shooting : MonoBehaviour
           }
           nextTimeToSwitch = Time.time + switchRate;
         }
-        if(Input.GetButtonDown("Fire1") && Time.time >= nextTimeToFire && canShoot)
+        if(Input.GetButtonDown("Fire1"))
         {
+          if(!canShoot || outOfPower)
+        {
+          if(!isTutorialReal)
+          {
+            StartCoroutine(gameManager.outOfPowerGents());
+          }
+        }
+          if(Time.time >= nextTimeToFire && canShoot)
+          {
             Shoot();
             nextTimeToFire = Time.time + 1f/fireRate;
-        }
-        if(Input.GetMouseButtonDown(1) && canDash)
-        {
-          powerType = 1;
-          usedPower = true;
-          if (!outOfPower)
-          {
-            readyToDash = true;
-          arrow.SetActive(true);
           }
+        }
+        if(Input.GetMouseButtonDown(1))
+        {
+          if(canDash)
+          {
+            powerType = 1;
+            usedPower = true;
+            if (!outOfPower)
+            {
+              readyToDash = true;
+              arrow.SetActive(true);
+            }
+          }
+          else if (!isTutorialReal)
+          {
+            StartCoroutine(gameManager.outOfPowerGents());
+          }   
         }
         if (Input.GetMouseButtonUp(1))
         {
@@ -191,27 +211,40 @@ public class shooting : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
         {
           Brake();
+          if(outOfPower || !canBrake)
+          {
+            StartCoroutine(gameManager.outOfPowerGents());
+          }
         }
-        else if(Input.GetKeyUp(KeyCode.Space))
+        if(!Input.GetKey(KeyCode.Space))
         {
-          player.drag = 0.1f;
-          StopCoroutine(canShootTimer());
-          canShoot = true;
-          animator.SetBool("isBraking", false);
+          if(!canDash || !canShoot)
+          {
+            if(!isTutorialReal)
+            {
+              StopCoroutine(canShootTimer());
+              brakingIndicator.SetText("STANDSTILL");
+              animator.SetBool("isBraking", false);
+              print("sex");
+              player.drag = 0.1f;
+              canDash = true;
+              canShoot = true;
+            }
+          }
         }
         if (shaking && shakeEnabled)
-    {
-      if(shakeDuration > 0)
-    {
-      cameraTransform.localPosition = originalPos + UnityEngine.Random.insideUnitSphere * shakeAmount;
-    shakeDuration -= Time.deltaTime * decreaseFactor;
-    }
-    else
-    {
-      shakeDuration = 0;
-      cameraTransform.localPosition = originalPos;
-      shaking = false;
-    }
+        {
+          if(shakeDuration > 0)
+          {
+            cameraTransform.localPosition = originalPos + UnityEngine.Random.insideUnitSphere * shakeAmount;
+            shakeDuration -= Time.deltaTime * decreaseFactor;
+          }
+          else
+          {
+            shakeDuration = 0;
+            cameraTransform.localPosition = originalPos;
+            shaking = false;
+          }
     }
         
    }
@@ -312,14 +345,18 @@ public class shooting : MonoBehaviour
 
    void Brake()
    {
-    if(canBrake)
+    if(!outOfPower && !isTutorialReal)
     {
-      StartCoroutine(canShootTimer());
-    player.AddForce(-player.transform.up * recoveryBounce * recoveryBounceMultiplier, ForceMode2D.Impulse);
-     player.drag = 8;
-     powerType = 0;
-     usedPower = true;
+        if(canBrake)
+        {
+          StartCoroutine(canShootTimer());
+          player.AddForce(-player.transform.up * recoveryBounce * recoveryBounceMultiplier, ForceMode2D.Impulse);
+          player.drag = 8;
+          powerType = 0;
+          usedPower = true;
+        }
     }
+    
    }
 
    void Shake()
@@ -345,11 +382,14 @@ public class shooting : MonoBehaviour
 
    IEnumerator canShootTimer()
    {
+    brakingIndicator.SetText("BRAKING!!");
     animator.SetBool("isBraking", true);
     yield return new WaitForSeconds(0.5f);
     if(animator.GetBool("isBraking") == true)
     {
       canShoot = false;
+      yield return new WaitForSeconds(0.5f);
+      canDash = false;
     }
    }
 

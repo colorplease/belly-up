@@ -13,6 +13,8 @@ public class swordfishai : MonoBehaviour
     bool ready;
     bool launch;
     public GameObject laser;
+    [SerializeField]Color preFire;
+    [SerializeField]Color afterFire;
     bool hitting;
     public GameObject[] powerUps;
     bool dying;
@@ -67,10 +69,14 @@ public class swordfishai : MonoBehaviour
         rb.velocity = Vector2.zero;
         launch = true;
         laser.SetActive(true);
+        laser.GetComponent<SpriteRenderer>().color = preFire;
         ready = true;
         yield return new WaitForSeconds(2);
         ready = false;
         rb.constraints = RigidbodyConstraints2D.FreezeRotation;
+        laser.GetComponent<SpriteRenderer>().color = Color.white;
+        yield return new WaitForSeconds(0.075f);
+        laser.GetComponent<SpriteRenderer>().color = afterFire;
         yield return new WaitForSeconds(1);
         laser.SetActive(false);
         rb.AddForce(transform.right * force * Vector2.Distance(transform.position, amongUs.position), ForceMode2D.Impulse);
