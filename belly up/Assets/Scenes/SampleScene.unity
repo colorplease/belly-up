@@ -11451,7 +11451,7 @@ MonoBehaviour:
   canShoot: 1
   energyUp: {r: 0.96862745, g: 0.73333335, b: 0.015686275, a: 1}
   maxEnergyUp: {r: 0.84313726, g: 0.4509804, b: 0.050980393, a: 1}
-  maxSpeed: 10
+  maxSpeed: 12.5
   gameManager: {fileID: 2048835607}
   canAim: 1
   canDash: 1

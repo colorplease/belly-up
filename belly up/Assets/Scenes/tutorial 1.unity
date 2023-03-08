@@ -11777,9 +11777,6 @@ MonoBehaviour:
   - dialogueText: fish.
     userInteractable: 1
     id: 0
-  - dialogueText: DASH and then BRAKE by holding Space.
-    userInteractable: 0
-    id: 6
   - dialogueText: i like fish.
     userInteractable: 1
     id: 0
@@ -11834,6 +11831,9 @@ MonoBehaviour:
   - dialogueText: must learn to take deep breathes.
     userInteractable: 1
     id: 5
+  - dialogueText: you cannot shoot or dash while doing it.
+    userInteractable: 1
+    id: 7
   - dialogueText: DASH and then BRAKE by holding Space.
     userInteractable: 0
     id: 6
@@ -11845,6 +11845,9 @@ MonoBehaviour:
     id: 5
   - dialogueText: ACCOUNT for recoil while SHOOTING the toy fish.
     userInteractable: 0
+    id: 7
+  - dialogueText: 
+    userInteractable: 1
     id: 7
   textSpeed: 0.025
   shoot: {fileID: 1373237219}

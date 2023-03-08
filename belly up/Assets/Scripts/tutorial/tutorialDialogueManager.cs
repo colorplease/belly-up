@@ -105,6 +105,9 @@ public class tutorialDialogueManager : MonoBehaviour
                 case 6:
                 BrakeTutorialCheck();
                 break;
+                case 7:
+                ShootDummySingleTutorialCheck();
+                break;
             }
         }
     }
@@ -208,7 +211,7 @@ public class tutorialDialogueManager : MonoBehaviour
 
     void BrakeTutorialCheck()
     {
-        if(Input.GetKeyDown(KeyCode.Space) && shoot.rb.velocity.sqrMagnitude > 10)
+        if(Input.GetKeyDown(KeyCode.Space) && shoot.rb.velocity.sqrMagnitude > 5)
         {
             currentAimScore++;
         }
@@ -248,6 +251,7 @@ public class tutorialDialogueManager : MonoBehaviour
             checkmeboxes[i].GetComponent<Animator>().SetBool("done", false);
         }
         shoot.control = false;
+        shoot.isTutorialReal = false;
         NextLine();
     }
     void StartDialogue()
@@ -306,13 +310,11 @@ public class tutorialDialogueManager : MonoBehaviour
             break;
             case 6:
             shoot.canBrake = true;
-            shoot.canDash = true;
-            shoot.canSwap = true;
-            gunSwapUI.SetBool("canvasg", true);
-            shoot.canShoot = true;
-            shoot.canKB = false;
-            shoot.canAim = true;
             shoot.isTutorialReal = false;
+            break;
+            case 7:
+            shoot.isTutorialReal = false;
+            shoot.canKB = true;
             break;
         }
     }

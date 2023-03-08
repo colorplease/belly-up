@@ -8,6 +8,9 @@ public class dummyTarget : MonoBehaviour
     [SerializeField]Collider2D meCollider;
     tutorialDialogueManager tutorialmanager;
     bool tagged;
+    bool dying;
+    bool hitting;
+    gamemanager gameManager;
     public void Hit()
     {
         tutorialmanager = GameObject.FindWithTag("dialogueManager").GetComponent<tutorialDialogueManager>();
@@ -37,5 +40,20 @@ public class dummyTarget : MonoBehaviour
              transform.GetComponent<SpriteRenderer>().color = newColor;
              yield return null;
          }
+     }
+
+     void OnTriggerEnter2D(Collider2D other)
+     {
+        if (other.tag == "Player")
+        {
+            if (!hitting && !dying)
+            {
+                gameManager = GameObject.FindWithTag("GameManager").GetComponent<gamemanager>();
+                hitting = true;
+                gameManager.hit();
+                StartCoroutine(FadeTo(0f, 1f));
+                StartCoroutine(death());
+            }
+        }
      }
 }
