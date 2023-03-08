@@ -72,7 +72,7 @@ public class shooting : MonoBehaviour
     public bool canKB;
     [Header("Braking Indicator")]
     [SerializeField]TextMeshProUGUI brakingIndicator;
-    [SerializeField]bool isTutorialReal;
+    public bool isTutorialReal;
 
     void Start()
     {
@@ -213,7 +213,10 @@ public class shooting : MonoBehaviour
           Brake();
           if(outOfPower || !canBrake)
           {
-            StartCoroutine(gameManager.outOfPowerGents());
+            if(!isTutorialReal)
+            {
+              StartCoroutine(gameManager.outOfPowerGents());
+            }
           }
         }
         if(!Input.GetKey(KeyCode.Space))

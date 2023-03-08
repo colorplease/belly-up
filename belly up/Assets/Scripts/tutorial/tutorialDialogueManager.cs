@@ -20,6 +20,7 @@ public class tutorialDialogueManager : MonoBehaviour
     [SerializeField]Animator helpAnimator;
     [SerializeField]Animator skiptitle;
     [SerializeField]Animator skiptitleflavor;
+    Coroutine helpmeTimer = null;
     [Header("General Tutorial Stuff")]
     public int tutorialScore;
     public GameObject[] checkmeboxes;
@@ -41,6 +42,8 @@ public class tutorialDialogueManager : MonoBehaviour
     public float shootDummySingleReq;
     [Header("Dash Tutorial")]
     public float dashTutorialReq;
+    [Header("Brake Tutorial")]
+    public float brakeTutorialReq;
     
 
     // Start is called before the first frame update
@@ -66,7 +69,6 @@ public class tutorialDialogueManager : MonoBehaviour
             StopAllCoroutines();
             textComponent.SetText("");
             textComponent.text = lines[index].dialogueText;
-            
             if(!lines[index].userInteractable)
             {
                 ExecuteAction(); 
@@ -77,7 +79,7 @@ public class tutorialDialogueManager : MonoBehaviour
             }
             else
             {
-                StartCoroutine(needHelpTimer());
+                helpmeTimer = StartCoroutine(needHelpTimer());
             }
             }
         }
@@ -99,6 +101,9 @@ public class tutorialDialogueManager : MonoBehaviour
                 break;
                 case 5:
                 DashTutorialCheck();
+                break;
+                case 6:
+                BrakeTutorialCheck();
                 break;
             }
         }
@@ -201,6 +206,28 @@ public class tutorialDialogueManager : MonoBehaviour
         }
     }
 
+    void BrakeTutorialCheck()
+    {
+        if(Input.GetKeyDown(KeyCode.Space) && shoot.rb.velocity.sqrMagnitude > 10)
+        {
+            currentAimScore++;
+        }
+        if(currentAimScore >= brakeTutorialReq)
+        {
+            if(tutorialScore < 2)
+            {
+                checkmeboxes[tutorialScore].GetComponent<Animator>().SetBool("done", true);
+                tutorialScore++;
+                currentAimScore = 0;
+            }
+            else
+            {
+                checkmeboxes[tutorialScore].GetComponent<Animator>().SetBool("done", true);
+                StartCoroutine(Complete());
+            }
+        }
+    }
+
     public void ScoreBoostSingleTutorialCheck()
     {
         if(cumplete != true)
@@ -231,6 +258,10 @@ public class tutorialDialogueManager : MonoBehaviour
 
     void NextLine()
     {
+        if (helpmeTimer != null)
+        {
+            StopCoroutine(helpmeTimer);
+        }
         helpAnimator.SetBool("help", false);
         if(index < lines.Length - 1)
         {
@@ -250,7 +281,10 @@ public class tutorialDialogueManager : MonoBehaviour
 
     void ExecuteAction()
     {
-        StopCoroutine(needHelpTimer());
+        if (helpmeTimer != null)
+        {
+            StopCoroutine(helpmeTimer);
+        }
         tutorialScore = 0;
         checkmeboxesParent.SetBool("here", true);
         shoot.control = true;
@@ -270,6 +304,16 @@ public class tutorialDialogueManager : MonoBehaviour
             case 5:
             shoot.canDash = true;
             break;
+            case 6:
+            shoot.canBrake = true;
+            shoot.canDash = true;
+            shoot.canSwap = true;
+            gunSwapUI.SetBool("canvasg", true);
+            shoot.canShoot = true;
+            shoot.canKB = false;
+            shoot.canAim = true;
+            shoot.isTutorialReal = false;
+            break;
         }
     }
 
@@ -287,7 +331,7 @@ public class tutorialDialogueManager : MonoBehaviour
         }
         else
         {
-            StartCoroutine(needHelpTimer());
+            helpmeTimer = StartCoroutine(needHelpTimer());
         }
     }
 

@@ -11777,6 +11777,9 @@ MonoBehaviour:
   - dialogueText: fish.
     userInteractable: 1
     id: 0
+  - dialogueText: DASH and then BRAKE by holding Space.
+    userInteractable: 0
+    id: 6
   - dialogueText: i like fish.
     userInteractable: 1
     id: 0
@@ -11902,6 +11905,7 @@ MonoBehaviour:
   shootBasicReq: 3
   shootDummySingleReq: 2
   dashTutorialReq: 2
+  brakeTutorialReq: 1
 --- !u!114 &1718563926
 MonoBehaviour:
   m_ObjectHideFlags: 0
