@@ -228,7 +228,6 @@ public class shooting : MonoBehaviour
               StopCoroutine(canShootTimer());
               brakingIndicator.SetText("STANDSTILL");
               animator.SetBool("isBraking", false);
-              print("sex");
               player.drag = 0.1f;
               canDash = true;
               canShoot = true;

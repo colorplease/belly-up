@@ -7,6 +7,7 @@ public class Dialogue
 {
     public string dialogueText;
     public bool userInteractable;
+    public bool notTest;
     public int id;
 }
 
@@ -30,6 +31,7 @@ public class tutorialDialogueManager : MonoBehaviour
     [SerializeField]Transform fishSpawn;
     [SerializeField]GameObject dummy;
     [SerializeField]Transform[] dummySpawnPoints;
+    [SerializeField]Animator energyUI;
     [Header("Aim Tutorial Reqs")]
     float lastGlockRotation;
     //used for other reqs btw 
@@ -203,6 +205,8 @@ public class tutorialDialogueManager : MonoBehaviour
             }
             else
             {
+                shoot.canDash = false;
+                shoot.arrow.SetActive(false);
                 checkmeboxes[tutorialScore].GetComponent<Animator>().SetBool("done", true);
                 StartCoroutine(Complete());
             }
@@ -251,7 +255,7 @@ public class tutorialDialogueManager : MonoBehaviour
             checkmeboxes[i].GetComponent<Animator>().SetBool("done", false);
         }
         shoot.control = false;
-        shoot.isTutorialReal = false;
+        shoot.isTutorialReal = true;
         NextLine();
     }
     void StartDialogue()
@@ -290,8 +294,11 @@ public class tutorialDialogueManager : MonoBehaviour
             StopCoroutine(helpmeTimer);
         }
         tutorialScore = 0;
-        checkmeboxesParent.SetBool("here", true);
-        shoot.control = true;
+        if(!lines[index].notTest)
+        {
+            checkmeboxesParent.SetBool("here", true);
+            shoot.control = true;
+        }
         switch(lines[index].id)
         {
             case 1:
@@ -309,14 +316,30 @@ public class tutorialDialogueManager : MonoBehaviour
             shoot.canDash = true;
             break;
             case 6:
+            shoot.canDash = true;
             shoot.canBrake = true;
             shoot.isTutorialReal = false;
             break;
             case 7:
+            shoot.canDash = true;
             shoot.isTutorialReal = false;
             shoot.canKB = true;
             break;
+            case 8:
+            StartCoroutine(powerIntro());
+            break;
         }
+    }
+
+    IEnumerator powerIntro()
+    {
+        energyUI.SetBool("powerUp", true);
+        yield return new WaitForSeconds(0.25f);
+        shoot.control = false;
+        shoot.isTutorialReal = false;
+        lines[index].userInteractable = true;
+        helpmeTimer = StartCoroutine(needHelpTimer());
+
     }
 
     IEnumerator TypeLine()

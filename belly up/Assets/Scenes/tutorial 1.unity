@@ -7253,6 +7253,7 @@ GameObject:
   m_Component:
   - component: {fileID: 567775552}
   - component: {fileID: 567775553}
+  - component: {fileID: 567775554}
   m_Layer: 5
   m_Name: PowerBarOpac
   m_TagString: Untagged
@@ -7293,6 +7294,26 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
+--- !u!95 &567775554
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 567775551}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 47f1c2bd98c437c44b509ba30f6a80d8, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
 --- !u!1 &567961875
 GameObject:
   m_ObjectHideFlags: 0
@@ -11776,79 +11797,120 @@ MonoBehaviour:
   lines:
   - dialogueText: fish.
     userInteractable: 1
+    notTest: 0
     id: 0
   - dialogueText: i like fish.
     userInteractable: 1
+    notTest: 0
     id: 0
   - dialogueText: fish no like you.
     userInteractable: 1
+    notTest: 0
     id: 0
   - dialogueText: must learn how to protect you from fish.
     userInteractable: 1
+    notTest: 0
     id: 0
   - dialogueText: AIM by using the mouse.
     userInteractable: 0
+    notTest: 0
     id: 1
   - dialogueText: that is only half the protection.
     userInteractable: 1
+    notTest: 0
     id: 1
   - dialogueText: you must learn how to harm fish.
     userInteractable: 1
+    notTest: 0
     id: 1
   - dialogueText: SHOOT by tapping Left Click on the Mouse.
     userInteractable: 0
+    notTest: 0
     id: 2
   - dialogueText: you cannot harm fish without discipline.
     userInteractable: 1
+    notTest: 0
     id: 2
   - dialogueText: must learn to harm fish accurately.
     userInteractable: 1
+    notTest: 0
     id: 2
   - dialogueText: AIM & SHOOT the toy fish.
     userInteractable: 0
+    notTest: 0
     id: 3
   - dialogueText: that is not your only weapon.
     userInteractable: 1
+    notTest: 0
     id: 3
   - dialogueText: must learn to fire many bullet.
     userInteractable: 1
+    notTest: 0
     id: 3
   - dialogueText: 'SWAP by pressing Tab. '
     userInteractable: 0
+    notTest: 0
     id: 4
   - dialogueText: you cannot stand still while fighting fish.
     userInteractable: 1
+    notTest: 0
     id: 4
   - dialogueText: must learn to move.
     userInteractable: 1
+    notTest: 0
     id: 4
   - dialogueText: 'DASH by holding down Right Click and then Release. '
     userInteractable: 0
+    notTest: 0
     id: 5
   - dialogueText: moving is difficult.
     userInteractable: 1
+    notTest: 0
     id: 5
   - dialogueText: must learn to take deep breathes.
     userInteractable: 1
+    notTest: 0
     id: 5
   - dialogueText: you cannot shoot or dash while doing it.
     userInteractable: 1
+    notTest: 0
     id: 7
   - dialogueText: DASH and then BRAKE by holding Space.
     userInteractable: 0
+    notTest: 0
     id: 6
   - dialogueText: your weapon is barely a friend.
     userInteractable: 1
+    notTest: 0
     id: 5
   - dialogueText: it will push you back.
     userInteractable: 1
+    notTest: 0
     id: 5
   - dialogueText: ACCOUNT for recoil while SHOOTING the toy fish.
     userInteractable: 0
+    notTest: 0
     id: 7
-  - dialogueText: 
+  - dialogueText: shooting is not free.
     userInteractable: 1
+    notTest: 0
     id: 7
+  - dialogueText: it costs energy.
+    userInteractable: 0
+    notTest: 1
+    id: 8
+  - dialogueText: if you want to shoot a lot, do not get hit by fish.
+    userInteractable: 1
+    notTest: 0
+    id: 8
+  - dialogueText: fish go chomcchompa on the energy.
+    userInteractable: 1
+    notTest: 0
+    id: 8
+  - dialogueText: like this.
+    userInteractable: 1
+    notTest: 0
+    id: 8
   textSpeed: 0.025
   shoot: {fileID: 1373237219}
   helpAnimator: {fileID: 1234138917}
@@ -11903,6 +11965,7 @@ MonoBehaviour:
   - {fileID: 1818312968}
   - {fileID: 1439258036}
   - {fileID: 1470211244}
+  energyUI: {fileID: 567775554}
   currentAimScore: 0
   aimReq: 3
   shootBasicReq: 3
