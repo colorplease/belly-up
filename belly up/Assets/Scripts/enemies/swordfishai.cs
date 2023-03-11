@@ -21,6 +21,10 @@ public class swordfishai : MonoBehaviour
      [SerializeField]float minChance;
     [SerializeField]float maxChance = 150;
     [SerializeField]float realChance;
+    [Header("RePos Speed")]
+    [SerializeField]bool rePos;
+    [SerializeField]float rePosSpeed;
+
 
     
 
@@ -37,18 +41,32 @@ public class swordfishai : MonoBehaviour
 
     void swordFish()
     {
-        if (ready)
+        if(!dying)
         {
-            Vector3 dir = amongUs.position - transform.position;
-        float angle = Mathf.Atan2(dir.y,dir.x) * Mathf.Rad2Deg ;
-        transform.rotation = Quaternion.Euler(0, 0, Mathf.SmoothStep(transform.rotation.z, angle, speed * Time.deltaTime ));
+            if(rePos)
+            {
+                Vector3 dir = amongUs.position - transform.position;
+                float angle = Mathf.Atan2(dir.y,dir.x) * Mathf.Rad2Deg;
+                transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(0, 0, angle), Time.deltaTime * rePosSpeed);
+            }
+            if (ready)
+            {
+                Vector3 dir = amongUs.position - transform.position;
+                float angle = Mathf.Atan2(dir.y,dir.x) * Mathf.Rad2Deg;
+                transform.rotation = Quaternion.Euler(0, 0, Mathf.SmoothStep(transform.rotation.z, angle, speed * Time.deltaTime ));
+            }
+            else
+            {
+                if (!launch)
+                {
+                    StartCoroutine(charge());
+                }
+            }
         }
         else
         {
-            if (!launch)
-            {
-                StartCoroutine(charge());
-            }
+            float angle = transform.rotation.z + 50;
+            transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(0, 0, angle), Time.deltaTime * rePosSpeed);
         }
     }
 
@@ -68,6 +86,9 @@ public class swordfishai : MonoBehaviour
     {
         rb.velocity = Vector2.zero;
         launch = true;
+        rePos = true;
+        yield return new WaitForSeconds(1f);
+        rePos = false;
         laser.SetActive(true);
         laser.GetComponent<SpriteRenderer>().color = preFire;
         ready = true;
@@ -107,7 +128,7 @@ public class swordfishai : MonoBehaviour
         Generate();
         StopAllCoroutines();
         laser.SetActive(false);
-        StartCoroutine(FadeTo(0f, 1f));
+        StartCoroutine(FadeTo(0f, 0.5f));
         StartCoroutine(death());
     }
     void Generate()
@@ -147,7 +168,7 @@ public class swordfishai : MonoBehaviour
             {
                 hitting = true;
                 gameManager.hit();
-                StartCoroutine(FadeTo(0f, 1f));
+                StartCoroutine(FadeTo(0f, 0.5f));
                 StartCoroutine(death());
             }
         }

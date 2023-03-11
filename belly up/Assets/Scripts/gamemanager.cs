@@ -69,6 +69,7 @@ public class gamemanager : MonoBehaviour
     bool concern = false;
     [SerializeField]depthMeter DepthMeter;
     [SerializeField]GameObject rocksObjects;
+    public bool canRegen;
     [Header("Difficulty Scaling")]
     int struggleMinSpawnTime;
     int struggleMaxSpawnTime;
@@ -177,7 +178,7 @@ public class gamemanager : MonoBehaviour
                 shooting.PowerUpCollect(1);
                 if (maxPower < 150)
                 {
-                    maxPower += 10;
+                    maxPower += 15;
                     concern = false;
                     speaker3.Stop();
                     lowPower.SetActive(false);
@@ -208,7 +209,7 @@ public class gamemanager : MonoBehaviour
         }
         
         UpdatePower();
-        if(shooting.usedPower)
+        if(shooting.usedPower && !isTutorial)
         {
             switch(shooting.powerType)
             {
@@ -280,7 +281,10 @@ public class gamemanager : MonoBehaviour
         
         if (currentPower < maxPower)
         {
-              currentPower += Time.deltaTime * powerRegenRate;
+            if(canRegen)
+            {
+                currentPower += Time.deltaTime * powerRegenRate;
+            }
         }
         UpdatePower();
         if (Time.time >= currentSpawnTime)
@@ -463,7 +467,7 @@ public class gamemanager : MonoBehaviour
     {
         speaker.PlayOneShot(musics[10]);
         shooting.hit = true;
-        if(!isTutorial)
+        if(shooting.canHurt)
         {
             if (maxPower - 10 > 0)
             {

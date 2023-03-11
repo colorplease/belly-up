@@ -46,6 +46,9 @@ public class tutorialDialogueManager : MonoBehaviour
     public float dashTutorialReq;
     [Header("Brake Tutorial")]
     public float brakeTutorialReq;
+    [Header("Power Intro")]
+    public GameObject tutorialFish;
+    [SerializeField]gamemanager gameManager;
     
 
     // Start is called before the first frame update
@@ -328,11 +331,17 @@ public class tutorialDialogueManager : MonoBehaviour
             case 8:
             StartCoroutine(powerIntro());
             break;
+            case 9:
+            shoot.canHurt = true;
+            Instantiate(tutorialFish, gameManager.spawns[Random.Range(0, gameManager.spawns.Length)].position, Quaternion.identity);
+            StartCoroutine(hitCheckTutorial());
+            break;
         }
     }
 
     IEnumerator powerIntro()
     {
+        gameManager.currentPower = 30;
         energyUI.SetBool("powerUp", true);
         yield return new WaitForSeconds(0.25f);
         shoot.control = false;
@@ -340,6 +349,15 @@ public class tutorialDialogueManager : MonoBehaviour
         lines[index].userInteractable = true;
         helpmeTimer = StartCoroutine(needHelpTimer());
 
+    }
+
+    IEnumerator hitCheckTutorial()
+    {
+        yield return new WaitForSeconds(5);
+        shoot.control = false;
+        shoot.isTutorialReal = false;
+        lines[index].userInteractable = true;
+        helpmeTimer = StartCoroutine(needHelpTimer());
     }
 
     IEnumerator TypeLine()

@@ -259,3 +259,7 @@ MonoBehaviour:
   - {fileID: 8065324607808081258, guid: a79482b0c1b957848bcc954b7a49640a, type: 3}
   splitParticle: {fileID: 893661437352076173, guid: 69188d3054e462a4483e6240573d1270, type: 3}
   time: 0.172
+  minChance: 0
+  maxChance: 150
+  realChance: 0
+  deathSpinSpeed: 10

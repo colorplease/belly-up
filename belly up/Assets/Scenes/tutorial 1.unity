@@ -10029,6 +10029,7 @@ MonoBehaviour:
   canBrake: 0
   canSwap: 0
   canKB: 0
+  canHurt: 0
   brakingIndicator: {fileID: 525339447}
   isTutorialReal: 1
 --- !u!1 &1380652132
@@ -11899,7 +11900,7 @@ MonoBehaviour:
     userInteractable: 0
     notTest: 1
     id: 8
-  - dialogueText: if you want to shoot a lot, do not get hit by fish.
+  - dialogueText: if you like being alive do not get hit by fish.
     userInteractable: 1
     notTest: 0
     id: 8
@@ -11908,9 +11909,25 @@ MonoBehaviour:
     notTest: 0
     id: 8
   - dialogueText: like this.
+    userInteractable: 0
+    notTest: 1
+    id: 9
+  - dialogueText: the fish deplete your Maximum Energy.
     userInteractable: 1
     notTest: 0
-    id: 8
+    id: 9
+  - dialogueText: when your Maximum Energy is zero, you go byebye.
+    userInteractable: 1
+    notTest: 0
+    id: 9
+  - dialogueText: there are ways to fix this.
+    userInteractable: 1
+    notTest: 0
+    id: 9
+  - dialogueText: PICKUP the Power Ups.
+    userInteractable: 0
+    notTest: 0
+    id: 10
   textSpeed: 0.025
   shoot: {fileID: 1373237219}
   helpAnimator: {fileID: 1234138917}
@@ -11972,6 +11989,8 @@ MonoBehaviour:
   shootDummySingleReq: 2
   dashTutorialReq: 2
   brakeTutorialReq: 1
+  tutorialFish: {fileID: 2303219579500583682, guid: bc0ed2a988c3cb942909154a829ed187, type: 3}
+  gameManager: {fileID: 2048835607}
 --- !u!114 &1718563926
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13592,6 +13611,7 @@ MonoBehaviour:
   lowPower: {fileID: 0}
   DepthMeter: {fileID: 0}
   rocksObjects: {fileID: 0}
+  canRegen: 0
   pauseMenu: {fileID: 0}
   isPaused: 0
 --- !u!4 &2048835608

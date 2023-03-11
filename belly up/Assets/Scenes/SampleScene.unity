@@ -8373,14 +8373,6 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5663438294571124305, guid: e0f1e0ca2a70da5408db1a59e3390d32, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5663438294571124305, guid: e0f1e0ca2a70da5408db1a59e3390d32, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 0.4761905
-      objectReference: {fileID: 0}
-    - target: {fileID: 5663438294571124305, guid: e0f1e0ca2a70da5408db1a59e3390d32, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.0062689483
       objectReference: {fileID: 0}
@@ -11458,6 +11450,7 @@ MonoBehaviour:
   canBrake: 1
   canSwap: 1
   canKB: 1
+  canHurt: 1
   brakingIndicator: {fileID: 1303073300}
   isTutorialReal: 0
 --- !u!1 &1401670654
@@ -15292,6 +15285,7 @@ MonoBehaviour:
   lowPower: {fileID: 1365548521}
   DepthMeter: {fileID: 1880033878}
   rocksObjects: {fileID: 396498268}
+  canRegen: 1
   pauseMenu: {fileID: 1262719409}
   isPaused: 0
 --- !u!4 &2048835608

@@ -19,6 +19,7 @@ public class blobfishai : MonoBehaviour
     [SerializeField]float minChance;
     [SerializeField]float maxChance = 150;
     [SerializeField]float realChance;
+    [SerializeField]float deathSpinSpeed;
 
     void Start()
     {
@@ -32,10 +33,18 @@ public class blobfishai : MonoBehaviour
 
     void blobFish()
     {
-        rb.AddRelativeForce(Vector2.right* speed, ForceMode2D.Force);
-        Vector3 dir = amongUs.position - transform.position;
-        float angle = Mathf.Atan2(dir.y,dir.x) * Mathf.Rad2Deg;
-        transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+        if(!dying)
+        {
+            rb.AddRelativeForce(Vector2.right* speed, ForceMode2D.Force);
+            Vector3 dir = amongUs.position - transform.position;
+            float angle = Mathf.Atan2(dir.y,dir.x) * Mathf.Rad2Deg;
+            transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+        }
+        else
+        {
+            float angle = transform.rotation.z + 50;
+            transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(0, 0, angle), Time.deltaTime * deathSpinSpeed);
+        }
     }
 
     public void hit(float dmg)
@@ -71,6 +80,8 @@ public class blobfishai : MonoBehaviour
         if (!dying)
         {
             Generate();
+            PolygonCollider2D collider = GetComponent<PolygonCollider2D>();
+            collider.enabled = false;
             if (dupeNumber < 1)
         {
             for(int i = 0; i<Random.Range(2,4);i++)
@@ -80,7 +91,7 @@ public class blobfishai : MonoBehaviour
         }
         else
         {
-            StartCoroutine(FadeTo(0f, 1f));
+            StartCoroutine(FadeTo(0f, 0.5f));
             StartCoroutine(death());
         }
 
@@ -93,6 +104,7 @@ public class blobfishai : MonoBehaviour
         StartCoroutine(split());
         GameObject splitEffect = Instantiate(splitParticle, transform.position,Quaternion.identity);
         Destroy(splitEffect, 5f);
+        StartCoroutine(FadeTo(0f, 1.25f));
         yield return new WaitForSeconds(0.25f);
         GameObject fish = Instantiate(underlings, new Vector2(transform.position.x + Random.Range(-0.3f, 0.3f), transform.position.y + Random.Range(-0.1f, 0.1f)), Quaternion.identity);
         fish.GetComponent<SpriteRenderer>().enabled = true;
@@ -104,7 +116,7 @@ public class blobfishai : MonoBehaviour
         fish.GetComponent<blobfishai>().HP = 2;
         fish.GetComponent<blobfishai>().speed = speed * Random.Range(2,4);
         fish.GetComponent<blobfishai>().dupeNumber += 1;
-        Destroy(gameObject, 0.1f);
+        Destroy(gameObject, 1f);
     }
 
     IEnumerator split()
@@ -150,8 +162,9 @@ public class blobfishai : MonoBehaviour
             if (!hitting && !dying)
             {
                 hitting = true;
+                dying = true;
                 gameManager.hit();
-                StartCoroutine(FadeTo(0f, 1f));
+                StartCoroutine(FadeTo(0f, 0.5f));
                 StartCoroutine(death());
             }
             

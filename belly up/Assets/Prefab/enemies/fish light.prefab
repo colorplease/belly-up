@@ -111,6 +111,7 @@ MonoBehaviour:
   minChance: 0
   maxChance: 150
   realChance: 0
+  deathSpinSpeed: 10
 --- !u!60 &2303219579500583681
 PolygonCollider2D:
   m_ObjectHideFlags: 0

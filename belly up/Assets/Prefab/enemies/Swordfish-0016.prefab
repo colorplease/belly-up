@@ -137,6 +137,8 @@ MonoBehaviour:
   minChance: 0
   maxChance: 150
   realChance: 0
+  rePos: 0
+  rePosSpeed: 10
 --- !u!60 &5463886328814113131
 PolygonCollider2D:
   m_ObjectHideFlags: 0

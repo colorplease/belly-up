@@ -70,6 +70,7 @@ public class shooting : MonoBehaviour
     public bool canBrake;
     public bool canSwap;
     public bool canKB;
+    public bool canHurt;
     [Header("Braking Indicator")]
     [SerializeField]TextMeshProUGUI brakingIndicator;
     public bool isTutorialReal;

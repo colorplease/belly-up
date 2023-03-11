@@ -17,6 +17,7 @@ public class anglerfishai : MonoBehaviour
     [SerializeField]float minChance;
     [SerializeField]float maxChance = 150;
     [SerializeField]float realChance;
+    [SerializeField]float deathSpinSpeed;
 
 
     void Start()
@@ -32,10 +33,18 @@ public class anglerfishai : MonoBehaviour
 
     void anglerFish()
     {
-        rb.AddRelativeForce(Vector2.right* speed, ForceMode2D.Force);
-        Vector3 dir = amongUs.position - transform.position;
-        float angle = Mathf.Atan2(dir.y,dir.x) * Mathf.Rad2Deg;
-        transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+        if(!dying)
+        {
+            rb.AddRelativeForce(Vector2.right* speed, ForceMode2D.Force);
+            Vector3 dir = amongUs.position - transform.position;
+            float angle = Mathf.Atan2(dir.y,dir.x) * Mathf.Rad2Deg;
+            transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+        }
+        else
+        {
+            float angle = transform.rotation.z + 50;
+            transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(0, 0, angle), Time.deltaTime * deathSpinSpeed);
+        }
     }
 
      IEnumerator flash()
@@ -71,7 +80,7 @@ public class anglerfishai : MonoBehaviour
     {
         dying = true;
         Generate();
-        StartCoroutine(FadeTo(0f, 1f));
+        StartCoroutine(FadeTo(0f, 0.5f));
         StartCoroutine(death());
         StartCoroutine(FadeLight(0f, 1f));
     }
@@ -122,7 +131,7 @@ public class anglerfishai : MonoBehaviour
             {
                 hitting = true;
                 gameManager.hit();
-                StartCoroutine(FadeTo(0f, 1f));
+                StartCoroutine(FadeTo(0f, 0.5f));
                 StartCoroutine(death());
             }
         }
