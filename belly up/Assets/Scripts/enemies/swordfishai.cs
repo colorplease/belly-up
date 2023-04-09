@@ -124,6 +124,7 @@ public class swordfishai : MonoBehaviour
 
     void die()
     {
+        PlayerPrefs.SetInt("murder", PlayerPrefs.GetInt("murder") + 1);
         dying = true;
         Generate();
         StopAllCoroutines();

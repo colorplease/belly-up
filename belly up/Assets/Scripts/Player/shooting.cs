@@ -73,7 +73,10 @@ public class shooting : MonoBehaviour
     public bool canHurt;
     [Header("Braking Indicator")]
     [SerializeField]TextMeshProUGUI brakingIndicator;
+    [Header("Tutorial")]
     public bool isTutorialReal;
+    public bool THISISFRATUTORIAL;
+    public bool myFavPowerUp;
 
     void Start()
     {
@@ -141,7 +144,15 @@ public class shooting : MonoBehaviour
     }
     if (Vector2.Distance(transform.position, outtaHere.position) > maxDistanceTillLoss)
     {
-      out2 = true;
+      if(!isTutorialReal)
+      {
+        out2 = true;
+      }
+      else
+      {
+        rb.velocity = Vector2.zero;      
+        transform.position = new Vector3(outtaHere.position.x, outtaHere.position.y, transform.position.z);
+      }
     }
 
     if (control)
@@ -381,6 +392,10 @@ public class shooting : MonoBehaviour
       break;
     }
     StartCoroutine(powerCollected(currentColor));
+    if (THISISFRATUTORIAL)
+    {
+      myFavPowerUp = true;
+    }
    }
 
    IEnumerator canShootTimer()

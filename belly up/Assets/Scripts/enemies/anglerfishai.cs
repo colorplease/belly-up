@@ -78,6 +78,7 @@ public class anglerfishai : MonoBehaviour
 
     void die()
     {
+        PlayerPrefs.SetInt("murder", PlayerPrefs.GetInt("murder") + 1);
         dying = true;
         Generate();
         StartCoroutine(FadeTo(0f, 0.5f));

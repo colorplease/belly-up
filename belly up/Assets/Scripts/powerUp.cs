@@ -20,8 +20,7 @@ public class powerUp : MonoBehaviour
             gamemanager gameManager = GameObject.FindWithTag("GameManager").GetComponent<gamemanager>();
             gameManager.powerUpType = type;
             gameManager.powerUpUsed = true;
-            StartCoroutine(FadeTo(0f, 0.1f));
-            StartCoroutine(death());
+            Collected();
         }
      }
 
@@ -48,5 +47,11 @@ public class powerUp : MonoBehaviour
     {
         yield return new WaitForSeconds(0.1f);
         Destroy(gameObject);
+    }
+
+    public void Collected()
+    {
+        StartCoroutine(FadeTo(0f, 0.1f));
+        StartCoroutine(death());
     }
 }

@@ -49,6 +49,13 @@ public class tutorialDialogueManager : MonoBehaviour
     [Header("Power Intro")]
     public GameObject tutorialFish;
     [SerializeField]gamemanager gameManager;
+    [Header("Power Up Tutorial")]
+    public GameObject[] powerups;
+    public float powerUpReq;
+    [Header("Final Trial")]
+    public int lastMurderCount;
+    public float murderReq;
+    
     
 
     // Start is called before the first frame update
@@ -113,8 +120,79 @@ public class tutorialDialogueManager : MonoBehaviour
                 case 7:
                 ShootDummySingleTutorialCheck();
                 break;
+                case 10:
+                PowerUpTutorial();
+                break;
+                case 11:
+                FinalTrialTutorial();
+                break;
             }
         }
+    }
+
+    void FinalTrialTutorial()
+    {
+        if(PlayerPrefs.GetInt("murder") > lastMurderCount)
+        {
+            currentAimScore++;
+            lastMurderCount = PlayerPrefs.GetInt("murder");
+        }
+        else
+        {
+            lastMurderCount = PlayerPrefs.GetInt("murder");
+        }
+        if(currentAimScore >= murderReq)
+        {
+            if(tutorialScore < 2)
+            {
+                checkmeboxes[tutorialScore].GetComponent<Animator>().SetBool("done", true);
+                tutorialScore++;
+                currentAimScore = 0;
+            }
+            else
+            {
+                checkmeboxes[tutorialScore].GetComponent<Animator>().SetBool("done", true);
+                StartCoroutine(Complete());
+                tutorialScore = 0;
+            }
+        }
+
+    }
+
+    void PowerUpTutorial()
+    {
+        if(fishSpawn.childCount == 0)
+        {
+            Instantiate(powerups[Random.Range(0, powerups.Length)], dummySpawnPoints[Random.Range(0, dummySpawnPoints.Length)].position, Quaternion.Euler(0f, 0f, Random.Range(0,360)),fishSpawn);
+        }
+        if(shoot.myFavPowerUp)
+        {
+            currentAimScore++;
+            shoot.myFavPowerUp = false;
+        }
+        if(currentAimScore >= powerUpReq)
+        {
+            if(tutorialScore < 2)
+            {
+                checkmeboxes[tutorialScore].GetComponent<Animator>().SetBool("done", true);
+                tutorialScore++;
+                currentAimScore = 0;
+            }
+            else
+            {
+                checkmeboxes[tutorialScore].GetComponent<Animator>().SetBool("done", true);
+                StartCoroutine(powerUpClean());
+                StartCoroutine(Complete());
+            }
+        }
+
+    }
+
+    IEnumerator powerUpClean()
+    {
+        yield return new WaitForSeconds(0.5f);
+        powerUp scam = fishSpawn.GetChild(0).gameObject.GetComponent<powerUp>();
+        scam.Collected();
     }
 
     void AimTutorialCheck()
@@ -335,6 +413,11 @@ public class tutorialDialogueManager : MonoBehaviour
             shoot.canHurt = true;
             Instantiate(tutorialFish, gameManager.spawns[Random.Range(0, gameManager.spawns.Length)].position, Quaternion.identity);
             StartCoroutine(hitCheckTutorial());
+            break;
+            case 11:
+            gameManager.spawning = true;
+            PlayerPrefs.SetInt("murder", 0);
+            lastMurderCount = 0;
             break;
         }
     }
