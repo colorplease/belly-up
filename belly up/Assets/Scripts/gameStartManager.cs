@@ -33,6 +33,24 @@ public class gameStartManager : MonoBehaviour
    [SerializeField]TextMeshProUGUI tipText;
    [Header("Roadmap Menu")]
    [SerializeField]GameObject roadmapMenu;
+   [Header("Tutorial Check")]
+   [SerializeField]TextMeshProUGUI startText;
+   [SerializeField]Button startButton;
+
+   void Start()
+   {
+    if(PlayerPrefs.GetInt("tutorial") == 0)
+    {   
+        startText.color = new Color(0.16f, 0.16f, 0.16f, 0.443f);
+        startButton.interactable = false;
+    }
+    else
+    {
+        startText.color = new Color(0.16f, 0.16f, 0.16f, 1f);
+        startButton.interactable = true;
+    }
+        
+   }
 
    public void StartGame()
    {
@@ -71,6 +89,7 @@ public class gameStartManager : MonoBehaviour
    public void Tutorial()
    {
         StartCoroutine(tutorialIt());
+        PlayerPrefs.SetInt("tutorial", 0);
    }
 
    public void RoadmapMenu()
@@ -89,7 +108,7 @@ public class gameStartManager : MonoBehaviour
    {
      black.SetBool("trans", true);
          yield return new WaitForSeconds(1f);
-        SceneManager.LoadScene(1);
+        SceneManager.LoadScene(3);
    }
 
    IEnumerator startIt()

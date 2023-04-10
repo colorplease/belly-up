@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 public class tutorialManager : MonoBehaviour
 {
     public Animator black;
+    public bool skippers;
 
     // Update is called once per frame
     void Update()
@@ -16,14 +17,24 @@ public class tutorialManager : MonoBehaviour
             {
                 if(Input.GetKey(KeyCode.M))
                 {
-                    StartCoroutine(tutorialIt());
+                    if(skippers)
+                    {
+                        StartCoroutine(leave());
+                    }
+                    else
+                    {
+                        StartCoroutine(tutorialIt());
+                    }
                 }
             }
         }
 
         if(Input.GetKeyDown(KeyCode.Escape))
         {
-            StartCoroutine(leave());
+            if(!skippers)
+            {
+                StartCoroutine(leave());
+            }
         }
     }
      
@@ -34,10 +45,11 @@ public class tutorialManager : MonoBehaviour
         Scene scene = SceneManager.GetActiveScene(); SceneManager.LoadScene(scene.name);
    }
 
-   IEnumerator leave()
+   public IEnumerator leave()
    {
-     black.SetBool("trans", true);
-         yield return new WaitForSeconds(1f);
+        black.SetBool("trans", true);
+        yield return new WaitForSeconds(1f);
+        PlayerPrefs.SetInt("tutorial", 1);
         SceneManager.LoadScene(0);
    }
 }

@@ -148,7 +148,7 @@ public class shooting : MonoBehaviour
       {
         out2 = true;
       }
-      else
+      else if (THISISFRATUTORIAL)
       {
         rb.velocity = Vector2.zero;      
         transform.position = new Vector3(outtaHere.position.x, outtaHere.position.y, transform.position.z);

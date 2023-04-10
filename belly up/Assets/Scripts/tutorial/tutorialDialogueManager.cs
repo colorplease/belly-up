@@ -55,6 +55,7 @@ public class tutorialDialogueManager : MonoBehaviour
     [Header("Final Trial")]
     public int lastMurderCount;
     public float murderReq;
+    public tutorialManager leavers;
     
     
 
@@ -154,6 +155,8 @@ public class tutorialDialogueManager : MonoBehaviour
                 checkmeboxes[tutorialScore].GetComponent<Animator>().SetBool("done", true);
                 StartCoroutine(Complete());
                 tutorialScore = 0;
+                gameManager.spawning = false;
+                PlayerPrefs.SetInt("murder", 0);
             }
         }
 
@@ -416,10 +419,20 @@ public class tutorialDialogueManager : MonoBehaviour
             break;
             case 11:
             gameManager.spawning = true;
+            shoot.isTutorialReal = false;
             PlayerPrefs.SetInt("murder", 0);
             lastMurderCount = 0;
             break;
+            case 12:
+            StartCoroutine(ends());
+            break;
         }
+    }
+
+    IEnumerator ends()
+    {
+        yield return new WaitForSeconds(1);
+        StartCoroutine(leavers.leave());
     }
 
     IEnumerator powerIntro()

@@ -25,7 +25,7 @@ public class gamemanager : MonoBehaviour
     int zone;
     float minSpawnTime;
     float maxSpawnTime;
-    float currentSpawnTime;
+    [SerializeField]float currentSpawnTime;
     public GameObject egg;
     public Transform[] spawns;
     public Slider slider;
@@ -70,6 +70,8 @@ public class gamemanager : MonoBehaviour
     [SerializeField]depthMeter DepthMeter;
     [SerializeField]GameObject rocksObjects;
     public bool canRegen;
+    public int enemyLimit;
+    public int minEnemyCount;
     [Header("Difficulty Scaling")]
     int struggleMinSpawnTime;
     int struggleMaxSpawnTime;
@@ -289,15 +291,20 @@ public class gamemanager : MonoBehaviour
         UpdatePower();
         if (Time.time >= currentSpawnTime)
         {
-            if (spawning)
+            if (spawning && mommy.childCount <= enemyLimit)
             {
                 GameObject spawn = Instantiate(egg, spawns[Random.Range(0, spawns.Length)].position, Quaternion.identity); 
-            spawn.GetComponent<egg>().Spawn(limitManage);
-            currentSpawnTime = Time.time + Random.Range(minSpawnTime, maxSpawnTime);
+                spawn.GetComponent<egg>().Spawn(limitManage);
+                currentSpawnTime = Time.time + Random.Range(minSpawnTime, maxSpawnTime);
             }
         }
         if(!isTutorial)
         {
+            if(mommy.childCount < minEnemyCount)
+            {
+                GameObject spawn = Instantiate(egg, spawns[Random.Range(0, spawns.Length)].position, Quaternion.identity); 
+                spawn.GetComponent<egg>().Spawn(limitManage);
+            }
             switch(currentDepthRounded)
         {
             case 0:
@@ -313,6 +320,7 @@ public class gamemanager : MonoBehaviour
             descentSpeed = 3.33f;
             limitManage = 1;
             shooting.recoveryBounce = 0.5f;
+            minEnemyCount = 0;
             DepthMeter.UpdateDepth(0);
             break;
             case 200:
@@ -330,6 +338,7 @@ public class gamemanager : MonoBehaviour
             descentSpeed = 6.66f;
             shooting.recoveryBounce = 0.6f;
             DepthMeter.UpdateDepth(1);
+            minEnemyCount = 0;
             break;
             case 1000:
             speaker.Stop();
@@ -342,6 +351,7 @@ public class gamemanager : MonoBehaviour
             limitManage = 3;
             shooting.recoveryBounce = 0.7f;
             DepthMeter.UpdateDepth(2);
+            minEnemyCount = 1;
             break;
             case 4000:
             speaker.Stop();
@@ -358,6 +368,7 @@ public class gamemanager : MonoBehaviour
             limitManage = 5;
             shooting.recoveryBounce = 0.8f;
             DepthMeter.UpdateDepth(3);
+            minEnemyCount = 1;
             break;
             case 6000:
             rocksObjects.SetActive(true);
@@ -370,9 +381,11 @@ public class gamemanager : MonoBehaviour
             descentSpeed = 41.11f;
             shooting.recoveryBounce = 0.9f;
             DepthMeter.UpdateDepth(4);
+            minEnemyCount = 2;
             break;
             case 10500:
             speaker.PlayOneShot(musics[20]);
+            minEnemyCount = 2;
             break;
             case 10934:
             zone = 6;

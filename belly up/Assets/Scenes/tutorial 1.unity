@@ -353,7 +353,7 @@ RectTransform:
   - {fileID: 1224453093}
   - {fileID: 757515422}
   m_Father: {fileID: 1560083914}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -9648,6 +9648,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   black: {fileID: 1664465399}
+  skippers: 1
 --- !u!82 &1277180413
 AudioSource:
   m_ObjectHideFlags: 0
@@ -10504,7 +10505,7 @@ RectTransform:
   - {fileID: 1600142738}
   - {fileID: 112405703}
   m_Father: {fileID: 1560083914}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -10563,7 +10564,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1560083914}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -11404,11 +11405,11 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 793830840}
-  - {fileID: 1664465396}
   - {fileID: 96113505}
   - {fileID: 1429556195}
   - {fileID: 1718563924}
   - {fileID: 1406128465}
+  - {fileID: 1664465396}
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -11684,7 +11685,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1560083914}
-  m_RootOrder: 1
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -11951,7 +11952,7 @@ RectTransform:
   - {fileID: 1234138914}
   - {fileID: 470206811}
   m_Father: {fileID: 1560083914}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -11984,10 +11985,6 @@ MonoBehaviour:
     userInteractable: 1
     notTest: 0
     id: 0
-  - dialogueText: SURVIVE.
-    userInteractable: 0
-    notTest: 0
-    id: 11
   - dialogueText: must learn how to protect you from fish.
     userInteractable: 1
     notTest: 0
@@ -12132,6 +12129,14 @@ MonoBehaviour:
     userInteractable: 0
     notTest: 0
     id: 11
+  - dialogueText: good job.
+    userInteractable: 1
+    notTest: 0
+    id: 11
+  - dialogueText: now try the ocean.
+    userInteractable: 0
+    notTest: 1
+    id: 12
   textSpeed: 0.025
   shoot: {fileID: 1373237219}
   helpAnimator: {fileID: 1234138917}
@@ -12201,6 +12206,7 @@ MonoBehaviour:
   powerUpReq: 2
   lastMurderCount: 0
   murderReq: 2
+  leavers: {fileID: 1277180412}
 --- !u!114 &1718563926
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13878,6 +13884,7 @@ MonoBehaviour:
   colors:
   - {r: 0.007843138, g: 0.050980393, b: 0.07058824, a: 1}
   - {r: 0, g: 0, b: 0, a: 1}
+  currentSpawnTime: 0
   egg: {fileID: 7924631146328341277, guid: ce997809a142ccd45b32bc023d56a3ea, type: 3}
   spawns:
   - {fileID: 1987479811}
@@ -13950,6 +13957,7 @@ MonoBehaviour:
   DepthMeter: {fileID: 0}
   rocksObjects: {fileID: 0}
   canRegen: 0
+  enemyLimit: 2
   pauseMenu: {fileID: 0}
   isPaused: 0
 --- !u!4 &2048835608
