@@ -6,6 +6,7 @@ public class rocks : MonoBehaviour
 {
   public float speed;
   [SerializeField]float currentPos;
+  [SerializeField]bool left;
   void OnTriggerEnter2D(Collider2D other)
   {
     if (other.tag == "Boundary")
@@ -16,6 +17,6 @@ public class rocks : MonoBehaviour
 
   void FixedUpdate()
   {
-    transform.position = new Vector2(Mathf.Lerp(transform.position.x, currentPos, Time.fixedDeltaTime*speed), transform.position.y);
+      transform.position = new Vector2(Mathf.Lerp(transform.position.x, currentPos, speed), transform.position.y);
   }
 }

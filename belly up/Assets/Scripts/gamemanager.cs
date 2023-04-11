@@ -393,9 +393,24 @@ public class gamemanager : MonoBehaviour
             textZone.SetText("CHALLENGER DEEP");
             StartCoroutine(boss());
             shooting.recoveryBounce = 0f;
-           Clear();
-           DepthMeter.UpdateDepth(5);
+            spawning = false;
+            Clear();
+            DepthMeter.UpdateDepth(5);
             break;
+        }
+        if(currentDepthRounded >= 10936)
+        {
+            if(spawning == true)
+            {
+                zone = 6;
+                endBack.SetActive(true);
+                textZone.SetText("CHALLENGER DEEP");
+                StartCoroutine(boss());
+                shooting.recoveryBounce = 0f;
+                spawning = false;
+                Clear();
+                DepthMeter.UpdateDepth(5);
+            }
         }
         }
         

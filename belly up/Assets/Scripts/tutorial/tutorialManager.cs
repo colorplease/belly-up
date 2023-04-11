@@ -2,11 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class tutorialManager : MonoBehaviour
 {
     public Animator black;
     public bool skippers;
+    [SerializeField]TextMeshProUGUI murder;
+
+    void Start()
+    {
+        if(!skippers)
+        {
+            murder.SetText("TOTAL FISH MURDERED: " + PlayerPrefs.GetInt("murder").ToString());
+        }
+    }
 
     // Update is called once per frame
     void Update()
@@ -50,6 +60,7 @@ public class tutorialManager : MonoBehaviour
         black.SetBool("trans", true);
         yield return new WaitForSeconds(1f);
         PlayerPrefs.SetInt("tutorial", 1);
+        PlayerPrefs.SetInt("murder", 0);
         SceneManager.LoadScene(0);
    }
 }
