@@ -21,9 +21,11 @@ public class swordfishai : MonoBehaviour
      [SerializeField]float minChance;
     [SerializeField]float maxChance = 150;
     [SerializeField]float realChance;
+    [SerializeField]int difficultyNum;
     [Header("RePos Speed")]
     [SerializeField]bool rePos;
     [SerializeField]float rePosSpeed;
+    
 
 
     
@@ -32,6 +34,11 @@ public class swordfishai : MonoBehaviour
     {
         amongUs = GameObject.FindWithTag("Player").transform;
         gameManager = GameObject.FindWithTag("GameManager").GetComponent<gamemanager>();
+        difficultyNum = gameManager.difficultNumber;
+        float buff = Random.Range(1,(1+(difficultyNum * 0.15f)));
+        transform.localScale = new Vector3(transform.localScale.x * buff, transform.localScale.y * buff, transform.localScale.z);
+        HP += difficultyNum;
+        force += (difficultyNum * 0.2f); 
 
     }
     void FixedUpdate()
@@ -168,7 +175,8 @@ public class swordfishai : MonoBehaviour
             if (!hitting && !dying)
             {
                 hitting = true;
-                //gameManager.hit();
+                float dmgMultiplier = (float)difficultyNum;
+                gameManager.hit((int)Mathf.Round(dmgMultiplier / 2f));
                 StartCoroutine(FadeTo(0f, 0.5f));
                 StartCoroutine(death());
             }

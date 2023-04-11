@@ -26,7 +26,7 @@ public class anglerfishai : MonoBehaviour
         amongUs = GameObject.FindWithTag("Player").transform;
         gameManager = GameObject.FindWithTag("GameManager").GetComponent<gamemanager>();
         difficultyNum = gameManager.difficultNumber;
-        float buff = Random.Range(1,(1+(difficultyNum * 0.35f)));
+        float buff = Random.Range(1,(1+(difficultyNum * 0.15f)));
         transform.localScale = new Vector3(transform.localScale.x * buff, transform.localScale.y * buff, transform.localScale.z);
         HP += difficultyNum;
         speed += (difficultyNum * 0.2f); 
@@ -74,9 +74,9 @@ public class anglerfishai : MonoBehaviour
             rb.velocity = Vector2.zero;
             if (HP <= 0)
             {
-                die();
                 PolygonCollider2D collider = GetComponent<PolygonCollider2D>();
                 collider.enabled = false;
+                die();
                 dying = true;
             }
         }
@@ -139,6 +139,9 @@ public class anglerfishai : MonoBehaviour
                 hitting = true;
                 float dmgMultiplier = (float)difficultyNum;
                 gameManager.hit((int)Mathf.Round(dmgMultiplier / 2f));
+                PolygonCollider2D collider = GetComponent<PolygonCollider2D>();
+                collider.enabled = false;
+                rb.velocity = Vector2.zero;
                 StartCoroutine(FadeTo(0f, 0.5f));
                 StartCoroutine(death());
             }

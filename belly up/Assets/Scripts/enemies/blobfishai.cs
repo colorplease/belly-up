@@ -20,11 +20,19 @@ public class blobfishai : MonoBehaviour
     [SerializeField]float maxChance = 150;
     [SerializeField]float realChance;
     [SerializeField]float deathSpinSpeed;
+    [SerializeField]int difficultyNum;
 
     void Start()
     {
         amongUs = GameObject.FindWithTag("Player").transform;
         gameManager = GameObject.FindWithTag("GameManager").GetComponent<gamemanager>();
+        difficultyNum = gameManager.difficultNumber;
+        if(dupeNumber == 0)
+        {
+            float buff = Random.Range(1,(1+(difficultyNum * 0.2f)));
+            transform.localScale = new Vector3(transform.localScale.x * buff, transform.localScale.y * buff, transform.localScale.z);
+            HP += difficultyNum;
+        }
     }
     void FixedUpdate()
     {
@@ -109,12 +117,13 @@ public class blobfishai : MonoBehaviour
         yield return new WaitForSeconds(0.25f);
         GameObject fish = Instantiate(underlings, new Vector2(transform.position.x + Random.Range(-0.3f, 0.3f), transform.position.y + Random.Range(-0.1f, 0.1f)), Quaternion.identity);
         fish.GetComponent<SpriteRenderer>().enabled = true;
+        float buff = Random.Range(1,(1+(difficultyNum * 0.35f)));
         fish.transform.localScale = new Vector2(transform.localScale.x * 0.75f, transform.localScale.y  * 0.75f);
         Color transparencyFix = new Color(1f, 1f, 1f, 1f);
         fish.GetComponent<SpriteRenderer>().enabled = true;
         fish.GetComponent<PolygonCollider2D>().enabled = true;
         fish.GetComponent<SpriteRenderer>().color = transparencyFix;
-        fish.GetComponent<blobfishai>().HP = 2;
+        fish.GetComponent<blobfishai>().HP = (2 + difficultyNum);
         fish.GetComponent<blobfishai>().speed = speed * Random.Range(2,4);
         fish.GetComponent<blobfishai>().dupeNumber += 1;
         Destroy(gameObject, 1f);
@@ -164,7 +173,8 @@ public class blobfishai : MonoBehaviour
             {
                 hitting = true;
                 dying = true;
-                gameManager.hit();
+                float dmgMultiplier = (float)difficultyNum;
+                gameManager.hit((int)Mathf.Round(dmgMultiplier / 2f));
                 StartCoroutine(FadeTo(0f, 0.5f));
                 StartCoroutine(death());
             }
