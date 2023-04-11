@@ -50,7 +50,7 @@ public class dummyTarget : MonoBehaviour
             {
                 gameManager = GameObject.FindWithTag("GameManager").GetComponent<gamemanager>();
                 hitting = true;
-                gameManager.hit();
+                gameManager.hit(0);
                 StartCoroutine(FadeTo(0f, 1f));
                 StartCoroutine(death());
             }

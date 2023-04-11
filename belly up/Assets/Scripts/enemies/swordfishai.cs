@@ -168,7 +168,7 @@ public class swordfishai : MonoBehaviour
             if (!hitting && !dying)
             {
                 hitting = true;
-                gameManager.hit();
+                //gameManager.hit();
                 StartCoroutine(FadeTo(0f, 0.5f));
                 StartCoroutine(death());
             }

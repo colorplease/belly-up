@@ -6282,6 +6282,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 0
   currentPos: 0
+  left: 0
 --- !u!50 &315145077
 Rigidbody2D:
   serializedVersion: 4
@@ -9027,6 +9028,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   black: {fileID: 1664465399}
+  skippers: 0
+  murder: {fileID: 0}
 --- !u!82 &1277180413
 AudioSource:
   m_ObjectHideFlags: 0
@@ -9519,8 +9522,11 @@ MonoBehaviour:
   canBrake: 1
   canSwap: 1
   canKB: 1
+  canHurt: 0
   brakingIndicator: {fileID: 308148210}
   isTutorialReal: 0
+  THISISFRATUTORIAL: 0
+  myFavPowerUp: 0
 --- !u!1 &1380652132
 GameObject:
   m_ObjectHideFlags: 0
@@ -12127,6 +12133,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 0
   currentPos: 0
+  left: 0
 --- !u!50 &1862177014
 Rigidbody2D:
   serializedVersion: 4
@@ -12657,6 +12664,7 @@ MonoBehaviour:
   colors:
   - {r: 0.007843138, g: 0.050980393, b: 0.07058824, a: 1}
   - {r: 0, g: 0, b: 0, a: 1}
+  currentSpawnTime: 0
   egg: {fileID: 7924631146328341277, guid: ce997809a142ccd45b32bc023d56a3ea, type: 3}
   spawns:
   - {fileID: 1987479811}
@@ -12728,6 +12736,15 @@ MonoBehaviour:
   lowPower: {fileID: 0}
   DepthMeter: {fileID: 0}
   rocksObjects: {fileID: 0}
+  canRegen: 0
+  enemyLimit: 0
+  minEnemyCount: 0
+  numberofHits: 0
+  difficultyMessages: []
+  difficultNumber: 10
+  meesage1: {fileID: 0}
+  meesage2: {fileID: 0}
+  messageHolder: {fileID: 0}
   pauseMenu: {fileID: 0}
   isPaused: 0
 --- !u!4 &2048835608
