@@ -22,6 +22,12 @@ public class swordfishai : MonoBehaviour
     [SerializeField]float maxChance = 150;
     [SerializeField]float realChance;
     [SerializeField]int difficultyNum;
+    [SerializeField]int[] difficultyTierPotentials;
+    [SerializeField]int tier;
+    [SerializeField]int[] weightTable;
+    [SerializeField]int calcVar;
+    [SerializeField]int iterationGenNum;
+    [SerializeField]float fireTime = 2;
     [Header("RePos Speed")]
     [SerializeField]bool rePos;
     [SerializeField]float rePosSpeed;
@@ -34,12 +40,74 @@ public class swordfishai : MonoBehaviour
     {
         amongUs = GameObject.FindWithTag("Player").transform;
         gameManager = GameObject.FindWithTag("GameManager").GetComponent<gamemanager>();
-        difficultyNum = gameManager.difficultNumber;
-        float buff = Random.Range(1,(1+(difficultyNum * 0.15f)));
-        transform.localScale = new Vector3(transform.localScale.x * buff, transform.localScale.y * buff, transform.localScale.z);
-        HP += difficultyNum;
-        force += (difficultyNum * 0.2f); 
+        DifficultySet();
+        TierCalculation();
+    }
+    void TierCalculation()
+    {
+        if(calcVar <= weightTable[iterationGenNum])
+        {
+            tier = difficultyTierPotentials[iterationGenNum];
+            float buff = 1+(tier * 0.075f);
+            transform.localScale = new Vector3(transform.localScale.x * buff, transform.localScale.y * buff, transform.localScale.z);
+            HP += tier * 0.4f;
+            if(fireTime - (tier * 0.075f) > 0.5f)
+            {
+                fireTime -= (tier * 0.075f);
+                force += (tier * 0.075f);
+            } 
+        }
+        else
+        {
+            iterationGenNum++;
+            TierCalculation();
+        }
+    }
 
+    void DifficultySet()
+    {
+        difficultyNum = gameManager.difficultNumber;
+        calcVar = Random.Range(0, 100);
+        switch(difficultyNum)
+        {
+            case 1:
+            for(int i = 0; i < difficultyTierPotentials.Length; i++)
+            {
+                difficultyTierPotentials[i] = 1;
+            }
+            break;
+            case 2:
+            for(int i = 0; i < difficultyTierPotentials.Length; i++)
+            {
+                difficultyTierPotentials[i] = 1;
+            }
+            difficultyTierPotentials[0] = 2;
+            break;
+            case 3:
+            for(int i = 0; i < difficultyTierPotentials.Length; i++)
+            {
+                difficultyTierPotentials[i] = 1;
+            }
+            difficultyTierPotentials[0] = 3;
+            difficultyTierPotentials[1] = 2;
+            break;
+            case 4:
+            for(int i = 0; i < difficultyTierPotentials.Length; i++)
+            {
+                difficultyTierPotentials[i] = 1;
+            }
+            difficultyTierPotentials[0] = 4;
+            difficultyTierPotentials[1] = 3;
+            difficultyTierPotentials[2] = 2;
+            break;
+        }
+        if(difficultyNum >= 5)
+        {
+            for(int i = 0; i < difficultyTierPotentials.Length; i++)
+            {
+                difficultyTierPotentials[i] += (difficultyNum - 4);
+            }
+        }
     }
     void FixedUpdate()
     {
@@ -99,7 +167,7 @@ public class swordfishai : MonoBehaviour
         laser.SetActive(true);
         laser.GetComponent<SpriteRenderer>().color = preFire;
         ready = true;
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(fireTime);
         ready = false;
         rb.constraints = RigidbodyConstraints2D.FreezeRotation;
         laser.GetComponent<SpriteRenderer>().color = Color.white;
@@ -175,8 +243,15 @@ public class swordfishai : MonoBehaviour
             if (!hitting && !dying)
             {
                 hitting = true;
-                float dmgMultiplier = (float)difficultyNum;
-                gameManager.hit((int)Mathf.Round(dmgMultiplier / 2f));
+                if(tier != 1)
+                {
+                    float dmgMultiplier = (float)tier;
+                    gameManager.hit((int)Mathf.Round(dmgMultiplier / 2f));
+                }
+                else
+                {
+                    gameManager.hit(1);
+                }
                 StartCoroutine(FadeTo(0f, 0.5f));
                 StartCoroutine(death());
             }

@@ -13,6 +13,7 @@ public class tutorialBox : MonoBehaviour
     public GameObject blob;
     public SpriteRenderer spriteRenderer;
     public Transform spawn;
+    [SerializeField]int enemyLimit;   
 
     public void Hit()
     {
@@ -33,7 +34,7 @@ public class tutorialBox : MonoBehaviour
             break;
 
             case 1:
-            if(spawn.childCount < 4)
+            if(spawn.childCount < enemyLimit)
             {
                 StartCoroutine(flash());
                 GameObject spawnedFish = Instantiate(lightFish, spawn.position, Quaternion.identity,spawn);
@@ -42,7 +43,7 @@ public class tutorialBox : MonoBehaviour
             break;
 
             case 2:
-            if(spawn.childCount < 4)
+            if(spawn.childCount < enemyLimit)
             {
             StartCoroutine(flash());
             GameObject spawnedFish2 = Instantiate(sword, spawn.position, Quaternion.identity,spawn);
@@ -51,7 +52,7 @@ public class tutorialBox : MonoBehaviour
             break;
 
             case 3:
-            if(spawn.childCount < 4)
+            if(spawn.childCount < enemyLimit)
             {
             StartCoroutine(flash());
             GameObject spawnedFish3 = Instantiate(angler, spawn.position, Quaternion.identity,spawn);
@@ -59,7 +60,7 @@ public class tutorialBox : MonoBehaviour
             break;
 
             case 4:
-            if(spawn.childCount < 4)
+            if(spawn.childCount < enemyLimit)
             {
             StartCoroutine(flash());
             GameObject spawnedFish4 = Instantiate(blob, spawn.position, Quaternion.identity,spawn);

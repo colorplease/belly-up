@@ -378,7 +378,7 @@ MonoBehaviour:
   amongUs: {fileID: 0}
   rb: {fileID: 5326972903601734084}
   speed: 1.5
-  HP: 4
+  HP: 3
   light: {fileID: 5326972902688380986}
   powerUps:
   - {fileID: 8065324607808081258, guid: a79482b0c1b957848bcc954b7a49640a, type: 3}
@@ -389,6 +389,12 @@ MonoBehaviour:
   maxChance: 150
   realChance: 0
   deathSpinSpeed: 10
+  difficultyNum: 0
+  difficultyTierPotentials: 0000000001000000020000000300000004000000
+  tier: 0
+  weightTable: 3200000041000000550000005f00000064000000
+  calcVar: 0
+  iterationGenNum: 0
 --- !u!50 &5326972903601734084
 Rigidbody2D:
   serializedVersion: 4

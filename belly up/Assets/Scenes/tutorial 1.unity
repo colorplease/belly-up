@@ -492,6 +492,7 @@ MonoBehaviour:
   blob: {fileID: 8869147228293718397, guid: bd60cc666804c074a84eef8d14df26ff, type: 3}
   spriteRenderer: {fileID: 101750803}
   spawn: {fileID: 2084412217}
+  enemyLimit: 0
 --- !u!61 &101750802
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -6234,6 +6235,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 0
   currentPos: 0
+  left: 0
 --- !u!50 &315145077
 Rigidbody2D:
   serializedVersion: 4
@@ -8559,6 +8561,7 @@ MonoBehaviour:
   blob: {fileID: 8869147228293718397, guid: bd60cc666804c074a84eef8d14df26ff, type: 3}
   spriteRenderer: {fileID: 971365750}
   spawn: {fileID: 2084412217}
+  enemyLimit: 0
 --- !u!61 &971365749
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -9629,8 +9632,8 @@ Transform:
   m_GameObject: {fileID: 1277180409}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -0.11, y: -4.2285, z: -5.5}
-  m_LocalScale: {x: 10.55, y: 14.286579, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 12.33, y: 16.697016, z: 1.1687204}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 9
@@ -9649,6 +9652,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   black: {fileID: 1664465399}
   skippers: 1
+  murder: {fileID: 0}
 --- !u!82 &1277180413
 AudioSource:
   m_ObjectHideFlags: 0
@@ -10344,6 +10348,7 @@ MonoBehaviour:
   blob: {fileID: 8869147228293718397, guid: bd60cc666804c074a84eef8d14df26ff, type: 3}
   spriteRenderer: {fileID: 1380652134}
   spawn: {fileID: 2084412217}
+  enemyLimit: 0
 --- !u!50 &1380652137
 Rigidbody2D:
   serializedVersion: 4
@@ -10870,6 +10875,7 @@ MonoBehaviour:
   blob: {fileID: 8869147228293718397, guid: bd60cc666804c074a84eef8d14df26ff, type: 3}
   spriteRenderer: {fileID: 1465592666}
   spawn: {fileID: 2084412217}
+  enemyLimit: 0
 --- !u!61 &1465592665
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -11265,15 +11271,15 @@ Camera:
   m_FocalLength: 50
   m_NormalizedViewPortRect:
     serializedVersion: 2
-    x: 0.00125
+    x: 0
     y: 0
-    width: 0.9975
+    width: 1
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 16
   orthographic: 1
-  orthographic size: 2.8301888
+  orthographic size: 3.3962264
   m_Depth: 1
   m_CullingMask:
     serializedVersion: 2
@@ -12570,6 +12576,7 @@ MonoBehaviour:
   blob: {fileID: 8869147228293718397, guid: bd60cc666804c074a84eef8d14df26ff, type: 3}
   spriteRenderer: {fileID: 1733363642}
   spawn: {fileID: 2084412217}
+  enemyLimit: 0
 --- !u!61 &1733363641
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -13237,6 +13244,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 0
   currentPos: 0
+  left: 0
 --- !u!50 &1862177014
 Rigidbody2D:
   serializedVersion: 4
@@ -13958,6 +13966,14 @@ MonoBehaviour:
   rocksObjects: {fileID: 0}
   canRegen: 0
   enemyLimit: 2
+  minEnemyCount: 0
+  numberofHits: 0
+  difficultyMessages: []
+  difficultNumber: 1
+  isEndless: 0
+  meesage1: {fileID: 0}
+  meesage2: {fileID: 0}
+  messageHolder: {fileID: 0}
   pauseMenu: {fileID: 0}
   isPaused: 0
 --- !u!4 &2048835608

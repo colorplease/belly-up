@@ -112,6 +112,12 @@ MonoBehaviour:
   maxChance: 150
   realChance: 0
   deathSpinSpeed: 10
+  difficultyNum: 0
+  difficultyTierPotentials: 0000000001000000020000000300000004000000
+  tier: 0
+  weightTable: 3200000041000000550000005f00000064000000
+  calcVar: 0
+  iterationGenNum: 0
 --- !u!60 &2303219579500583681
 PolygonCollider2D:
   m_ObjectHideFlags: 0

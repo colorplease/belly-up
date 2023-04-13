@@ -364,6 +364,7 @@ MonoBehaviour:
   blob: {fileID: 8869147228293718397, guid: bd60cc666804c074a84eef8d14df26ff, type: 3}
   spriteRenderer: {fileID: 101750803}
   spawn: {fileID: 2084412217}
+  enemyLimit: 8
 --- !u!61 &101750802
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -8468,6 +8469,7 @@ MonoBehaviour:
   blob: {fileID: 8869147228293718397, guid: bd60cc666804c074a84eef8d14df26ff, type: 3}
   spriteRenderer: {fileID: 971365750}
   spawn: {fileID: 2084412217}
+  enemyLimit: 8
 --- !u!61 &971365749
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -9662,6 +9664,7 @@ MonoBehaviour:
   blob: {fileID: 8869147228293718397, guid: bd60cc666804c074a84eef8d14df26ff, type: 3}
   spriteRenderer: {fileID: 1380652134}
   spawn: {fileID: 2084412217}
+  enemyLimit: 8
 --- !u!50 &1380652137
 Rigidbody2D:
   serializedVersion: 4
@@ -10112,6 +10115,7 @@ MonoBehaviour:
   blob: {fileID: 8869147228293718397, guid: bd60cc666804c074a84eef8d14df26ff, type: 3}
   spriteRenderer: {fileID: 1465592666}
   spawn: {fileID: 2084412217}
+  enemyLimit: 8
 --- !u!61 &1465592665
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -11627,6 +11631,7 @@ MonoBehaviour:
   blob: {fileID: 8869147228293718397, guid: bd60cc666804c074a84eef8d14df26ff, type: 3}
   spriteRenderer: {fileID: 1733363642}
   spawn: {fileID: 2084412217}
+  enemyLimit: 0
 --- !u!61 &1733363641
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -12737,7 +12742,7 @@ MonoBehaviour:
   DepthMeter: {fileID: 0}
   rocksObjects: {fileID: 0}
   canRegen: 0
-  enemyLimit: 0
+  enemyLimit: 100
   minEnemyCount: 0
   numberofHits: 0
   difficultyMessages: []

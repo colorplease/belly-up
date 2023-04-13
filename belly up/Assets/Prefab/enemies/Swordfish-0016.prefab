@@ -137,6 +137,12 @@ MonoBehaviour:
   minChance: 0
   maxChance: 150
   realChance: 0
+  difficultyNum: 0
+  difficultyTierPotentials: 0000000001000000020000000300000004000000
+  tier: 0
+  weightTable: 3200000041000000550000005f00000064000000
+  calcVar: 0
+  iterationGenNum: 0
   rePos: 0
   rePosSpeed: 10
 --- !u!60 &5463886328814113131

@@ -79,8 +79,11 @@ public class gamemanager : MonoBehaviour
     int currentMaxSpawnTime;
     [SerializeField]int numberofHits = 0;
     [SerializeField]string[] difficultyMessages;
-    public int difficultNumber;
+    public int difficultNumber = 1;
     bool difficultyRising;
+    public bool isEndless;
+    //adds by 8 for sum reason so heres a value to /8 in an int format
+    int difficultBuffer;
     [SerializeField]TextMeshProUGUI meesage1;
     [SerializeField]TextMeshProUGUI meesage2;
     [SerializeField]GameObject messageHolder;
@@ -430,32 +433,42 @@ public class gamemanager : MonoBehaviour
 
     void DifficultyCheckers()
     {
-        if(difficultNumber <= 10)
+        if(isEndless)
         {
             if(numberofHits == 0)
             {
-                difficultNumber++;
+                if(difficultBuffer >= 8)
+                {
+                    difficultNumber++;
+                    difficultBuffer = 0;
+                }
                 difficultyRising = true;
-                print("sex2");
             }
-            if(PlayerPrefs.GetInt("murder") % 100 == 0)
+            if(PlayerPrefs.GetInt("murder") > (100 * difficultNumber))
             {
-                difficultNumber++;
+                if(difficultBuffer >= 8)
+                {
+                    difficultNumber++;
+                    difficultBuffer = 0;
+                }
                 difficultyRising = true;
-                print("sex2");
             }
             if(maxPower == 150)
             {
-                difficultNumber++;
+                if(difficultBuffer >= 8)
+                {
+                    difficultNumber++;
+                    difficultBuffer = 0;
+                }
                 difficultyRising = true;
-                print("sex3");
+            }
+            
+            if(difficultyRising == true)
+            {
+                StartCoroutine(difficultyUP());
             }
         }
             
-        if(difficultyRising == true)
-        {
-            StartCoroutine(difficultyUP());
-        }
     }
 
     IEnumerator difficultyUP()
@@ -469,7 +482,7 @@ public class gamemanager : MonoBehaviour
         meesage2.SetText(currentMessage);
         yield return new WaitForSeconds(4f);
         messageHolder.SetActive(false);
-        minEnemyCount = (difficultNumber / 8) + 1;
+        minEnemyCount = (difficultNumber) + 1;
 
     }
 
@@ -555,7 +568,7 @@ public class gamemanager : MonoBehaviour
         shooting.hit = true;
         if(shooting.canHurt)
         {
-            if (maxPower - (10 * dmgMultiplier) > 0)
+            if (maxPower - (5 * dmgMultiplier) > 0)
             {
                 maxPower -= (5 * dmgMultiplier);
                 if(maxPower <= 30)

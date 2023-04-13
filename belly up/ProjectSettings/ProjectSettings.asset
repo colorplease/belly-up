@@ -315,6 +315,7 @@ PlayerSettings:
   openGLRequireES32: 0
   m_TemplateCustomTags:
     BACKGROUND: '#000b0e'
+    HIDE_FULL_SCREEN_BUTTON: false
     OPTIMIZE_FOR_PIXEL_ART: true
     SCALE_TO_FIT: true
   mobileMTRendering:

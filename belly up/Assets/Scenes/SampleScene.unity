@@ -1029,7 +1029,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e6bfc548ccc53046aaeb2793c7820a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 0.00015
+  speed: 0.00025
   currentPos: 4.35
   left: 0
 --- !u!212 &235512115
@@ -1655,7 +1655,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e6bfc548ccc53046aaeb2793c7820a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 0.00015
+  speed: 0.00025
   currentPos: -4.62
   left: 0
 --- !u!60 &315145077
@@ -3260,7 +3260,7 @@ ParticleSystem:
     donutRadius: 0.2
     m_Position: {x: 0, y: 0, z: 0}
     m_Rotation: {x: 0, y: 0, z: 0}
-    m_Scale: {x: 10, y: 1, z: 1}
+    m_Scale: {x: 11.8, y: 1, z: 1}
     placementMode: 0
     m_MeshMaterialIndex: 0
     m_MeshNormalOffset: 0
@@ -10142,7 +10142,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e6bfc548ccc53046aaeb2793c7820a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 0.00015
+  speed: 0.00025
   currentPos: -4.62
   left: 0
 --- !u!212 &1081729598
@@ -10287,7 +10287,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e6bfc548ccc53046aaeb2793c7820a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 0.00015
+  speed: 0.00025
   currentPos: 4.35
   left: 0
 --- !u!212 &1094247269
@@ -12673,15 +12673,15 @@ Camera:
   m_FocalLength: 50
   m_NormalizedViewPortRect:
     serializedVersion: 2
-    x: 0.00125
+    x: 0
     y: 0
-    width: 0.9975
+    width: 1
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 16
   orthographic: 1
-  orthographic size: 3.2608695
+  orthographic size: 3.2727273
   m_Depth: 1
   m_CullingMask:
     serializedVersion: 2
@@ -12710,7 +12710,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_ComponentVersion: 1
-  m_AssetsPPU: 46
+  m_AssetsPPU: 55
   m_RefResolutionX: 500
   m_RefResolutionY: 250
   m_CropFrame: 0
@@ -15665,7 +15665,8 @@ MonoBehaviour:
   - bigger fish awaken.
   - your metal begins to rust.
   - fish fish fish.
-  difficultNumber: 0
+  difficultNumber: 1
+  isEndless: 0
   meesage1: {fileID: 940491549}
   meesage2: {fileID: 1365722952}
   messageHolder: {fileID: 987660383}
@@ -16360,8 +16361,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2114076318}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.01999998, y: 0.06, z: 10}
-  m_LocalScale: {x: 0.38598108, y: 0.38598108, z: 1.2866036}
+  m_LocalPosition: {x: 0.001, y: 0.06, z: 10}
+  m_LocalScale: {x: 0.388, y: 0.38, z: 1.2866036}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1554629353}

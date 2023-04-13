@@ -19,18 +19,84 @@ public class anglerfishai : MonoBehaviour
     [SerializeField]float realChance;
     [SerializeField]float deathSpinSpeed;
     [SerializeField]int difficultyNum;
+    [SerializeField]int[] difficultyTierPotentials;
+    [SerializeField]int tier;
+    [SerializeField]int[] weightTable;
+    [SerializeField]int calcVar;
+    [SerializeField]int iterationGenNum;
 
 
     void Start()
     {
         amongUs = GameObject.FindWithTag("Player").transform;
         gameManager = GameObject.FindWithTag("GameManager").GetComponent<gamemanager>();
-        difficultyNum = gameManager.difficultNumber;
-        float buff = Random.Range(1,(1+(difficultyNum * 0.15f)));
-        transform.localScale = new Vector3(transform.localScale.x * buff, transform.localScale.y * buff, transform.localScale.z);
-        HP += difficultyNum;
-        speed += (difficultyNum * 0.2f); 
+        DifficultySet();
+        TierCalculation();
+        
 
+    }
+
+    void TierCalculation()
+    {
+        if(calcVar <= weightTable[iterationGenNum])
+        {
+            tier = difficultyTierPotentials[iterationGenNum];
+            float buff = 1+(tier * 0.075f);
+            transform.localScale = new Vector3(transform.localScale.x * buff, transform.localScale.y * buff, transform.localScale.z);
+            HP += tier * 0.4f;
+            speed += (tier * 0.075f);
+        }
+        else
+        {
+            iterationGenNum++;
+            TierCalculation();
+        }
+    }
+
+    void DifficultySet()
+    {
+        difficultyNum = gameManager.difficultNumber;
+        calcVar = Random.Range(0, 100);
+        switch(difficultyNum)
+        {
+            case 1:
+            for(int i = 0; i < difficultyTierPotentials.Length; i++)
+            {
+                difficultyTierPotentials[i] = 1;
+            }
+            break;
+            case 2:
+            for(int i = 0; i < difficultyTierPotentials.Length; i++)
+            {
+                difficultyTierPotentials[i] = 1;
+            }
+            difficultyTierPotentials[0] = 2;
+            break;
+            case 3:
+            for(int i = 0; i < difficultyTierPotentials.Length; i++)
+            {
+                difficultyTierPotentials[i] = 1;
+            }
+            difficultyTierPotentials[0] = 3;
+            difficultyTierPotentials[1] = 2;
+            break;
+            case 4:
+            for(int i = 0; i < difficultyTierPotentials.Length; i++)
+            {
+                difficultyTierPotentials[i] = 1;
+            }
+            difficultyTierPotentials[0] = 4;
+            difficultyTierPotentials[1] = 3;
+            difficultyTierPotentials[2] = 2;
+            break;
+        }
+        if(difficultyNum >= 5)
+        {
+            for(int i = 0; i < difficultyTierPotentials.Length; i++)
+            {
+                difficultyTierPotentials[i] += (difficultyNum - 4);
+            }
+        }
     }
     void FixedUpdate()
     {
@@ -89,7 +155,7 @@ public class anglerfishai : MonoBehaviour
         Generate();
         StartCoroutine(FadeTo(0f, 0.5f));
         StartCoroutine(death());
-        StartCoroutine(FadeLight(0f, 1f));
+        StartCoroutine(FadeLight(0f, 0.5f));
     }
     void Generate()
    {
@@ -137,12 +203,20 @@ public class anglerfishai : MonoBehaviour
             if (!hitting && !dying)
             {
                 hitting = true;
-                float dmgMultiplier = (float)difficultyNum;
-                gameManager.hit((int)Mathf.Round(dmgMultiplier / 2f));
+                if(tier != 1)
+                {
+                    float dmgMultiplier = (float)tier;
+                    gameManager.hit((int)Mathf.Round(dmgMultiplier / 2f));
+                }
+                else
+                {
+                    gameManager.hit(1);
+                }
                 PolygonCollider2D collider = GetComponent<PolygonCollider2D>();
                 collider.enabled = false;
                 rb.velocity = Vector2.zero;
                 StartCoroutine(FadeTo(0f, 0.5f));
+                StartCoroutine(FadeLight(0f, 0.6f));
                 StartCoroutine(death());
             }
         }
