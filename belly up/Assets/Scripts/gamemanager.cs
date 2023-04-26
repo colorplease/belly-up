@@ -237,18 +237,6 @@ public class gamemanager : MonoBehaviour
                     currentPower -= powerDraw;
                 }
                 break;
-                case 1:
-                powerDraw = 3;
-                if(currentPower - powerDraw < 0)
-                {
-                     shooting.outOfPower = true;
-                }
-                else
-                {
-                    shooting.outOfPower = false;
-                    currentPower -= powerDraw;
-                }
-                break;
                 case 2:
                 powerDraw = 1;
                 if(currentPower - powerDraw < 0)
@@ -262,7 +250,7 @@ public class gamemanager : MonoBehaviour
                 }
                 break;
                 case 3:
-                powerDraw = 10;
+                powerDraw = 15;
                 if(currentPower - powerDraw < 0)
                 {
                     shooting.outOfPower = true;
@@ -557,7 +545,7 @@ public class gamemanager : MonoBehaviour
     void UpdatePower()
     {
         float currentVelocity = 0;
-        slider.value = Mathf.SmoothDamp(slider.value, currentPower, ref currentVelocity, powerLerp * powerDraw * Time.deltaTime);
+        slider.value = Mathf.SmoothDamp(slider.value, currentPower, ref currentVelocity, powerLerp * Time.deltaTime);
         chipSlider.value = Mathf.SmoothDamp(chipSlider.value, maxPower, ref currentVelocity, powerLerp * Time.deltaTime);
     }
 

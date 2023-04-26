@@ -198,8 +198,6 @@ public class shooting : MonoBehaviour
         {
           if(canDash)
           {
-            powerType = 1;
-            usedPower = true;
             if (!outOfPower)
             {
               readyToDash = true;
