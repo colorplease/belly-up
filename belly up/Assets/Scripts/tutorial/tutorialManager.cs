@@ -9,11 +9,17 @@ public class tutorialManager : MonoBehaviour
     public Animator black;
     public bool skippers;
     [SerializeField]TextMeshProUGUI murder;
+    [SerializeField]GameObject[] creditThings;
+    [SerializeField]GameObject currentCreditThing;
+    [SerializeField]GameObject leftArrow, rightArrow;
+    [SerializeField]int index;
 
     void Start()
     {
         if(!skippers)
         {
+            index = creditThings.Length - 1;
+            currentCreditThing = creditThings[creditThings.Length - 1];
             murder.SetText("TOTAL FISH MURDERED: " + PlayerPrefs.GetInt("murder").ToString());
         }
     }
@@ -62,5 +68,45 @@ public class tutorialManager : MonoBehaviour
         PlayerPrefs.SetInt("tutorial", 1);
         PlayerPrefs.SetInt("murder", 0);
         SceneManager.LoadScene(0);
+   }
+
+   public void DecreaseCredits()
+   {
+    if(index - 1 > 0)
+    {
+        index--;
+        currentCreditThing.SetActive(false);
+        currentCreditThing = creditThings[index];
+        currentCreditThing.SetActive(true);
+    }
+    else
+    {
+        index--;
+        currentCreditThing.SetActive(false);
+        currentCreditThing = creditThings[index];
+        currentCreditThing.SetActive(true);
+        rightArrow.SetActive(false);
+        leftArrow.SetActive(true);
+    }
+   }
+
+   public void IncreaseCredits()
+   {
+    if(index + 1 < (creditThings.Length - 1))
+    {
+        index++;
+        currentCreditThing.SetActive(false);
+        currentCreditThing = creditThings[index];
+        currentCreditThing.SetActive(true);
+    }
+    else
+    {
+        index++;
+        currentCreditThing.SetActive(false);
+        currentCreditThing = creditThings[index];
+        currentCreditThing.SetActive(true);
+        leftArrow.SetActive(false);
+        rightArrow.SetActive(true);
+    }
    }
 }
