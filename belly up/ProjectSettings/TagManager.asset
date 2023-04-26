@@ -18,6 +18,7 @@ TagManager:
   - DummyExclude
   - Dummy
   - dialogueManager
+  - bluepikmin
   layers:
   - Default
   - TransparentFX

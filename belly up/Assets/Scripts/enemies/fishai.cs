@@ -211,4 +211,13 @@ public class fishai : MonoBehaviour
             }
         }
      }
+
+     void OnTriggerExit2D(Collider2D other)
+     {
+        if(other.tag == "bluepikmin")
+        {
+                StartCoroutine(FadeTo(0f, 0.5f));
+                StartCoroutine(death());
+        }
+     }
 }

@@ -226,4 +226,14 @@ public class anglerfishai : MonoBehaviour
             }
         }
      }
+
+     void OnTriggerExit2D(Collider2D other)
+     {
+        if(other.tag == "bluepikmin")
+        {
+                StartCoroutine(FadeTo(0f, 0.5f));
+                StartCoroutine(FadeLight(0f, 0.6f));
+                StartCoroutine(death());
+        }
+     }
 }
