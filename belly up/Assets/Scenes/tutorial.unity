@@ -375,7 +375,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0.0016812682, y: -0.0011208281}
@@ -8480,7 +8480,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0.0016812682, y: -0.0011208281}
@@ -9032,6 +9032,11 @@ MonoBehaviour:
   black: {fileID: 1664465399}
   skippers: 0
   murder: {fileID: 0}
+  creditThings: []
+  currentCreditThing: {fileID: 0}
+  leftArrow: {fileID: 0}
+  rightArrow: {fileID: 0}
+  index: 0
 --- !u!82 &1277180413
 AudioSource:
   m_ObjectHideFlags: 0
@@ -9559,7 +9564,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0.0016812682, y: -0.0011208281}
@@ -10126,7 +10131,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0.0016812682, y: -0.0011208281}
@@ -10614,15 +10619,15 @@ Camera:
   m_FocalLength: 50
   m_NormalizedViewPortRect:
     serializedVersion: 2
-    x: 0.00125
+    x: 0
     y: 0
-    width: 0.9975
+    width: 1
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 16
   orthographic: 1
-  orthographic size: 2.8301888
+  orthographic size: 3.3962264
   m_Depth: 1
   m_CullingMask:
     serializedVersion: 2
@@ -11642,7 +11647,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0.0016812682, y: -0.0011208281}
@@ -12746,7 +12751,8 @@ MonoBehaviour:
   minEnemyCount: 0
   numberofHits: 0
   difficultyMessages: []
-  difficultNumber: 10
+  difficultNumber: 1
+  isEndless: 0
   meesage1: {fileID: 0}
   meesage2: {fileID: 0}
   messageHolder: {fileID: 0}

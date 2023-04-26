@@ -12,6 +12,7 @@ public class blobfishai : MonoBehaviour
     public GameObject underlings;
     public int dupeNumber;
     bool dying;
+    [SerializeField]float maxSpeed;
     bool hitting;
     public GameObject[] powerUps;
     public GameObject splitParticle;
@@ -109,6 +110,10 @@ public class blobfishai : MonoBehaviour
     {
         if(!dying)
         {
+            if(rb.velocity.magnitude > maxSpeed)
+            {
+                rb.velocity = Vector2.ClampMagnitude(rb.velocity, maxSpeed);
+            }
             rb.AddRelativeForce(Vector2.right* speed, ForceMode2D.Force);
             Vector3 dir = amongUs.position - transform.position;
             float angle = Mathf.Atan2(dir.y,dir.x) * Mathf.Rad2Deg;
@@ -131,7 +136,7 @@ public class blobfishai : MonoBehaviour
             if (HP <= 0)
             {
                 die();
-                PolygonCollider2D collider = GetComponent<PolygonCollider2D>();
+                PolygonCollider2D collider = GetComponentInChildren<PolygonCollider2D>();
                 collider.enabled = false;
                 dying = true;
             }
@@ -155,7 +160,7 @@ public class blobfishai : MonoBehaviour
         if (!dying)
         {
             Generate();
-            PolygonCollider2D collider = GetComponent<PolygonCollider2D>();
+            PolygonCollider2D collider = GetComponentInChildren<PolygonCollider2D>();
             collider.enabled = false;
             if (dupeNumber < 1)
         {
@@ -187,7 +192,7 @@ public class blobfishai : MonoBehaviour
         fish.transform.localScale = new Vector2(transform.localScale.x * 0.75f, transform.localScale.y  * 0.75f);
         Color transparencyFix = new Color(1f, 1f, 1f, 1f);
         fish.GetComponent<SpriteRenderer>().enabled = true;
-        fish.GetComponent<PolygonCollider2D>().enabled = true;
+        fish.GetComponentInChildren<PolygonCollider2D>().enabled = true;
         fish.GetComponent<SpriteRenderer>().color = transparencyFix;
         fish.GetComponent<blobfishai>().HP = (2 + difficultyNum);
         fish.GetComponent<blobfishai>().speed = speed * Random.Range(2,4);
@@ -231,13 +236,13 @@ public class blobfishai : MonoBehaviour
          }
      }
 
-     void OnTriggerEnter2D(Collider2D other)
+     void OnCollisionEnter2D(Collision2D other)
      {
-        if (other.tag == "Player")
+        if (other.collider.tag == "Player")
         {
-            if (!hitting && !dying)
+            if (!hitting &&  !dying)
             {
-                hitting = true;
+                hitting  = true;
                 if(tier != 1)
                 {
                     float dmgMultiplier = (float)tier;
@@ -250,7 +255,6 @@ public class blobfishai : MonoBehaviour
                 StartCoroutine(FadeTo(0f, 0.5f));
                 StartCoroutine(death());
             }
-            
         }
      }
 }

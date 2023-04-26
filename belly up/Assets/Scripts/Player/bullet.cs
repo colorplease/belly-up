@@ -30,47 +30,47 @@ public class bullet : MonoBehaviour
             Destroy(gameObject, 5f);
         }
     }
-    void OnCollisionEnter2D(Collision2D collision)
+    void OnTriggerEnter2D(Collider2D other)
     {
-        if(collision.collider.tag == "fish")
+        if(other.tag == "fish")
         {
-            fish = collision.gameObject.GetComponent<fishai>();
+            fish = other.gameObject.GetComponentInParent<fishai>();
             fish.hit(damage);
         Destroy(gameObject);
         }
-        if(collision.collider.tag == "swordfish")
+        if(other.tag == "swordfish")
         {
-            fish2= collision.gameObject.GetComponent<swordfishai>();
+            fish2= other.gameObject.GetComponentInParent<swordfishai>();
             fish2.hit(damage);
         Destroy(gameObject);
         }
-        if(collision.collider.tag == "angler")
+        if(other.tag == "angler")
         {
-            fish3= collision.gameObject.GetComponent<anglerfishai>();
+            fish3= other.gameObject.GetComponentInParent<anglerfishai>();
             fish3.hit(damage);
         Destroy(gameObject);
         }
-        if(collision.collider.tag == "blob")
+        if(other.tag == "blob")
         {
-            fish4 = collision.gameObject.GetComponent<blobfishai>();
+            fish4 = other.gameObject.GetComponentInParent<blobfishai>();
             fish4.hit(damage);
             Destroy(gameObject);
         }
-        if (collision.collider.tag == "bag")
+        if (other.tag == "bag")
         {
-            bag = collision.gameObject.GetComponent<plasticbag>();
+            bag = other.gameObject.GetComponentInParent<plasticbag>();
             bag.hit(damage);
             Destroy(gameObject);
         }
-        if(collision.collider.tag == "tutorialBox")
+        if(other.tag == "tutorialBox")
         {
-            tutorialbox = collision.gameObject.GetComponent<tutorialBox>();
+            tutorialbox = other.gameObject.GetComponent<tutorialBox>();
             tutorialbox.Hit();
         Destroy(gameObject, 0.025f);
         }
-        if(collision.collider.tag == "Dummy")
+        if(other.tag == "Dummy")
         {
-            dummytarget = collision.gameObject.GetComponent<dummyTarget>();
+            dummytarget = other.gameObject.GetComponent<dummyTarget>();
             dummytarget.Hit();
             Destroy(gameObject);
         }

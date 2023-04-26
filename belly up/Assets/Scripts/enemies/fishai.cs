@@ -12,6 +12,7 @@ public class fishai : MonoBehaviour
     bool hitting;
      public GameObject[] powerUps;
      bool dying;
+     [SerializeField]float maxSpeed;
     
     [SerializeField]float minChance;
     [SerializeField]float maxChance = 150;
@@ -23,6 +24,7 @@ public class fishai : MonoBehaviour
     [SerializeField]int[] weightTable;
     [SerializeField]int calcVar;
     [SerializeField]int iterationGenNum;
+
 
     void Start()
     {
@@ -104,6 +106,10 @@ public class fishai : MonoBehaviour
     {
         if(!dying)
         {
+            if(rb.velocity.magnitude > maxSpeed)
+            {
+                rb.velocity = Vector2.ClampMagnitude(rb.velocity, maxSpeed);
+            }
             rb.AddRelativeForce(Vector2.right* speed, ForceMode2D.Force);
             Vector3 dir = amongUs.position - transform.position;
             float angle = Mathf.Atan2(dir.y,dir.x) * Mathf.Rad2Deg;
@@ -126,7 +132,7 @@ public class fishai : MonoBehaviour
             if (HP <= 0)
             {
                 die();
-                PolygonCollider2D collider = GetComponent<PolygonCollider2D>();
+                PolygonCollider2D collider = GetComponentInChildren<PolygonCollider2D>();
                 collider.enabled = false;
                 dying = true;
             }
@@ -184,9 +190,9 @@ public class fishai : MonoBehaviour
          }
      }
 
-     void OnTriggerEnter2D(Collider2D other)
+     void OnCollisionEnter2D(Collision2D other)
      {
-        if (other.tag == "Player")
+        if (other.collider.tag == "Player")
         {
             if (!hitting &&  !dying)
             {

@@ -190,7 +190,7 @@ public class swordfishai : MonoBehaviour
             if (HP <= 0)
             {
                 die();
-                PolygonCollider2D collider = GetComponent<PolygonCollider2D>();
+                PolygonCollider2D collider = GetComponentInChildren<PolygonCollider2D>();
                 collider.enabled = false;
                 dying = true;
             }
@@ -236,13 +236,13 @@ public class swordfishai : MonoBehaviour
          }
      }
 
-     void OnTriggerEnter2D(Collider2D other)
+    void OnCollisionEnter2D(Collision2D other)
      {
-        if (other.tag == "Player")
+        if (other.collider.tag == "Player")
         {
-            if (!hitting && !dying)
+            if (!hitting &&  !dying)
             {
-                hitting = true;
+                hitting  = true;
                 if(tier != 1)
                 {
                     float dmgMultiplier = (float)tier;

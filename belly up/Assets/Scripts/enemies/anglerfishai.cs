@@ -14,6 +14,7 @@ public class anglerfishai : MonoBehaviour
     bool hitting;
     public GameObject[] powerUps;
     bool dying;
+    [SerializeField]float maxSpeed;
     [SerializeField]float minChance;
     [SerializeField]float maxChance = 150;
     [SerializeField]float realChance;
@@ -107,6 +108,10 @@ public class anglerfishai : MonoBehaviour
     {
         if(!dying)
         {
+             if(rb.velocity.magnitude > maxSpeed)
+            {
+                rb.velocity = Vector2.ClampMagnitude(rb.velocity, maxSpeed);
+            }
             rb.AddRelativeForce(Vector2.right* speed, ForceMode2D.Force);
             Vector3 dir = amongUs.position - transform.position;
             float angle = Mathf.Atan2(dir.y,dir.x) * Mathf.Rad2Deg;
@@ -140,7 +145,7 @@ public class anglerfishai : MonoBehaviour
             rb.velocity = Vector2.zero;
             if (HP <= 0)
             {
-                PolygonCollider2D collider = GetComponent<PolygonCollider2D>();
+                PolygonCollider2D collider = GetComponentInChildren<PolygonCollider2D>();
                 collider.enabled = false;
                 die();
                 dying = true;
@@ -196,13 +201,13 @@ public class anglerfishai : MonoBehaviour
         }
      }
 
-     void OnTriggerEnter2D(Collider2D other)
+     void OnCollisionEnter2D(Collision2D other)
      {
-        if (other.tag == "Player")
+        if (other.collider.tag == "Player")
         {
-            if (!hitting && !dying)
+            if (!hitting &&  !dying)
             {
-                hitting = true;
+                hitting  = true;
                 if(tier != 1)
                 {
                     float dmgMultiplier = (float)tier;
@@ -212,7 +217,7 @@ public class anglerfishai : MonoBehaviour
                 {
                     gameManager.hit(1);
                 }
-                PolygonCollider2D collider = GetComponent<PolygonCollider2D>();
+                BoxCollider2D collider = GetComponentInParent<BoxCollider2D>();
                 collider.enabled = false;
                 rb.velocity = Vector2.zero;
                 StartCoroutine(FadeTo(0f, 0.5f));
