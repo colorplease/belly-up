@@ -211,8 +211,16 @@ public class shooting : MonoBehaviour
         }
           if(Time.time >= nextTimeToFire && canShoot)
           {
-            Shoot();
-            nextTimeToFire = Time.time + 1f/fireRate;
+            usedPower = true;
+            if(!outOfPower)
+            {
+              Shoot();
+              nextTimeToFire = Time.time + 1f/fireRate;
+            }
+            else
+            {
+              StartCoroutine(gameManager.outOfPowerGents());
+            }
           }
         }
         if(Input.GetKeyDown(dash))

@@ -322,9 +322,10 @@ public class gamemanager : MonoBehaviour
                 }
                 break;
                 case 3:
-                powerDraw = 15;
+                powerDraw = 10;
                 if(currentPower - powerDraw < 0)
                 {
+                    print("yeah");
                     shooting.outOfPower = true;
                 }
                 else
@@ -387,7 +388,7 @@ public class gamemanager : MonoBehaviour
             textZone.SetText("Sunlight Zone");
             zone = 1;
             speaker.Stop();
-            speaker.PlayOneShot(musics[zone-1]);
+            speaker.PlayOneShot(musics[21]);
             minSpawnTime = 3;
             maxSpawnTime = 6;
             currentMinSpawnTime = 3;
@@ -402,8 +403,6 @@ public class gamemanager : MonoBehaviour
             break;
             case 200:
             textZone.SetText("Twilight Zone");
-            speaker.Stop();
-            speaker.PlayOneShot(musics[zone-1]);
             speaker.PlayOneShot(musics[16]);
             minSpawnTime = 2;
             maxSpawnTime = 5;
@@ -420,8 +419,6 @@ public class gamemanager : MonoBehaviour
             DifficultyCheckers();
             break;
             case 1000:
-            speaker.Stop();
-            speaker.PlayOneShot(musics[zone-1]);
             speaker.PlayOneShot(musics[17]);
             textZone.SetText("Midnight Zone");
             zone = 3;
@@ -433,8 +430,6 @@ public class gamemanager : MonoBehaviour
             numberofHits = 0;
             break;
             case 4000:
-            speaker.Stop();
-            speaker.PlayOneShot(musics[zone-1]);
             speaker.PlayOneShot(musics[18]);
             textZone.SetText("Abyssal Zone");
             zone = 4;
@@ -451,8 +446,6 @@ public class gamemanager : MonoBehaviour
             break;
             case 6000:
             rocksObjects.SetActive(true);
-            speaker.Stop();
-            speaker.PlayOneShot(musics[zone-1]);
             speaker.PlayOneShot(musics[19]);
             textZone.SetText("Hadal Zone");
             zone = 5;

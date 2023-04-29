@@ -24956,6 +24956,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: e19fbedda6c84cc4d9243e404a5c0b8b, type: 3}
   - {fileID: 8300000, guid: fdc1a7c87d2b6d148b28b3ce61f6d4bf, type: 3}
   - {fileID: 8300000, guid: de1cd44ea876bf14d9a68b98459f4493, type: 3}
+  - {fileID: 8300000, guid: ae211aa8187a92349970b31d30e32d0a, type: 3}
   speaker: {fileID: 197486059}
   speaker2: {fileID: 1350970319}
   speaker3: {fileID: 629651301}
