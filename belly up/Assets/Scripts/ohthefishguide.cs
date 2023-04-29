@@ -13,6 +13,18 @@ public class ohthefishguide : MonoBehaviour
     [SerializeField]TextMeshProUGUI tagline;
     [SerializeField]GameObject[] data;
     [SerializeField]GameObject[] fish3D;
+    [SerializeField]Animator fishGuide;
+   [SerializeField]GameObject fishGuideObject;
+    public void fishguidefadeout()
+    {
+        fishGuide.SetBool("fishGuide", true);
+        StartCoroutine(fadeouttimer());
+    }
+    IEnumerator fadeouttimer()
+    {
+        yield return new WaitForSeconds(1);
+        fishGuideObject.SetActive(false);
+    }
     public void cod()
     {
         title.SetText("Cod");

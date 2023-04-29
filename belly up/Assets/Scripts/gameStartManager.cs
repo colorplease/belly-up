@@ -36,6 +36,9 @@ public class gameStartManager : MonoBehaviour
    [Header("Tutorial Check")]
    [SerializeField]TextMeshProUGUI startText;
    [SerializeField]Button startButton;
+   [Header("Fish Guide")]
+   [SerializeField]Animator fishGuide;
+   [SerializeField]GameObject fishGuideObject;
 
    void Start()
    {
@@ -48,7 +51,13 @@ public class gameStartManager : MonoBehaviour
     {
         startText.color = new Color(0.16f, 0.16f, 0.16f, 1f);
         startButton.interactable = true;
-    }
+    }    
+   }
+
+   public void FishGuide()
+   {
+        fishGuideObject.SetActive(true);
+        fishGuide.SetBool("fishGuide", false);
         
    }
 
