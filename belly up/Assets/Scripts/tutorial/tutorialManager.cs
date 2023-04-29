@@ -20,7 +20,14 @@ public class tutorialManager : MonoBehaviour
         {
             index = creditThings.Length - 1;
             currentCreditThing = creditThings[creditThings.Length - 1];
-            murder.SetText("TOTAL FISH MURDERED: " + PlayerPrefs.GetInt("murder").ToString());
+            if(PlayerPrefs.GetInt("murder") == 80085)
+            {
+                murder.SetText("you truly have no enemies.");
+            }
+            else
+            {
+                murder.SetText("TOTAL FISH MURDERED: " + PlayerPrefs.GetInt("murder").ToString());
+            }
         }
     }
 

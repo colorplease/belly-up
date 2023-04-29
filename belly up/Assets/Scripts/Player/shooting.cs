@@ -219,11 +219,8 @@ public class shooting : MonoBehaviour
         {
           if(canDash)
           {
-            if (!outOfPower)
-            {
               readyToDash = true;
               arrow.SetActive(true);
-            }
           }
           else if (!isTutorialReal)
           {

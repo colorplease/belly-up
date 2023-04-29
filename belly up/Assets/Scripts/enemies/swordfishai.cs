@@ -31,6 +31,7 @@ public class swordfishai : MonoBehaviour
     [Header("RePos Speed")]
     [SerializeField]bool rePos;
     [SerializeField]float rePosSpeed;
+    float dropPowerChance;
     
 
 
@@ -209,8 +210,16 @@ public class swordfishai : MonoBehaviour
     }
     void Generate()
    {
-    realChance = gameManager.maxPower - 50;
-    var dropPowerChance = Random.Range(minChance, maxChance);
+    if(!gameManager.dylanMode)
+    {
+        realChance = gameManager.maxPower - 50;
+        dropPowerChance = Random.Range(minChance, maxChance);
+    }
+    else
+    {
+        realChance = 125;
+        dropPowerChance = Random.Range(minChance, maxChance);
+    }
     if (dropPowerChance >= realChance)
     {
         var chance = Random.Range(0, 4);

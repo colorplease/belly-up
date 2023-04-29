@@ -30,7 +30,6 @@ public class gamemanager : MonoBehaviour
     public Transform[] spawns;
     public Slider slider;
     public float maxPower;
-    public float maximumMaxPower = 150;
     public float powerRegenRate;
     public float currentPower;
     float powerDraw;
@@ -97,9 +96,13 @@ public class gamemanager : MonoBehaviour
     [SerializeField]TextMeshProUGUI controlReadOut;
     [SerializeField]GameObject secretMenu;
     [SerializeField]TextMeshProUGUI confirmation;
+    public bool dylanMode;
     int scheme = 0;
     public bool isPaused;
-
+    [Header("PowerAttributes")]
+    public float maximumMaxPower = 150;
+    public float maxPowerUpAmount = 15;
+    public float powerUpAmount = 35;
 
     void Start()
     {
@@ -145,7 +148,11 @@ public class gamemanager : MonoBehaviour
         maximumMaxPower = 75;
         minEnemyCount = 10;
         shooting.maxDistanceTillLoss = 7.5f;
+        maxPowerUpAmount = 7.5f;
+        powerUpAmount = 10;
+        dylanMode = true;
         confirmation.SetText("the ocean grows warmer...");
+        speaker2.PlayOneShot(musics[5]);
     }
     public void OpenAcessibilityMenu()
     {
@@ -245,17 +252,17 @@ public class gamemanager : MonoBehaviour
             switch(powerUpType)
             {
                 case 0:
-                speaker.PlayOneShot(musics[7]);
+                speaker2.PlayOneShot(musics[7]);
                 shooting.PowerUpCollect(0);
                 Battery();
                 break;
 
                 case 1:
-                speaker.PlayOneShot(musics[8]);
+                speaker2.PlayOneShot(musics[8]);
                 shooting.PowerUpCollect(1);
                 if (maxPower < 150)
                 {
-                    maxPower += 15;
+                    maxPower += maxPowerUpAmount;
                     concern = false;
                     speaker3.Stop();
                     lowPower.SetActive(false);
@@ -368,8 +375,11 @@ public class gamemanager : MonoBehaviour
         {
             if(mommy.childCount < minEnemyCount)
             {
-                GameObject spawn = Instantiate(egg, spawns[Random.Range(0, spawns.Length)].position, Quaternion.identity); 
-                spawn.GetComponent<egg>().Spawn(limitManage);
+                if(spawning)
+                {
+                    GameObject spawn = Instantiate(egg, spawns[Random.Range(0, spawns.Length)].position, Quaternion.identity); 
+                    spawn.GetComponent<egg>().Spawn(limitManage);
+                }
             }
             switch(currentDepthRounded)
         {
@@ -573,6 +583,10 @@ public class gamemanager : MonoBehaviour
 
     IEnumerator victory()
     {
+        if(dylanMode == true && PlayerPrefs.GetInt("murder") >= 900)
+        {
+            PlayerPrefs.SetInt("murder", 80085);
+        }
         Clear();
         buble.Stop();
         speaker.Stop();
@@ -617,7 +631,7 @@ public class gamemanager : MonoBehaviour
     public void hit(int dmgMultiplier)
     {
         numberofHits++;
-        speaker.PlayOneShot(musics[10]);
+        speaker2.PlayOneShot(musics[10]);
         shooting.hit = true;
         if(shooting.canHurt)
         {
@@ -656,7 +670,7 @@ public class gamemanager : MonoBehaviour
 
     void Battery()
     {
-            currentPower += 35;
+        currentPower += powerUpAmount;
         powerUpUsed = false;
     }
 

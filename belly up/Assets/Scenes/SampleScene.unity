@@ -20495,7 +20495,7 @@ MonoBehaviour:
   smooth: 15
   rb: {fileID: 1664598481}
   death: 0
-  gameManager: {fileID: 0}
+  gameManager: {fileID: 2048835607}
 --- !u!50 &1664598481
 Rigidbody2D:
   serializedVersion: 4
@@ -24912,7 +24912,6 @@ MonoBehaviour:
   - {fileID: 1484731715}
   slider: {fileID: 850432836}
   maxPower: 150
-  maximumMaxPower: 150
   powerRegenRate: 9
   currentPower: 0
   powerLerp: 5
@@ -24995,7 +24994,11 @@ MonoBehaviour:
   controlReadOut: {fileID: 964754686}
   secretMenu: {fileID: 1409530351}
   confirmation: {fileID: 1374733260}
+  dylanMode: 0
   isPaused: 0
+  maximumMaxPower: 150
+  maxPowerUpAmount: 15
+  powerUpAmount: 35
 --- !u!4 &2048835608
 Transform:
   m_ObjectHideFlags: 0

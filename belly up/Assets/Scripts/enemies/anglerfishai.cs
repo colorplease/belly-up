@@ -25,6 +25,7 @@ public class anglerfishai : MonoBehaviour
     [SerializeField]int[] weightTable;
     [SerializeField]int calcVar;
     [SerializeField]int iterationGenNum;
+    float dropPowerChance;
 
 
     void Start()
@@ -164,8 +165,16 @@ public class anglerfishai : MonoBehaviour
     }
     void Generate()
    {
-    realChance = gameManager.maxPower - 50;
-    var dropPowerChance = Random.Range(minChance, maxChance);
+    if(!gameManager.dylanMode)
+    {
+        realChance = gameManager.maxPower - 50;
+        dropPowerChance = Random.Range(minChance, maxChance);
+    }
+    else
+    {
+        realChance = 125;
+        dropPowerChance = Random.Range(minChance, maxChance);
+    }
     if (dropPowerChance >= realChance)
     {
         var chance = Random.Range(0, 4);

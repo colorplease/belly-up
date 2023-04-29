@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class plasticbag : MonoBehaviour
 {
-    public float HP;
+    public float HP = 250;
     public Slider healthBar;
     float currentVelocity;
     public float smooth;
@@ -18,6 +18,14 @@ public class plasticbag : MonoBehaviour
         healthBar.value = HP;
         healthBar.maxValue = HP;
         gameManager = GameObject.FindWithTag("GameManager").GetComponent<gamemanager>();
+    }
+
+    void OnEnable()
+    {
+        if(gameManager.dylanMode)
+        {
+            HP = 1000;
+        }
     }
    
    public void hit(float dmg)
