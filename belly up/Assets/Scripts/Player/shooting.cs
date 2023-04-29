@@ -55,7 +55,7 @@ public class shooting : MonoBehaviour
     [SerializeField]Animator indicatorAnimator;
     [SerializeField]GameObject indicatorText;
     [SerializeField]Animator indicatorTextAnimator;
-    [SerializeField]float maxDistanceTillLoss;
+    public float maxDistanceTillLoss;
     public bool canShoot;
     Animator animator;
     [SerializeField]Color energyUp;
@@ -77,11 +77,32 @@ public class shooting : MonoBehaviour
     public bool isTutorialReal;
     public bool THISISFRATUTORIAL;
     public bool myFavPowerUp;
+    [Header("Chromebook Mode")]
+    [SerializeField]KeyCode dash;
+    [SerializeField]KeyCode shoot;
+    [SerializeField]KeyCode brake;
+    [SerializeField]KeyCode swap;
 
     void Start()
     {
       rd = play.gameObject.GetComponent<Renderer>();
       animator = play.gameObject.GetComponent<Animator>();
+      RegularMode();
+    }
+
+    public void ChromebookMode()
+    {
+      dash = KeyCode.UpArrow;
+      shoot = KeyCode.LeftArrow;
+      swap = KeyCode.DownArrow;
+      brake = KeyCode.RightArrow;
+    }
+    public void RegularMode()
+    {
+      dash = KeyCode.Mouse1;
+      shoot = KeyCode.Mouse0;
+      swap = KeyCode.Tab;
+      brake = KeyCode.Space;
     }
 
     IEnumerator hitAnim()
@@ -157,7 +178,7 @@ public class shooting : MonoBehaviour
 
     if (control)
     {
-      if (Input.GetKeyDown(KeyCode.Tab) && Time.time >= switchRate && canSwap)
+      if (Input.GetKeyDown(swap) && Time.time >= switchRate && canSwap)
         {
 
           switch(gunType)
@@ -179,7 +200,7 @@ public class shooting : MonoBehaviour
           }
           nextTimeToSwitch = Time.time + switchRate;
         }
-        if(Input.GetButtonDown("Fire1"))
+        if(Input.GetKeyDown(shoot))
         {
           if(!canShoot || outOfPower)
         {
@@ -194,7 +215,7 @@ public class shooting : MonoBehaviour
             nextTimeToFire = Time.time + 1f/fireRate;
           }
         }
-        if(Input.GetMouseButtonDown(1))
+        if(Input.GetKeyDown(dash))
         {
           if(canDash)
           {
@@ -209,7 +230,7 @@ public class shooting : MonoBehaviour
             StartCoroutine(gameManager.outOfPowerGents());
           }   
         }
-        if (Input.GetMouseButtonUp(1))
+        if (Input.GetKeyUp(dash))
         {
           arrow.SetActive(false);
           if (readyToDash == true)
@@ -218,7 +239,7 @@ public class shooting : MonoBehaviour
             readyToDash = false;
           } 
         }
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(brake))
         {
           Brake();
           if(outOfPower || !canBrake)
@@ -229,7 +250,7 @@ public class shooting : MonoBehaviour
             }
           }
         }
-        if(!Input.GetKey(KeyCode.Space))
+        if(!Input.GetKey(brake))
         {
           if(!canDash || !canShoot)
           {

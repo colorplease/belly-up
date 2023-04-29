@@ -30,6 +30,7 @@ public class gamemanager : MonoBehaviour
     public Transform[] spawns;
     public Slider slider;
     public float maxPower;
+    public float maximumMaxPower = 150;
     public float powerRegenRate;
     public float currentPower;
     float powerDraw;
@@ -89,6 +90,14 @@ public class gamemanager : MonoBehaviour
     [SerializeField]GameObject messageHolder;
     [Header("Pause")]
     [SerializeField]GameObject pauseMenu;
+    [SerializeField]GameObject pauseMenuMenu;
+    [SerializeField]GameObject accessMenu;
+    [SerializeField]GameObject controlMenu;
+    [SerializeField]TextMeshProUGUI controlScheme;
+    [SerializeField]TextMeshProUGUI controlReadOut;
+    [SerializeField]GameObject secretMenu;
+    [SerializeField]TextMeshProUGUI confirmation;
+    int scheme = 0;
     public bool isPaused;
 
 
@@ -124,12 +133,68 @@ public class gamemanager : MonoBehaviour
 
     public void UnPause()
     {
-            Time.timeScale = 1;
+        Time.timeScale = 1;
         pauseMenu.SetActive(false);
        speaker.UnPause();
        speaker2.UnPause();
        speaker3.UnPause();
        isPaused = false;
+    }
+    public void DylanMode()
+    {
+        maximumMaxPower = 75;
+        minEnemyCount = 10;
+        shooting.maxDistanceTillLoss = 7.5f;
+        confirmation.SetText("the ocean grows warmer...");
+    }
+    public void OpenAcessibilityMenu()
+    {
+        pauseMenuMenu.SetActive(false);
+        accessMenu.SetActive(true);
+    }
+    
+    public void CloseAcessibilityMenu()
+    {
+        pauseMenuMenu.SetActive(true);
+        accessMenu.SetActive(false);
+    }
+    public void OpenControlMenu()
+    {
+        controlMenu.SetActive(true);
+        accessMenu.SetActive(false);
+    }
+    public void CloseControlMenu()
+    {
+        controlMenu.SetActive(false);
+        accessMenu.SetActive(true);
+    }
+    public void hushhushsecret()
+    {
+        accessMenu.SetActive(false);
+        secretMenu.SetActive(true);
+    }
+    public void byebyeSecret()
+    {
+        accessMenu.SetActive(true);
+        secretMenu.SetActive(false);
+        confirmation.SetText(" ");
+    }
+    public void ControlSwappers()
+    {
+        if(scheme == 0)
+        {
+            controlScheme.SetText("Current Controls: Mouseless");
+            controlReadOut.SetText("CURRENT CONTROLS: \n\nDASH - UP ARROW\nBRAKE - RIGHT ARROW\nSHOOT - LEFT ARROW\nSWAP - DOWN ARROW");
+            shooting.ChromebookMode();
+            scheme = 1;
+        }
+        else
+        {
+            controlScheme.SetText("Current Controls: Mouseful");
+            shooting.RegularMode();
+            controlReadOut.SetText("CURRENT CONTROLS: \n\nDASH - RIGHT CLICK\nBRAKE - SPACE\nSHOOT - LEFT CLICK\nSWAP - TAB");
+            scheme = 0;
+        }
     }
 
     void Pause()
@@ -159,7 +224,7 @@ public class gamemanager : MonoBehaviour
             }
         }
         currentPower = Mathf.Clamp(currentPower, 0, maxPower);
-        maxPower = Mathf.Clamp(maxPower, 0, 150);
+        maxPower = Mathf.Clamp(maxPower, 0, maximumMaxPower);
 
         if(!isTutorial)
 
@@ -321,7 +386,7 @@ public class gamemanager : MonoBehaviour
             descentSpeed = 3.33f;
             limitManage = 1;
             shooting.recoveryBounce = 0.5f;
-            minEnemyCount = 0;
+            minEnemyCount += 0;
             DepthMeter.UpdateDepth(0);
             numberofHits = 1;
             break;
@@ -340,7 +405,7 @@ public class gamemanager : MonoBehaviour
             descentSpeed = 6.66f;
             shooting.recoveryBounce = 0.6f;
             DepthMeter.UpdateDepth(1);
-            minEnemyCount = 0;
+            minEnemyCount += 0;
             numberofHits = 2;
             DifficultyCheckers();
             break;
