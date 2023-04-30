@@ -12,8 +12,6 @@ using UnityEngine.UI;
 
 public class gamemanager : MonoBehaviour
 {
-    public float scrollSpeed;
-    public float descentSpeed;
     public Transform cameraTransform;
     public float currentDepth;
     float currentDepthRounded;
@@ -30,7 +28,6 @@ public class gamemanager : MonoBehaviour
     public Transform[] spawns;
     public Slider slider;
     public float maxPower;
-    public float powerRegenRate;
     public float currentPower;
     float powerDraw;
     public float powerLerp;
@@ -64,6 +61,7 @@ public class gamemanager : MonoBehaviour
     public GameObject endText1;
     public GameObject endText2;
     public GameObject endBack;
+    public TextMeshProUGUI totalfishmurderedondeath;
     public bool isTutorial;
     public GameObject lowPower;
     bool concern = false;
@@ -77,16 +75,6 @@ public class gamemanager : MonoBehaviour
     int struggleMaxSpawnTime;
     int currentMinSpawnTime;
     int currentMaxSpawnTime;
-    [SerializeField]int numberofHits = 0;
-    [SerializeField]string[] difficultyMessages;
-    public int difficultNumber = 1;
-    bool difficultyRising;
-    public bool isEndless;
-    //adds by 8 for sum reason so heres a value to /8 in an int format
-    int difficultBuffer;
-    [SerializeField]TextMeshProUGUI meesage1;
-    [SerializeField]TextMeshProUGUI meesage2;
-    [SerializeField]GameObject messageHolder;
     [Header("Pause")]
     [SerializeField]GameObject pauseMenu;
     [SerializeField]GameObject pauseMenuMenu;
@@ -100,9 +88,14 @@ public class gamemanager : MonoBehaviour
     int scheme = 0;
     public bool isPaused;
     [Header("PowerAttributes")]
+    public bool isEndless;
     public float maximumMaxPower = 150;
     public float maxPowerUpAmount = 15;
     public float powerUpAmount = 35;
+    public float scrollSpeed;
+    public float descentSpeed;
+    public float powerRegenRate;
+    public float damageMultiplier;
 
     void Start()
     {
@@ -190,8 +183,8 @@ public class gamemanager : MonoBehaviour
     {
         if(scheme == 0)
         {
-            controlScheme.SetText("Current Controls: Mouseless");
-            controlReadOut.SetText("CURRENT CONTROLS: \n\nDASH - UP ARROW\nBRAKE - RIGHT ARROW\nSHOOT - LEFT ARROW\nSWAP - DOWN ARROW");
+            controlScheme.SetText("Current Controls: Trackpad");
+            controlReadOut.SetText("CURRENT CONTROLS: \n\nDASH - UP ARROW\nBRAKE - RIGHT ARROW\nSHOOT - LEFT ARROW\nSWAP - DOWN ARROW\nAIM - TRACKPAD");
             shooting.ChromebookMode();
             scheme = 1;
         }
@@ -199,7 +192,7 @@ public class gamemanager : MonoBehaviour
         {
             controlScheme.SetText("Current Controls: Mouseful");
             shooting.RegularMode();
-            controlReadOut.SetText("CURRENT CONTROLS: \n\nDASH - RIGHT CLICK\nBRAKE - SPACE\nSHOOT - LEFT CLICK\nSWAP - TAB");
+            controlReadOut.SetText("CURRENT CONTROLS: \n\nDASH - RIGHT CLICK\nBRAKE - SPACE\nSHOOT - LEFT CLICK\nSWAP - TAB\nAIM - MOUSE");
             scheme = 0;
         }
     }
@@ -219,6 +212,10 @@ public class gamemanager : MonoBehaviour
 
     void Update()
     {
+        if(!spawning)
+        {
+            Clear();
+        }
         if(Input.GetKeyDown(KeyCode.Escape))
         {
             if(!isPaused)
@@ -325,7 +322,6 @@ public class gamemanager : MonoBehaviour
                 powerDraw = 10;
                 if(currentPower - powerDraw < 0)
                 {
-                    print("yeah");
                     shooting.outOfPower = true;
                 }
                 else
@@ -349,12 +345,15 @@ public class gamemanager : MonoBehaviour
              text.text = currentDepthRounded.ToString() + "m";
         }
     }
+    IEnumerator songStart()
+    {
+        speaker.Stop();
+        yield return new WaitForSeconds(1);
+        speaker.Stop();
+        speaker.PlayOneShot(musics[21]);
+    }
     void FixedUpdate()
     {
-        if(currentDepth % 700 == 0)
-        {
-            DifficultyCheckers();
-        }
         if (currentPower < maxPower)
         {
             if(canRegen)
@@ -388,7 +387,7 @@ public class gamemanager : MonoBehaviour
             textZone.SetText("Sunlight Zone");
             zone = 1;
             speaker.Stop();
-            speaker.PlayOneShot(musics[21]);
+            StartCoroutine(songStart());
             minSpawnTime = 3;
             maxSpawnTime = 6;
             currentMinSpawnTime = 3;
@@ -397,9 +396,7 @@ public class gamemanager : MonoBehaviour
             descentSpeed = 3.33f;
             limitManage = 1;
             shooting.recoveryBounce = 0.5f;
-            minEnemyCount += 0;
             DepthMeter.UpdateDepth(0);
-            numberofHits = 1;
             break;
             case 200:
             textZone.SetText("Twilight Zone");
@@ -414,9 +411,6 @@ public class gamemanager : MonoBehaviour
             descentSpeed = 6.66f;
             shooting.recoveryBounce = 0.6f;
             DepthMeter.UpdateDepth(1);
-            minEnemyCount += 0;
-            numberofHits = 2;
-            DifficultyCheckers();
             break;
             case 1000:
             speaker.PlayOneShot(musics[17]);
@@ -427,7 +421,6 @@ public class gamemanager : MonoBehaviour
             limitManage = 3;
             shooting.recoveryBounce = 0.7f;
             DepthMeter.UpdateDepth(2);
-            numberofHits = 0;
             break;
             case 4000:
             speaker.PlayOneShot(musics[18]);
@@ -442,7 +435,6 @@ public class gamemanager : MonoBehaviour
             limitManage = 5;
             shooting.recoveryBounce = 0.8f;
             DepthMeter.UpdateDepth(3);
-            numberofHits = 0;
             break;
             case 6000:
             rocksObjects.SetActive(true);
@@ -453,7 +445,6 @@ public class gamemanager : MonoBehaviour
             descentSpeed = 41.11f;
             shooting.recoveryBounce = 0.9f;
             DepthMeter.UpdateDepth(4);
-            numberofHits = 0;
             break;
             case 10500:
             speaker.PlayOneShot(musics[20]);
@@ -485,61 +476,6 @@ public class gamemanager : MonoBehaviour
         }
         }
         
-    }
-
-    void DifficultyCheckers()
-    {
-        if(isEndless)
-        {
-            if(numberofHits == 0)
-            {
-                if(difficultBuffer >= 8)
-                {
-                    difficultNumber++;
-                    difficultBuffer = 0;
-                }
-                difficultyRising = true;
-            }
-            if(PlayerPrefs.GetInt("murder") > (100 * difficultNumber))
-            {
-                if(difficultBuffer >= 8)
-                {
-                    difficultNumber++;
-                    difficultBuffer = 0;
-                }
-                difficultyRising = true;
-            }
-            if(maxPower == 150)
-            {
-                if(difficultBuffer >= 8)
-                {
-                    difficultNumber++;
-                    difficultBuffer = 0;
-                }
-                difficultyRising = true;
-            }
-            
-            if(difficultyRising == true)
-            {
-                StartCoroutine(difficultyUP());
-            }
-        }
-            
-    }
-
-    IEnumerator difficultyUP()
-    {
-        yield return new WaitForSeconds(1f);
-        difficultyRising = false;
-        speaker.PlayOneShot(musics[5], 0.1f);
-        messageHolder.SetActive(true);
-        string currentMessage = difficultyMessages[Random.Range(0, difficultyMessages.Length)];
-        meesage1.SetText(currentMessage);
-        meesage2.SetText(currentMessage);
-        yield return new WaitForSeconds(4f);
-        messageHolder.SetActive(false);
-        minEnemyCount = (difficultNumber) + 1;
-
     }
 
     IEnumerator boss()
@@ -601,7 +537,9 @@ public class gamemanager : MonoBehaviour
 
     void Clear()
     {
-        int i = 0;
+        if(mommy.childCount > 0)
+        {
+            int i = 0;
             GameObject[] allChildren = new GameObject[mommy.childCount];
             foreach(Transform child in mommy)
             {
@@ -612,6 +550,7 @@ public class gamemanager : MonoBehaviour
             {
                 DestroyImmediate(child.gameObject);
             }
+        }
     }
 
     void UpdatePower()
@@ -623,14 +562,13 @@ public class gamemanager : MonoBehaviour
 
     public void hit(int dmgMultiplier)
     {
-        numberofHits++;
         speaker2.PlayOneShot(musics[10]);
         shooting.hit = true;
         if(shooting.canHurt)
         {
-            if (maxPower - (5 * dmgMultiplier) > 0)
+            if (maxPower - (5 * dmgMultiplier * damageMultiplier) > 0)
             {
-                maxPower -= (5 * dmgMultiplier);
+                maxPower -= (5 * dmgMultiplier * damageMultiplier);
                 if(maxPower <= 30)
                 {
                     if(!concern)
@@ -678,19 +616,20 @@ public class gamemanager : MonoBehaviour
              realUi.alpha  = Mathf.Lerp(realUi.alpha, 0, Time.deltaTime * 5);
              GameOver.gameObject.SetActive(true);
             GameOver.alpha  = Mathf.Lerp(GameOver.alpha, 1, Time.deltaTime * 5);
+            totalfishmurderedondeath.SetText("TOTAL FISH MURDERED: " + PlayerPrefs.GetInt("murder").ToString());
         }
     }
 
     public void Reload()
     {
        StartCoroutine(reloadAnime());
-       PlayerPrefs.SetInt("murder", 0);
     }
 
     IEnumerator reloadAnime()
     {
          black.SetBool("trans", true);
          yield return new WaitForSeconds(1f);
+         PlayerPrefs.SetInt("murder", 0);
         Scene scene = SceneManager.GetActiveScene(); SceneManager.LoadScene(scene.name);
     }
 

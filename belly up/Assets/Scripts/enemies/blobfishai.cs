@@ -21,90 +21,16 @@ public class blobfishai : MonoBehaviour
     [SerializeField]float maxChance = 150;
     [SerializeField]float realChance;
     [SerializeField]float deathSpinSpeed;
-    [SerializeField]int difficultyNum;
-    [SerializeField]int[] difficultyTierPotentials;
-    [SerializeField]int tier;
-    [SerializeField]int[] weightTable;
-    [SerializeField]int calcVar;
-    [SerializeField]int iterationGenNum;
     float dropPowerChance;
 
     void Start()
     {
         amongUs = GameObject.FindWithTag("Player").transform;
         gameManager = GameObject.FindWithTag("GameManager").GetComponent<gamemanager>();
-        if(dupeNumber == 0)
-        {
-            DifficultySet();
-            TierCalculation();
-        }
     }
     void FixedUpdate()
     {
         blobFish();
-    }
-
-    void TierCalculation()
-    {
-        if(calcVar <= weightTable[iterationGenNum])
-        {
-            tier = difficultyTierPotentials[iterationGenNum];
-            float buff = 1+(tier * 0.075f);
-            transform.localScale = new Vector3(transform.localScale.x * buff, transform.localScale.y * buff, transform.localScale.z);
-            HP += tier * 0.4f;
-            speed += (tier * 0.075f);
-        }
-        else
-        {
-            iterationGenNum++;
-            TierCalculation();
-        }
-    }
-
-    void DifficultySet()
-    {
-        difficultyNum = gameManager.difficultNumber;
-        calcVar = Random.Range(0, 100);
-        switch(difficultyNum)
-        {
-            case 1:
-            for(int i = 0; i < difficultyTierPotentials.Length; i++)
-            {
-                difficultyTierPotentials[i] = 1;
-            }
-            break;
-            case 2:
-            for(int i = 0; i < difficultyTierPotentials.Length; i++)
-            {
-                difficultyTierPotentials[i] = 1;
-            }
-            difficultyTierPotentials[0] = 2;
-            break;
-            case 3:
-            for(int i = 0; i < difficultyTierPotentials.Length; i++)
-            {
-                difficultyTierPotentials[i] = 1;
-            }
-            difficultyTierPotentials[0] = 3;
-            difficultyTierPotentials[1] = 2;
-            break;
-            case 4:
-            for(int i = 0; i < difficultyTierPotentials.Length; i++)
-            {
-                difficultyTierPotentials[i] = 1;
-            }
-            difficultyTierPotentials[0] = 4;
-            difficultyTierPotentials[1] = 3;
-            difficultyTierPotentials[2] = 2;
-            break;
-        }
-        if(difficultyNum >= 5)
-        {
-            for(int i = 0; i < difficultyTierPotentials.Length; i++)
-            {
-                difficultyTierPotentials[i] += (difficultyNum - 4);
-            }
-        }
     }
 
     void blobFish()
@@ -197,13 +123,12 @@ public class blobfishai : MonoBehaviour
         yield return new WaitForSeconds(0.25f);
         GameObject fish = Instantiate(underlings, new Vector2(transform.position.x + Random.Range(-0.3f, 0.3f), transform.position.y + Random.Range(-0.1f, 0.1f)), Quaternion.identity);
         fish.GetComponent<SpriteRenderer>().enabled = true;
-        float buff = Random.Range(1,(1+(difficultyNum * 0.35f)));
         fish.transform.localScale = new Vector2(transform.localScale.x * 0.75f, transform.localScale.y  * 0.75f);
         Color transparencyFix = new Color(1f, 1f, 1f, 1f);
         fish.GetComponent<SpriteRenderer>().enabled = true;
         fish.GetComponentInChildren<PolygonCollider2D>().enabled = true;
         fish.GetComponent<SpriteRenderer>().color = transparencyFix;
-        fish.GetComponent<blobfishai>().HP = (2 + difficultyNum);
+        fish.GetComponent<blobfishai>().HP = Random.Range(1, 3);
         fish.GetComponent<blobfishai>().speed = speed * Random.Range(2,4);
         fish.GetComponent<blobfishai>().dupeNumber += 1;
         Destroy(gameObject, 1f);
@@ -252,15 +177,7 @@ public class blobfishai : MonoBehaviour
             if (!hitting &&  !dying)
             {
                 hitting  = true;
-                if(tier != 1)
-                {
-                    float dmgMultiplier = (float)tier;
-                    gameManager.hit((int)Mathf.Round(dmgMultiplier / 2f));
-                }
-                else
-                {
-                    gameManager.hit(1);
-                }
+                gameManager.hit(1);
                 StartCoroutine(FadeTo(0f, 0.5f));
                 StartCoroutine(death());
             }
