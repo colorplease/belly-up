@@ -26,7 +26,6 @@ public class anglerfishai : MonoBehaviour
     {
         amongUs = GameObject.FindWithTag("Player").transform;
         gameManager = GameObject.FindWithTag("GameManager").GetComponent<gamemanager>();
-        
 
     }
     void FixedUpdate()
@@ -116,6 +115,7 @@ public class anglerfishai : MonoBehaviour
         rb.velocity = Vector2.zero;
         yield return new WaitForSeconds(1);
         Destroy(gameObject);
+        gameManager.anglerSpawns--;
     }
 
     IEnumerator FadeTo(float aValue, float aTime)

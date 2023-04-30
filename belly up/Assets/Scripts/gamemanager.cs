@@ -68,8 +68,8 @@ public class gamemanager : MonoBehaviour
     [SerializeField]depthMeter DepthMeter;
     [SerializeField]GameObject rocksObjects;
     public bool canRegen;
-    public int enemyLimit;
-    public int minEnemyCount;
+    public int howManyAnglers;
+    public int anglerSpawns;
     [Header("Difficulty Scaling")]
     int struggleMinSpawnTime;
     int struggleMaxSpawnTime;
@@ -96,6 +96,8 @@ public class gamemanager : MonoBehaviour
     public float descentSpeed;
     public float powerRegenRate;
     public float damageMultiplier;
+    public int minEnemyCount;
+    public int enemyLimit;
 
     void Start()
     {
@@ -354,6 +356,8 @@ public class gamemanager : MonoBehaviour
     }
     void FixedUpdate()
     {
+        anglerfishai[] anglers = mommy.GetComponentsInChildren<anglerfishai>();
+        howManyAnglers = anglers.Length;
         if (currentPower < maxPower)
         {
             if(canRegen)
@@ -379,6 +383,15 @@ public class gamemanager : MonoBehaviour
                 {
                     GameObject spawn = Instantiate(egg, spawns[Random.Range(0, spawns.Length)].position, Quaternion.identity); 
                     spawn.GetComponent<egg>().Spawn(limitManage);
+                }
+            }
+            if(anglerSpawns < howManyAnglers)
+            {
+                if(spawning)
+                {
+                    GameObject spawn = Instantiate(egg, spawns[Random.Range(0, spawns.Length)].position, Quaternion.identity); 
+                    spawn.GetComponent<egg>().AnglerSpawn(limitManage);
+                    anglerSpawns++;
                 }
             }
             switch(currentDepthRounded)
