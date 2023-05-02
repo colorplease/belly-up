@@ -9261,7 +9261,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: PRESS ENTER TO CONTINUE
+  m_text: PRESS LEFT SHIFT TO CONTINUE
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 5204869161eef27468f5089f59d35cb1, type: 2}
   m_sharedMaterial: {fileID: -2045239741070033876, guid: 5204869161eef27468f5089f59d35cb1, type: 2}
@@ -9653,6 +9653,11 @@ MonoBehaviour:
   black: {fileID: 1664465399}
   skippers: 1
   murder: {fileID: 0}
+  creditThings: []
+  currentCreditThing: {fileID: 0}
+  leftArrow: {fileID: 0}
+  rightArrow: {fileID: 0}
+  index: 0
 --- !u!82 &1277180413
 AudioSource:
   m_ObjectHideFlags: 0
@@ -10213,6 +10218,10 @@ MonoBehaviour:
   isTutorialReal: 1
   THISISFRATUTORIAL: 1
   myFavPowerUp: 0
+  dash: 0
+  shoot: 0
+  brake: 0
+  swap: 0
 --- !u!1 &1380652132
 GameObject:
   m_ObjectHideFlags: 0
@@ -13881,8 +13890,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42646862a90b9f249957cdf02e104a74, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scrollSpeed: 0.5
-  descentSpeed: 18.33
   cameraTransform: {fileID: 1554629353}
   currentDepth: 30935
   text: {fileID: 1361992655}
@@ -13918,7 +13925,6 @@ MonoBehaviour:
   - {fileID: 1484731715}
   slider: {fileID: 850432836}
   maxPower: 150
-  powerRegenRate: 9
   currentPower: 0
   powerLerp: 5
   chipSpeed: 0
@@ -13960,22 +13966,35 @@ MonoBehaviour:
   endText1: {fileID: 0}
   endText2: {fileID: 0}
   endBack: {fileID: 0}
+  totalfishmurderedondeath: {fileID: 0}
   isTutorial: 1
   lowPower: {fileID: 571664497}
   DepthMeter: {fileID: 0}
   rocksObjects: {fileID: 0}
   canRegen: 0
-  enemyLimit: 2
-  minEnemyCount: 0
-  numberofHits: 0
-  difficultyMessages: []
-  difficultNumber: 1
-  isEndless: 0
-  meesage1: {fileID: 0}
-  meesage2: {fileID: 0}
-  messageHolder: {fileID: 0}
+  howManyAnglers: 0
+  anglerSpawns: 0
   pauseMenu: {fileID: 0}
+  pauseMenuMenu: {fileID: 0}
+  accessMenu: {fileID: 0}
+  controlMenu: {fileID: 0}
+  controlScheme: {fileID: 0}
+  controlReadOut: {fileID: 0}
+  secretMenu: {fileID: 0}
+  confirmation: {fileID: 0}
+  dylanMode: 0
   isPaused: 0
+  PToPause: {fileID: 0}
+  isEndless: 0
+  maximumMaxPower: 150
+  maxPowerUpAmount: 15
+  powerUpAmount: 35
+  scrollSpeed: 0.5
+  descentSpeed: 18.33
+  powerRegenRate: 9
+  damageMultiplier: 0
+  minEnemyCount: 0
+  enemyLimit: 2
 --- !u!4 &2048835608
 Transform:
   m_ObjectHideFlags: 0

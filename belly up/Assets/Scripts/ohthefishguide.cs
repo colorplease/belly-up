@@ -89,7 +89,7 @@ public class ohthefishguide : MonoBehaviour
     {
         title.SetText("Blobfish");
         type.SetText("Type: fish");
-        occupation.SetText("Occupation: Business and Finance Consultant");
+        occupation.SetText("Occupation: Finance Consultant");
         education.SetText("Education: fish");
         hobbies.SetText("Hobbies: fish");
         tagline.SetText("hello francis");

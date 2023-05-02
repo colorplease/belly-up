@@ -87,6 +87,7 @@ public class gamemanager : MonoBehaviour
     public bool dylanMode;
     int scheme = 0;
     public bool isPaused;
+    [SerializeField]GameObject PToPause;
     [Header("PowerAttributes")]
     public bool isEndless;
     public float maximumMaxPower = 150;
@@ -112,6 +113,18 @@ public class gamemanager : MonoBehaviour
          currentPowerCool = powerCool;
         UpdatePower();
         ogColor = powerFill.color;
+    }
+
+    void OnEnable()
+    {
+        StartCoroutine(PToPauseNotif());
+    }
+    
+    IEnumerator PToPauseNotif()
+    {
+        PToPause.SetActive(true);
+        yield return new WaitForSeconds(10f);
+        PToPause.GetComponent<Animator>().SetBool("no more", true);
     }
 
     public IEnumerator outOfPowerGents()
@@ -218,7 +231,7 @@ public class gamemanager : MonoBehaviour
         {
             Clear();
         }
-        if(Input.GetKeyDown(KeyCode.Escape))
+        if(Input.GetKeyDown(KeyCode.P))
         {
             if(!isPaused)
             {
@@ -550,14 +563,14 @@ public class gamemanager : MonoBehaviour
 
     void Clear()
     {
-        if(mommy.childCount > 0)
+        if(mommy.childCount > 1)
         {
             int i = 0;
             GameObject[] allChildren = new GameObject[mommy.childCount];
             foreach(Transform child in mommy)
             {
-                allChildren[i] = child.gameObject;
-                i+= 1;
+                    allChildren[i] = child.gameObject;
+                    i+= 1;
             }
             foreach(GameObject child in allChildren)
             {
