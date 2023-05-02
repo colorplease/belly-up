@@ -538,7 +538,7 @@ public class gamemanager : MonoBehaviour
 
     IEnumerator victory()
     {
-        if(dylanMode == true && PlayerPrefs.GetInt("murder") >= 900)
+        if(dylanMode == true && PlayerPrefs.GetInt("murder") >= 700)
         {
             PlayerPrefs.SetInt("murder", 80085);
         }

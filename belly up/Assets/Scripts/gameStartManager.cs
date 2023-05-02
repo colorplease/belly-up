@@ -49,8 +49,7 @@ public class gameStartManager : MonoBehaviour
     }
     else
     {
-        startText.color = new Color(0.16f, 0.16f, 0.16f, 1f);
-        startButton.interactable = true;
+        StartCoroutine(badStartFailSafe());
     }    
    }
 
@@ -111,6 +110,13 @@ public class gameStartManager : MonoBehaviour
         {
             roadmapMenu.SetActive(true);
         }
+   }
+
+   IEnumerator badStartFailSafe()
+   {
+        yield return new WaitForSeconds(0.9f);
+        startText.color = new Color(0.16f, 0.16f, 0.16f, 1f);
+        startButton.interactable = true;
    }
 
    IEnumerator tutorialIt()
