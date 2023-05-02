@@ -24,6 +24,11 @@ public class tutorialManager : MonoBehaviour
             {
                 murder.SetText("you truly have no enemies.");
             }
+            if(PlayerPrefs.GetInt("murder") == 123456)
+            {
+                murder.SetText("ACTIVATE DYLAN MODE AT THE BEGINNING OR NOT AT ALL. WEAK.");
+                murder.fontSize = 64.11f;
+            }
             else
             {
                 murder.SetText("TOTAL FISH MURDERED: " + PlayerPrefs.GetInt("murder").ToString());

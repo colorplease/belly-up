@@ -114,7 +114,7 @@ public class gameStartManager : MonoBehaviour
 
    IEnumerator badStartFailSafe()
    {
-        yield return new WaitForSeconds(0.9f);
+        yield return new WaitForSeconds(0.5f);
         startText.color = new Color(0.16f, 0.16f, 0.16f, 1f);
         startButton.interactable = true;
    }

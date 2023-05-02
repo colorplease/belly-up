@@ -538,9 +538,13 @@ public class gamemanager : MonoBehaviour
 
     IEnumerator victory()
     {
-        if(dylanMode == true && PlayerPrefs.GetInt("murder") >= 700)
+        if(dylanMode == true && PlayerPrefs.GetInt("murder") >= 650)
         {
             PlayerPrefs.SetInt("murder", 80085);
+        }
+        else if(dylanMode && PlayerPrefs.GetInt("murder") <= 700)
+        {
+            PlayerPrefs.SetInt("murder", 123456);
         }
         Clear();
         buble.Stop();
