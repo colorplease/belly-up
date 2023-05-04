@@ -42,6 +42,25 @@ PolygonCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
@@ -220,6 +239,7 @@ PolygonCollider2D:
       - {x: -9.030899, y: 1.089081}
       - {x: -9.030899, y: 0.9494326}
       - {x: -9.1705475, y: 0.9494326}
+  m_UseDelaunayMesh: 0
 --- !u!1 &5326972902688380984
 GameObject:
   m_ObjectHideFlags: 0
@@ -435,7 +455,7 @@ MonoBehaviour:
   amongUs: {fileID: 0}
   rb: {fileID: 5326972903601734084}
   speed: 1.5
-  HP: 3
+  HP: 5
   light: {fileID: 5326972902688380986}
   powerUps:
   - {fileID: 8065324607808081258, guid: a79482b0c1b957848bcc954b7a49640a, type: 3}
@@ -447,12 +467,6 @@ MonoBehaviour:
   maxChance: 150
   realChance: 0
   deathSpinSpeed: 10
-  difficultyNum: 0
-  difficultyTierPotentials: 0000000001000000020000000300000004000000
-  tier: 0
-  weightTable: 3200000041000000550000005f00000064000000
-  calcVar: 0
-  iterationGenNum: 0
 --- !u!50 &5326972903601734084
 Rigidbody2D:
   serializedVersion: 4
@@ -470,6 +484,12 @@ Rigidbody2D:
   m_AngularDrag: 0.05
   m_GravityScale: 0
   m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
   m_Interpolate: 2
   m_SleepingMode: 1
   m_CollisionDetection: 0
@@ -484,6 +504,25 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0

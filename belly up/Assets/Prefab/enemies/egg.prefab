@@ -49,6 +49,5 @@ MonoBehaviour:
   - {fileID: 1316037641659203932, guid: f9bf369bcf7fb66438dfc6b92d37bb91, type: 3}
   - {fileID: 5326972903601734083, guid: c74b62208b7499542b8389386de79561, type: 3}
   - {fileID: 8869147228293718397, guid: bd60cc666804c074a84eef8d14df26ff, type: 3}
-  - {fileID: 8869147228293718397, guid: bd60cc666804c074a84eef8d14df26ff, type: 3}
   mommy: {fileID: 0}
   validChoices: 00000000010000000300000004000000
