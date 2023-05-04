@@ -91,7 +91,7 @@ public class blobfishai : MonoBehaviour
 
     void die()
     {
-        PlayerPrefs.SetInt("murder", PlayerPrefs.GetInt("murder") + 1);
+        gameManager.kills += 1;
         if (!dying)
         {
             Generate();

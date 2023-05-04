@@ -99,6 +99,8 @@ public class gamemanager : MonoBehaviour
     public float damageMultiplier;
     public int minEnemyCount;
     public int enemyLimit;
+    [Header("Player Stats")]
+    public int kills;
 
     void Start()
     {
@@ -546,6 +548,7 @@ public class gamemanager : MonoBehaviour
         {
             PlayerPrefs.SetInt("murder", 123456);
         }
+        PlayerPrefs.SetInt("murder", kills);
         Clear();
         buble.Stop();
         speaker.Stop();
@@ -560,8 +563,8 @@ public class gamemanager : MonoBehaviour
         endText2.SetActive(true);
         yield return new WaitForSeconds(4);
         black.SetBool("trans", true);
-         yield return new WaitForSeconds(1f);
-         SceneManager.LoadScene(2);
+        yield return new WaitForSeconds(1f);
+        SceneManager.LoadScene(2);
 
     }
 
@@ -646,7 +649,7 @@ public class gamemanager : MonoBehaviour
              realUi.alpha  = Mathf.Lerp(realUi.alpha, 0, Time.deltaTime * 5);
              GameOver.gameObject.SetActive(true);
             GameOver.alpha  = Mathf.Lerp(GameOver.alpha, 1, Time.deltaTime * 5);
-            totalfishmurderedondeath.SetText("TOTAL FISH MURDERED: " + PlayerPrefs.GetInt("murder").ToString());
+            totalfishmurderedondeath.SetText("TOTAL FISH MURDERED: " + kills.ToString());
         }
     }
 
@@ -660,6 +663,7 @@ public class gamemanager : MonoBehaviour
          black.SetBool("trans", true);
          yield return new WaitForSeconds(1f);
          PlayerPrefs.SetInt("murder", 0);
+         kills = 0;
         Scene scene = SceneManager.GetActiveScene(); SceneManager.LoadScene(scene.name);
     }
 
