@@ -106,6 +106,12 @@ Rigidbody2D:
   m_AngularDrag: 0.05
   m_GravityScale: 0
   m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
   m_Interpolate: 2
   m_SleepingMode: 1
   m_CollisionDetection: 0
@@ -126,7 +132,7 @@ MonoBehaviour:
   rb: {fileID: 1316037641659203934}
   speed: 50
   force: 0.7
-  HP: 2
+  HP: 3
   laser: {fileID: 1316037642270317055}
   preFire: {r: 1, g: 0.791047, b: 0.3339622, a: 1}
   afterFire: {r: 1, g: 0.2679245, b: 0.2679245, a: 1}
@@ -138,12 +144,6 @@ MonoBehaviour:
   minChance: 0
   maxChance: 150
   realChance: 0
-  difficultyNum: 0
-  difficultyTierPotentials: 0000000001000000020000000300000004000000
-  tier: 0
-  weightTable: 3200000041000000550000005f00000064000000
-  calcVar: 0
-  iterationGenNum: 0
   fireTime: 2
   rePos: 0
   rePosSpeed: 10
@@ -157,6 +157,25 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
@@ -299,6 +318,25 @@ PolygonCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
@@ -526,3 +564,4 @@ PolygonCollider2D:
       - {x: 0.6724607, y: -5.5344925}
       - {x: 0.77988255, y: -5.3626175}
       - {x: 0.77988255, y: -5.2981644}
+  m_UseDelaunayMesh: 0
