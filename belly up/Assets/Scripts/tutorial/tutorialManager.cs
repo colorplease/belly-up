@@ -79,7 +79,7 @@ public class tutorialManager : MonoBehaviour
         yield return new WaitForSeconds(1f);
         PlayerPrefs.SetInt("tutorial", 1);
         PlayerPrefs.SetInt("murder", 0);
-        SceneManager.LoadScene(0);
+        SceneManager.LoadScene("SampleScene");
    }
 
    public void DecreaseCredits()

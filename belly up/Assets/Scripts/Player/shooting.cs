@@ -78,16 +78,23 @@ public class shooting : MonoBehaviour
     public bool THISISFRATUTORIAL;
     public bool myFavPowerUp;
     [Header("Chromebook Mode")]
-    [SerializeField]KeyCode dash;
-    [SerializeField]KeyCode shoot;
-    [SerializeField]KeyCode brake;
-    [SerializeField]KeyCode swap;
+    public KeyCode dash;
+    public KeyCode shoot;
+    public KeyCode brake;
+    public KeyCode swap;
 
     void Start()
     {
       rd = play.gameObject.GetComponent<Renderer>();
       animator = play.gameObject.GetComponent<Animator>();
-      RegularMode();
+      if(PlayerPrefs.GetInt("InputMode") == 0)
+      {
+        RegularMode();
+      }
+      if(PlayerPrefs.GetInt("InputMode") == 1)
+      {
+        ChromebookMode();
+      }
     }
 
     public void ChromebookMode()

@@ -123,7 +123,7 @@ public class gameStartManager : MonoBehaviour
    {
      black.SetBool("trans", true);
          yield return new WaitForSeconds(1f);
-        SceneManager.LoadScene(3);
+        SceneManager.LoadScene("tutorial 1");
    }
 
    IEnumerator startIt()

@@ -104,4 +104,24 @@ public class ohthefishguide : MonoBehaviour
         }
         fish3D[3].SetActive(true);
     }
+
+    public void plasticBag()
+    {
+        title.SetText("a literal plastic bag");
+        type.SetText("Type: Creature");
+        occupation.SetText("Occupation: plastic bag");
+        education.SetText("Education: plastic bag");
+        hobbies.SetText("Hobbies: plastic bag");
+        tagline.SetText("colorplease cant 3d model a real bag");
+        for(int i = 0; i < data.Length; i++)
+        {
+            data[i].SetActive(false);
+        }
+        data[4].SetActive(true);
+        for(int i = 0; i < fish3D.Length; i++)
+        {
+            fish3D[i].SetActive(false);
+        }
+        fish3D[4].SetActive(true);
+    }
 }

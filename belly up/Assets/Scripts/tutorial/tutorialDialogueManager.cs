@@ -15,6 +15,7 @@ public class tutorialDialogueManager : MonoBehaviour
 {
     public TextMeshProUGUI textComponent;
     public Dialogue[] lines;
+    public Dialogue[] linesTrackpad;
     public float textSpeed;
     private int index;
     [SerializeField]shooting shoot;
@@ -63,6 +64,10 @@ public class tutorialDialogueManager : MonoBehaviour
     void Start()
     {
         textComponent.SetText("");
+        if(PlayerPrefs.GetInt("InputMode") == 1)
+        {
+            lines = linesTrackpad;
+        }
         StartDialogue();
     }
 
@@ -133,14 +138,14 @@ public class tutorialDialogueManager : MonoBehaviour
 
     void FinalTrialTutorial()
     {
-        if(PlayerPrefs.GetInt("murder") > lastMurderCount)
+        if(gameManager.kills > lastMurderCount)
         {
             currentAimScore++;
-            lastMurderCount = PlayerPrefs.GetInt("murder");
+            lastMurderCount = gameManager.kills;
         }
         else
         {
-            lastMurderCount = PlayerPrefs.GetInt("murder");
+            lastMurderCount = gameManager.kills;
         }
         if(currentAimScore >= murderReq)
         {
@@ -222,7 +227,7 @@ public class tutorialDialogueManager : MonoBehaviour
 
     void ShootBasicTutorialCheck()
     {
-         if(Input.GetButtonDown("Fire1"))
+         if(Input.GetKeyDown(shoot.shoot))
          {
             currentAimScore++;
          }
@@ -275,7 +280,7 @@ public class tutorialDialogueManager : MonoBehaviour
 
     void DashTutorialCheck()
     {
-        if (Input.GetMouseButtonDown(1))
+        if (Input.GetKeyDown(shoot.dash))
         {
             currentAimScore++;
         }
@@ -299,7 +304,7 @@ public class tutorialDialogueManager : MonoBehaviour
 
     void BrakeTutorialCheck()
     {
-        if(Input.GetKeyDown(KeyCode.Space) && shoot.rb.velocity.sqrMagnitude > 5)
+        if(Input.GetKeyDown(shoot.brake) && shoot.rb.velocity.sqrMagnitude > 5)
         {
             currentAimScore++;
         }
