@@ -124,4 +124,24 @@ public class ohthefishguide : MonoBehaviour
         }
         fish3D[4].SetActive(true);
     }
+
+    public void seaBirdMKII()
+    {
+        title.SetText("FishCorp “SeaBird” MK II");
+        type.SetText("Type: Machine");
+        occupation.SetText("Occupation: Consumer Submarine");
+        education.SetText("Education: ??");
+        hobbies.SetText("Hobbies: ??");
+        tagline.SetText("i haven't eaten lunch yet");
+        for(int i = 0; i < data.Length; i++)
+        {
+            data[i].SetActive(false);
+        }
+        data[5].SetActive(true);
+        for(int i = 0; i < fish3D.Length; i++)
+        {
+            fish3D[i].SetActive(false);
+        }
+        fish3D[5].SetActive(true);
+    }
 }

@@ -1481,6 +1481,7 @@ Transform:
   - {fileID: 2774051131373034867}
   - {fileID: 3189354766483397454}
   - {fileID: 5969110732500449217}
+  - {fileID: 373629808308299362}
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3516,7 +3517,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0.00019773678}
-  m_SizeDelta: {x: 0, y: 881.8723}
+  m_SizeDelta: {x: 0, y: 1230.4}
   m_Pivot: {x: 0, y: 1}
 --- !u!1 &372866046
 GameObject:
@@ -4716,6 +4717,7 @@ RectTransform:
   - {fileID: 1588201610}
   - {fileID: 2125171732}
   - {fileID: 579937361}
+  - {fileID: 791360398}
   m_Father: {fileID: 1560083914}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -10342,7 +10344,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 613776019}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1872942083}
+        m_TargetAssemblyTypeName: ohthefishguide, Assembly-CSharp
+        m_MethodName: seaBirdMKII
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &613776019
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12356,6 +12370,82 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e0f1e0ca2a70da5408db1a59e3390d32, type: 3}
+--- !u!1 &791360397
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 791360398}
+  - component: {fileID: 791360400}
+  - component: {fileID: 791360399}
+  m_Layer: 5
+  m_Name: Image
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!224 &791360398
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 791360397}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.55, y: 0.55, z: 0.55}
+  m_ConstrainProportionsScale: 1
+  m_Children: []
+  m_Father: {fileID: 558269922}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -554.03, y: 309.57}
+  m_SizeDelta: {x: 2048, y: 1365}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &791360399
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 791360397}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: 725ef0588d12e394aaaf328966117004, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &791360400
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 791360397}
+  m_CullTransparentMesh: 1
 --- !u!1 &793655501
 GameObject:
   m_ObjectHideFlags: 0
@@ -23697,12 +23787,14 @@ MonoBehaviour:
   - {fileID: 1061089118}
   - {fileID: 1085912628}
   - {fileID: 779252920}
+  - {fileID: 1918820946}
   fish3D:
   - {fileID: 234204903261098849}
   - {fileID: 4199892598546118844}
   - {fileID: 3257431165450241993}
   - {fileID: 2812794764636799476}
   - {fileID: 7259762554240005740}
+  - {fileID: 1037154991997385944}
   fishGuide: {fileID: 1872942084}
   fishGuideObject: {fileID: 1872942079}
 --- !u!95 &1872942084
@@ -24613,23 +24705,30 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "About this item: \r\n\r\n* A high-tech professionally equipped submarine
-    for all your sea-exploration needs! \r\n* Equipped with state-of-the-art weaponry
-    and navigation systems.\r\n* Batteries not included, FishCorp batteries recommended
-    for optimal performance.\r\n* Thrusters support a maximum of 10,000 fisher meters
-    per second, unlocked for overclocking, and the all new TURBOMAX\xAE setting.
-    \r\n* Extreme resilience, annealed glass and reinforced materials ensure that
-    not even the biggest of fish will breach your SeaBird MK II\u2122 (patent pending).\r\n*
-    Possesses two modes of operation: Single-Shot and Shotgun fire. \r\n* Single-Shot
-    fire allows the user to shoot single bullets that do high damage, at a very low
-    energy cost\r\n* Shotgun fire allows the user to shoot many bullets that do low
-    damage, at a higher energy cost.\r\n\nOrder today! Just call 1-800-LUV-FISH to
-    inquire about your SeaBird MK II\u2122 (patent pending).\r\n\r\nWARNING:\r\n\r\nANY
-    ATTEMPTS TO MODIFY OR \u201CMOD\u201D YOUR SeaBird MK II\u2122 (patent pending)
-    WILL INSTANTLY VOID WARRANTY AND IS AGAINST FishCorp GUIDELINES, WARRANTING LEGAL
-    ACTION. ONLY USE FishCorp VERIFIED BULLETS. OTHER BULLETS MAY NOT MEET SAFETY
-    STANDARDS AND COULD SERIOUSLY HARM OTHERS OR YOUR SeaBird MK II\u2122 (patent
-    pending).\r\n\n"
+  m_text: "A creature of flesh and metal, very hungry. \n\nSecond iteration of the
+    SeaBird from an enterprise known as \u201CFishCorp\u201D. Despite not being able
+    to kill it, they deemed it a failure, sending it into the sea in hopes that one
+    day it will cease to function. However, it returns to the surface over and over
+    again, with the only one ceasing to function being the pilot. The MK II is the
+    only one of its kind thought to exist.\r\n\r\nMarketing material for the SeaBird
+    MK II can be found below, however it is still unclear whether the device was
+    ever manufactured or advertised to the public.\r\n\nAbout this item: \r\n\r\n*
+    A high-tech professionally equipped submarine for all your sea-exploration needs!
+    \r\n* Equipped with state-of-the-art weaponry and navigation systems.\r\n* Batteries
+    not included, FishCorp batteries recommended for optimal performance.\r\n* Thrusters
+    support a maximum of 10,000 fisher meters per second, unlocked for overclocking,
+    and the all new TURBOMAX\xAE setting. \r\n* Extreme resilience, annealed glass
+    and reinforced materials ensure that not even the biggest of fish will breach
+    your SeaBird MK II\u2122 (patent pending).\r\n* Possesses two modes of operation:
+    Single-Shot and Shotgun fire. \r\n* Single-Shot fire allows the user to shoot
+    single bullets that do high damage, at a very low energy cost\r\n* Shotgun fire
+    allows the user to shoot many bullets that do low damage, at a higher energy
+    cost.\r\n\nOrder today! Just call 1-800-LUV-FISH to inquire about your SeaBird
+    MK II\u2122 (patent pending).\r\n\r\nWARNING:\r\n\r\nANY ATTEMPTS TO MODIFY OR
+    \u201CMOD\u201D YOUR SeaBird MK II\u2122 (patent pending) WILL INSTANTLY VOID
+    WARRANTY AND IS AGAINST FishCorp GUIDELINES, WARRANTING LEGAL ACTION. ONLY USE
+    FishCorp VERIFIED BULLETS. OTHER BULLETS MAY NOT MEET SAFETY STANDARDS AND COULD
+    SERIOUSLY HARM OTHERS OR YOUR SeaBird MK II\u2122 (patent pending).\r"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 5204869161eef27468f5089f59d35cb1, type: 2}
   m_sharedMaterial: {fileID: -2045239741070033876, guid: 5204869161eef27468f5089f59d35cb1, type: 2}
@@ -27065,6 +27164,21 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!4 &373629808308299362
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1037154991997385944}
+  m_LocalRotation: {x: 0.7051444, y: 0.050959118, z: 0.050976906, w: -0.7053906}
+  m_LocalPosition: {x: 0.61, y: -5.3, z: 4.63}
+  m_LocalScale: {x: 178.48, y: 230.53587, z: 178.48}
+  m_ConstrainProportionsScale: 1
+  m_Children: []
+  m_Father: {fileID: 179366260}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &481057404564106659
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -27088,6 +27202,25 @@ Transform:
   m_Father: {fileID: 179366260}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: -89.98, y: 0, z: 0}
+--- !u!1 &1037154991997385944
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 373629808308299362}
+  - component: {fileID: 3639117137818790343}
+  - component: {fileID: 1541438922283375885}
+  - component: {fileID: 3639117137818790344}
+  m_Layer: 0
+  m_Name: seabird
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
 --- !u!33 &1283723098101486294
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -27096,6 +27229,48 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3257431165450241993}
   m_Mesh: {fileID: -6385650445355762420, guid: b549ddb05c5e3fb4dbc90e8f5bbdb402, type: 3}
+--- !u!23 &1541438922283375885
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1037154991997385944}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 4611759551533685079, guid: c4b19edd03abda54cbf6358017159407, type: 3}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!23 &1747656614374535860
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -27271,6 +27446,35 @@ Transform:
   m_Father: {fileID: 179366260}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: -89.98, y: 0, z: 0}
+--- !u!33 &3639117137818790343
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1037154991997385944}
+  m_Mesh: {fileID: 5461320835613783329, guid: c4b19edd03abda54cbf6358017159407, type: 3}
+--- !u!95 &3639117137818790344
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1037154991997385944}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 0073dc548c143824abb127499ad34c01, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!23 &3905821624667825692
 MeshRenderer:
   m_ObjectHideFlags: 0
