@@ -127,6 +127,7 @@ public class gamemanager : MonoBehaviour
         PToPause.SetActive(true);
         yield return new WaitForSeconds(10f);
         PToPause.GetComponent<Animator>().SetBool("no more", true);
+        PToPause.SetActive(false);
     }
 
     public IEnumerator outOfPowerGents()
@@ -242,6 +243,13 @@ public class gamemanager : MonoBehaviour
             else
             {
                 UnPause();
+            }
+        }
+        if(Input.GetKeyDown(KeyCode.Escape))
+        {
+            if(!PToPause.activeSelf)
+            {
+                StartCoroutine(PToPauseNotif());
             }
         }
         currentPower = Mathf.Clamp(currentPower, 0, maxPower);
