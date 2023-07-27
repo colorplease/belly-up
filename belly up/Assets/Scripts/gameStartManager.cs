@@ -39,9 +39,16 @@ public class gameStartManager : MonoBehaviour
    [Header("Fish Guide")]
    [SerializeField]Animator fishGuide;
    [SerializeField]GameObject fishGuideObject;
+   [Header("Very Cool Opening Anim")]
+   public GameObject[] titleObjects;
+   public GameObject versionNumber;
+   public AudioClip cardFlip;
+   public AudioClip buttonSelect;
 
    void Start()
    {
+    versionNumber.SetActive(false);
+    StartCoroutine(titleOpening());
     if(PlayerPrefs.GetInt("tutorial") == 0)
     {   
         startText.color = new Color(0.16f, 0.16f, 0.16f, 0.443f);
@@ -51,6 +58,23 @@ public class gameStartManager : MonoBehaviour
     {
         StartCoroutine(badStartFailSafe());
     }    
+   }
+
+   IEnumerator titleOpening()
+   {
+        for(int i=0; i<titleObjects.Length; i++)
+        {
+            titleObjects[i].SetActive(false);
+        }
+        yield return new WaitForSeconds(0.4f);
+        for(int i=0; i<titleObjects.Length; i++)
+        {
+            yield return new WaitForSeconds(0.15f);
+            titleObjects[i].SetActive(true);
+            audioSource.PlayOneShot(cardFlip);
+        }
+        versionNumber.SetActive(true);
+        audioSource.Play();
    }
 
    public void FishGuide()
