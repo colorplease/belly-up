@@ -27,6 +27,8 @@ public class gameStartManager : MonoBehaviour
    public AudioClip drop;
    public AudioClip drop2;
    public Button start;
+   public Button fishGuideButton;
+   public Button credits;
    [Header("Tip Of The Day")]
    [SerializeField]string[] tips;
    [SerializeField]int currentTip;
@@ -66,7 +68,7 @@ public class gameStartManager : MonoBehaviour
         {
             titleObjects[i].SetActive(false);
         }
-        yield return new WaitForSeconds(0.4f);
+        yield return new WaitForSeconds(0.7f);
         for(int i=0; i<titleObjects.Length; i++)
         {
             yield return new WaitForSeconds(0.15f);
@@ -79,6 +81,7 @@ public class gameStartManager : MonoBehaviour
 
    public void FishGuide()
    {
+        fishGuideButton.animator.SetTrigger("Pressed");
         fishGuideObject.SetActive(true);
         fishGuide.SetBool("fishGuide", false);
         
@@ -152,6 +155,7 @@ public class gameStartManager : MonoBehaviour
 
    IEnumerator startIt()
    {
+    start.animator.SetTrigger("Pressed");
     audioSource.Stop();
     audioSource.PlayOneShot(drop);
     audioSource.PlayOneShot(drop2);

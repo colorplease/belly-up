@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class MainMenuButton : MonoBehaviour, ISelectHandler
+public class MainMenuButton : MonoBehaviour
 {
     public gameStartManager gamestart;
     [SerializeField]bool soundPlayed;
@@ -23,10 +23,5 @@ public class MainMenuButton : MonoBehaviour, ISelectHandler
         {
             soundPlayed = false;
         }
-    }
-    public void OnSelect(BaseEventData eventData)
-    {
-        print("ye");
-        gamestart.audioSource.PlayOneShot(gamestart.buttonSelect);
     }
 }

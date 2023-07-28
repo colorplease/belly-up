@@ -55,6 +55,7 @@ public class shooting : MonoBehaviour
     [SerializeField]Animator indicatorAnimator;
     [SerializeField]GameObject indicatorText;
     [SerializeField]Animator indicatorTextAnimator;
+    bool indicatorActive = false;
     public float maxDistanceTillLoss;
     public bool canShoot;
     Animator animator;
@@ -95,6 +96,18 @@ public class shooting : MonoBehaviour
       {
         ChromebookMode();
       }
+    }
+
+    void OnEnable()
+    {
+      StartCoroutine(indicatorDelay());
+    }
+
+    IEnumerator indicatorDelay()
+    {
+      //fixes indicator flickering on entering water
+      yield return new WaitForSeconds(0.1f);
+      indicatorActive = true;
     }
 
     public void ChromebookMode()
@@ -141,7 +154,7 @@ public class shooting : MonoBehaviour
      player.velocity = Vector2.ClampMagnitude(player.velocity, maxSpeed);
     }
 
-    if(!rd.isVisible)
+    if(!rd.isVisible && indicatorActive)
     {
         if(!indicator.activeSelf)
         {
