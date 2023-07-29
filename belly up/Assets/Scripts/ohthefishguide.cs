@@ -152,4 +152,26 @@ public class ohthefishguide : MonoBehaviour
         }
         fish3D[5].SetActive(true);
     }
+
+    public void FishCorp()
+    {
+        startManager.audioSource.PlayOneShot(startManager.fishGuidePress);
+        title.SetText("FishCorp");
+        type.SetText("Type: Tech-Conglomerate");
+        occupation.SetText("Occupation: Universal Domination");
+        education.SetText("Education: High-School Diploma");
+        hobbies.SetText("Hobbies: DDR");
+        tagline.SetText("go play FinuxOS on colorplease . itch . io");
+        for(int i = 0; i < data.Length; i++)
+        {
+            data[i].SetActive(false);
+        }
+        data[6].SetActive(true);
+        for(int i = 0; i < fish3D.Length; i++)
+        {
+            fish3D[i].SetActive(false);
+        }
+        fish3D[6].SetActive(true);
+
+    }
 }
