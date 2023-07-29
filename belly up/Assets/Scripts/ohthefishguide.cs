@@ -15,8 +15,10 @@ public class ohthefishguide : MonoBehaviour
     [SerializeField]GameObject[] fish3D;
     [SerializeField]Animator fishGuide;
    [SerializeField]GameObject fishGuideObject;
+   [SerializeField]gameStartManager startManager;
     public void fishguidefadeout()
     {
+        startManager.audioSource.PlayOneShot(startManager.buttonPress);
         fishGuide.SetBool("fishGuide", true);
         StartCoroutine(fadeouttimer());
     }
@@ -27,6 +29,7 @@ public class ohthefishguide : MonoBehaviour
     }
     public void cod()
     {
+        startManager.audioSource.PlayOneShot(startManager.fishGuidePress);
         title.SetText("Cod");
         type.SetText("Type: fish");
         occupation.SetText("Occupation: fish");
@@ -47,6 +50,7 @@ public class ohthefishguide : MonoBehaviour
 
     public void sword()
     {
+        startManager.audioSource.PlayOneShot(startManager.fishGuidePress);
         title.SetText("Sword Fish");
         type.SetText("Type: fish");
         occupation.SetText("Occupation: Data Science Analyst");
@@ -67,6 +71,7 @@ public class ohthefishguide : MonoBehaviour
 
     public void angler()
     {
+        startManager.audioSource.PlayOneShot(startManager.fishGuidePress);
         title.SetText("Angler Fish");
         type.SetText("Type: fish");
         occupation.SetText("Occupation: fish");
@@ -87,6 +92,7 @@ public class ohthefishguide : MonoBehaviour
 
     public void blobfish()
     {
+        startManager.audioSource.PlayOneShot(startManager.fishGuidePress);
         title.SetText("Blobfish");
         type.SetText("Type: fish");
         occupation.SetText("Occupation: Finance Consultant");
@@ -107,6 +113,7 @@ public class ohthefishguide : MonoBehaviour
 
     public void plasticBag()
     {
+        startManager.audioSource.PlayOneShot(startManager.fishGuidePress);
         title.SetText("a literal plastic bag");
         type.SetText("Type: Creature");
         occupation.SetText("Occupation: plastic bag");
@@ -127,6 +134,7 @@ public class ohthefishguide : MonoBehaviour
 
     public void seaBirdMKII()
     {
+        startManager.audioSource.PlayOneShot(startManager.fishGuidePress);
         title.SetText("FishCorp “SeaBird” MK II");
         type.SetText("Type: Machine");
         occupation.SetText("Occupation: Consumer Submarine");

@@ -26,6 +26,8 @@ public class gameStartManager : MonoBehaviour
    public AudioSource audioSource;
    public AudioClip drop;
    public AudioClip drop2;
+   public AudioClip fishGuidePress;
+   public GameObject seaAmbience;
    public Button start;
    public Button fishGuideButton;
    public Button credits;
@@ -72,7 +74,7 @@ public class gameStartManager : MonoBehaviour
             audioSource.PlayOneShot(cardFlip);
         }
         versionNumber.SetActive(true);
-        audioSource.Play();
+        seaAmbience.SetActive(true);
    }
 
    public void OpenGameModeMenu()
@@ -111,14 +113,18 @@ public class gameStartManager : MonoBehaviour
         yield return new WaitForSeconds(0.15f);
         classicButton.interactable = false;
         audioSource.PlayOneShot(cardFlip);
-        int i = 1;
-        while(i < 4)
-        {
-            yield return new WaitForSeconds(0.15f);
-            titleObjects[i].SetActive(true);
-            audioSource.PlayOneShot(cardFlip); 
-            i++;
-        }   
+        yield return new WaitForSeconds(0.15f);
+        titleObjects[4].SetActive(true);
+        audioSource.PlayOneShot(cardFlip); 
+        yield return new WaitForSeconds(0.15f);
+        titleObjects[3].SetActive(true);
+        audioSource.PlayOneShot(cardFlip); 
+        yield return new WaitForSeconds(0.15f);
+        titleObjects[2].SetActive(true);
+        audioSource.PlayOneShot(cardFlip); 
+        yield return new WaitForSeconds(0.15f);
+        titleObjects[1].SetActive(true);
+        audioSource.PlayOneShot(cardFlip); 
    }
 
    IEnumerator gameMenuOpen()
@@ -210,7 +216,7 @@ public class gameStartManager : MonoBehaviour
    IEnumerator startIt()
    {
     start.animator.SetTrigger("Pressed");
-    audioSource.Stop();
+    seaAmbience.SetActive(false);
     audioSource.PlayOneShot(drop);
     audioSource.PlayOneShot(drop2);
     GameManager.GetComponent<gamemanager>().canLose = false;

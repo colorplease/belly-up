@@ -19,6 +19,7 @@ TagManager:
   - Dummy
   - dialogueManager
   - bluepikmin
+  - buttonClickNoise
   layers:
   - Default
   - TransparentFX
