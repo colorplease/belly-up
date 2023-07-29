@@ -35,31 +35,27 @@ public class gameStartManager : MonoBehaviour
    [SerializeField]TextMeshProUGUI tipText;
    [Header("Roadmap Menu")]
    [SerializeField]GameObject roadmapMenu;
-   [Header("Tutorial Check")]
-   [SerializeField]TextMeshProUGUI startText;
-   [SerializeField]Button startButton;
    [Header("Fish Guide")]
    [SerializeField]Animator fishGuide;
    [SerializeField]GameObject fishGuideObject;
    [Header("Very Cool Opening Anim")]
    public GameObject[] titleObjects;
+   public Button classicButton;
+   public Button tutorialButton;
+   public Button backButton;
+   [SerializeField]Button playButton;
+   public GameObject classic;
+   public GameObject tutorial;
+   public GameObject back;
    public GameObject versionNumber;
    public AudioClip cardFlip;
    public AudioClip buttonSelect;
+   public AudioClip buttonPress;
 
    void Start()
    {
     versionNumber.SetActive(false);
-    StartCoroutine(titleOpening());
-    if(PlayerPrefs.GetInt("tutorial") == 0)
-    {   
-        startText.color = new Color(0.16f, 0.16f, 0.16f, 0.443f);
-        startButton.interactable = false;
-    }
-    else
-    {
-        StartCoroutine(badStartFailSafe());
-    }    
+    StartCoroutine(titleOpening());    
    }
 
    IEnumerator titleOpening()
@@ -79,9 +75,74 @@ public class gameStartManager : MonoBehaviour
         audioSource.Play();
    }
 
+   public void OpenGameModeMenu()
+   {
+        tutorial.SetActive(false);
+        classic.SetActive(false);
+        back.SetActive(false);
+        backButton.interactable = true;
+        tutorialButton.interactable = true;
+        classicButton.interactable = true;
+        playButton.interactable = false;  
+        playButton.animator.SetTrigger("Pressed");
+        audioSource.PlayOneShot(buttonPress);
+        StartCoroutine(gameMenuOpen());   
+   }
+
+   public void CloseGameModeMenu()
+   {
+        titleObjects[1].SetActive(false);
+        titleObjects[2].SetActive(false);
+        titleObjects[3].SetActive(false);
+        credits.interactable = true;
+        playButton.interactable = true;
+        fishGuideButton.interactable = true;
+        backButton.interactable = false;
+        audioSource.PlayOneShot(cardFlip); 
+        StartCoroutine(gameMenuClose());
+        audioSource.PlayOneShot(buttonPress);
+   }
+
+   IEnumerator gameMenuClose()
+   {
+        yield return new WaitForSeconds(0.15f);
+        tutorialButton.interactable = false;
+        audioSource.PlayOneShot(cardFlip);
+        yield return new WaitForSeconds(0.15f);
+        classicButton.interactable = false;
+        audioSource.PlayOneShot(cardFlip);
+        int i = 1;
+        while(i < 4)
+        {
+            yield return new WaitForSeconds(0.15f);
+            titleObjects[i].SetActive(true);
+            audioSource.PlayOneShot(cardFlip); 
+            i++;
+        }   
+   }
+
+   IEnumerator gameMenuOpen()
+   {
+        yield return new WaitForSeconds(0.15f);
+        fishGuideButton.interactable = false;
+        audioSource.PlayOneShot(cardFlip); 
+        yield return new WaitForSeconds(0.15f); 
+        credits.interactable = false;
+        audioSource.PlayOneShot(cardFlip);
+        yield return new WaitForSeconds(0.15f);
+        classic.SetActive(true);
+        audioSource.PlayOneShot(cardFlip); 
+        yield return new WaitForSeconds(0.15f); 
+        tutorial.SetActive(true);
+        audioSource.PlayOneShot(cardFlip);
+        yield return new WaitForSeconds(0.15f); 
+        back.SetActive(true);
+        audioSource.PlayOneShot(cardFlip);
+   }
+
    public void FishGuide()
    {
-        fishGuideButton.animator.SetTrigger("Pressed");
+        audioSource.PlayOneShot(buttonPress);
         fishGuideObject.SetActive(true);
         fishGuide.SetBool("fishGuide", false);
         
@@ -124,7 +185,7 @@ public class gameStartManager : MonoBehaviour
    public void Tutorial()
    {
         StartCoroutine(tutorialIt());
-        PlayerPrefs.SetInt("tutorial", 0);
+        audioSource.PlayOneShot(buttonPress);
    }
 
    public void RoadmapMenu()
@@ -137,13 +198,6 @@ public class gameStartManager : MonoBehaviour
         {
             roadmapMenu.SetActive(true);
         }
-   }
-
-   IEnumerator badStartFailSafe()
-   {
-        yield return new WaitForSeconds(0.5f);
-        startText.color = new Color(0.16f, 0.16f, 0.16f, 1f);
-        startButton.interactable = true;
    }
 
    IEnumerator tutorialIt()
@@ -177,6 +231,7 @@ public class gameStartManager : MonoBehaviour
     UI.SetActive(true);
     GameManager.SetActive(true);
     shooting.control = true;
+    yield return null;
     dummy.SetActive(false);
     backDrop.SetActive(true);
     realBackDrop.SetActive(false);
