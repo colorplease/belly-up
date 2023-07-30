@@ -24,7 +24,7 @@ public class plasticbag : MonoBehaviour
     {
         if(gameManager.dylanMode)
         {
-            HP = 1000;
+            HP = 690;
         }
     }
    

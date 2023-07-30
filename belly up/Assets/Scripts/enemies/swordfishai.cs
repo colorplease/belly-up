@@ -100,6 +100,7 @@ public class swordfishai : MonoBehaviour
         rb.constraints = RigidbodyConstraints2D.FreezeRotation;
         laser.GetComponent<SpriteRenderer>().color = Color.white;
         yield return new WaitForSeconds(0.075f);
+        gameManager.speaker2.PlayOneShot(gameManager.musics[26], 0.5f);
         laser.GetComponent<SpriteRenderer>().color = afterFire;
         yield return new WaitForSeconds(1);
         laser.SetActive(false);

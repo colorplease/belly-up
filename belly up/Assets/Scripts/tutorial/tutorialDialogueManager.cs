@@ -33,6 +33,10 @@ public class tutorialDialogueManager : MonoBehaviour
     [SerializeField]GameObject dummy;
     [SerializeField]Transform[] dummySpawnPoints;
     [SerializeField]Animator energyUI;
+    [SerializeField]AudioClip[] typeSounds;
+    public AudioSource typing;
+    [SerializeField]AudioClip taskComplete;
+    float typeSoundRate = 0;
     [Header("Aim Tutorial Reqs")]
     float lastGlockRotation;
     //used for other reqs btw 
@@ -152,12 +156,14 @@ public class tutorialDialogueManager : MonoBehaviour
             if(tutorialScore < 2)
             {
                 checkmeboxes[tutorialScore].GetComponent<Animator>().SetBool("done", true);
+                TaskCompleteSound(tutorialScore);
                 tutorialScore++;
                 currentAimScore = 0;
             }
             else
             {
                 checkmeboxes[tutorialScore].GetComponent<Animator>().SetBool("done", true);
+                TaskCompleteSound(tutorialScore);
                 StartCoroutine(Complete());
                 tutorialScore = 0;
                 gameManager.spawning = false;
@@ -183,12 +189,14 @@ public class tutorialDialogueManager : MonoBehaviour
             if(tutorialScore < 2)
             {
                 checkmeboxes[tutorialScore].GetComponent<Animator>().SetBool("done", true);
+                TaskCompleteSound(tutorialScore);
                 tutorialScore++;
                 currentAimScore = 0;
             }
             else
             {
                 checkmeboxes[tutorialScore].GetComponent<Animator>().SetBool("done", true);
+                TaskCompleteSound(tutorialScore);
                 StartCoroutine(powerUpClean());
                 StartCoroutine(Complete());
             }
@@ -212,17 +220,36 @@ public class tutorialDialogueManager : MonoBehaviour
             if(tutorialScore < 2)
             {
                 checkmeboxes[tutorialScore].GetComponent<Animator>().SetBool("done", true);
+                TaskCompleteSound(tutorialScore);
                 tutorialScore++;
                 currentAimScore = 0;
             }
             else
             {
                 checkmeboxes[tutorialScore].GetComponent<Animator>().SetBool("done", true);
+                TaskCompleteSound(2);
                 StartCoroutine(Complete());
                 tutorialScore = 0;
             }
         }
         
+    }
+
+    void TaskCompleteSound(int phase)
+    {
+        switch(phase)
+        {
+            case 0:
+            typing.pitch = 0.6f;
+            break;
+            case 1:
+            typing.pitch = 0.8f;
+            break;
+            case 2:
+            typing.pitch = 1f;
+            break;
+        }
+        typing.PlayOneShot(taskComplete, 0.3f);
     }
 
     void ShootBasicTutorialCheck()
@@ -236,12 +263,14 @@ public class tutorialDialogueManager : MonoBehaviour
             if(tutorialScore < 2)
             {
                 checkmeboxes[tutorialScore].GetComponent<Animator>().SetBool("done", true);
+                TaskCompleteSound(tutorialScore);
                 tutorialScore++;
                 currentAimScore = 0;
             }
             else
             {
                 checkmeboxes[tutorialScore].GetComponent<Animator>().SetBool("done", true);
+                TaskCompleteSound(2);
                 StartCoroutine(Complete());
             }
         }
@@ -258,6 +287,7 @@ public class tutorialDialogueManager : MonoBehaviour
             if(tutorialScore < 2)
             {
                 checkmeboxes[tutorialScore].GetComponent<Animator>().SetBool("done", true);
+                TaskCompleteSound(tutorialScore);
                 tutorialScore++;
                 currentAimScore = 0;
                 
@@ -266,6 +296,7 @@ public class tutorialDialogueManager : MonoBehaviour
             {
                 StartCoroutine(cleanUpDummy());
                 checkmeboxes[tutorialScore].GetComponent<Animator>().SetBool("done", true);
+                TaskCompleteSound(2);
                 StartCoroutine(Complete());
             }
         }
@@ -289,6 +320,7 @@ public class tutorialDialogueManager : MonoBehaviour
             if(tutorialScore < 2)
             {
                 checkmeboxes[tutorialScore].GetComponent<Animator>().SetBool("done", true);
+                TaskCompleteSound(tutorialScore);
                 tutorialScore++;
                 currentAimScore = 0;
             }
@@ -297,6 +329,7 @@ public class tutorialDialogueManager : MonoBehaviour
                 shoot.canDash = false;
                 shoot.arrow.SetActive(false);
                 checkmeboxes[tutorialScore].GetComponent<Animator>().SetBool("done", true);
+                TaskCompleteSound(2);
                 StartCoroutine(Complete());
             }
         }
@@ -313,12 +346,14 @@ public class tutorialDialogueManager : MonoBehaviour
             if(tutorialScore < 2)
             {
                 checkmeboxes[tutorialScore].GetComponent<Animator>().SetBool("done", true);
+                TaskCompleteSound(tutorialScore);
                 tutorialScore++;
                 currentAimScore = 0;
             }
             else
             {
                 checkmeboxes[tutorialScore].GetComponent<Animator>().SetBool("done", true);
+                TaskCompleteSound(2);
                 StartCoroutine(Complete());
             }
         }
@@ -466,6 +501,13 @@ public class tutorialDialogueManager : MonoBehaviour
         //types out each char one by one
         foreach(char c in lines[index].dialogueText.ToCharArray())
         {
+            typeSoundRate += 1;
+            if(typeSoundRate > 1)
+            {
+                typing.pitch = Random.Range(0.8f, 1.2f);
+                typing.PlayOneShot(typeSounds[Random.Range(0,typeSounds.Length)]);
+                typeSoundRate = 0;
+            }
             textComponent.text += c;
             yield return new WaitForSeconds(textSpeed);
         }

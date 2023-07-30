@@ -13,6 +13,12 @@ public class tutorialManager : MonoBehaviour
     [SerializeField]GameObject currentCreditThing;
     [SerializeField]GameObject leftArrow, rightArrow;
     [SerializeField]int index;
+    public AudioClip buttonPress;
+    public AudioSource audioSource;
+    [SerializeField]GameObject everything;
+    [SerializeField]GameObject everything2;
+    [SerializeField]TextMeshProUGUI assetUsedButtonText;
+    bool whatIsOpen;
 
     void Start()
     {
@@ -84,6 +90,7 @@ public class tutorialManager : MonoBehaviour
 
    public void DecreaseCredits()
    {
+    audioSource.PlayOneShot(buttonPress, 0.5f);
     if(index - 1 > 0)
     {
         index--;
@@ -104,6 +111,7 @@ public class tutorialManager : MonoBehaviour
 
    public void IncreaseCredits()
    {
+    audioSource.PlayOneShot(buttonPress, 0.5f);
     if(index + 1 < (creditThings.Length - 1))
     {
         index++;
@@ -120,5 +128,24 @@ public class tutorialManager : MonoBehaviour
         leftArrow.SetActive(false);
         rightArrow.SetActive(true);
     }
+   }
+
+   public void AssetsUsed()
+   {
+        audioSource.PlayOneShot(buttonPress, 0.5f);
+        if(!whatIsOpen)
+        {
+            everything.SetActive(false);
+            everything2.SetActive(true);
+            assetUsedButtonText.SetText("People");
+            whatIsOpen = true;
+        }
+        else
+        {
+            everything.SetActive(true);
+            everything2.SetActive(false);
+            assetUsedButtonText.SetText("Assets Used");
+            whatIsOpen = false;
+        }
    }
 }

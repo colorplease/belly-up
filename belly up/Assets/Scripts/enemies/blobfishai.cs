@@ -138,6 +138,7 @@ public class blobfishai : MonoBehaviour
     {
         yield return new WaitForSeconds(time);
         gameObject.GetComponent<SpriteRenderer>().enabled = false;
+        gameManager.speaker2.PlayOneShot(gameManager.musics[25], 0.5f);
     }
 
      IEnumerator flash()

@@ -190,8 +190,14 @@ public class gameStartManager : MonoBehaviour
 
    public void Tutorial()
    {
-        StartCoroutine(tutorialIt());
+        StartCoroutine(tutorialIt("tutorial 1"));
         audioSource.PlayOneShot(buttonPress);
+   }
+
+   public void Credits()
+   {
+     StartCoroutine(tutorialIt("thank"));
+     audioSource.PlayOneShot(buttonPress);
    }
 
    public void RoadmapMenu()
@@ -206,11 +212,11 @@ public class gameStartManager : MonoBehaviour
         }
    }
 
-   IEnumerator tutorialIt()
+   IEnumerator tutorialIt(string scene)
    {
      black.SetBool("trans", true);
          yield return new WaitForSeconds(1f);
-        SceneManager.LoadScene("tutorial 1");
+        SceneManager.LoadScene(scene);
    }
 
    IEnumerator startIt()

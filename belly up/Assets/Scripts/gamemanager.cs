@@ -56,6 +56,7 @@ public class gamemanager : MonoBehaviour
     public AudioSource speaker;
     public AudioSource speaker2;
     public AudioSource speaker3;
+    public AudioSource speaker4;
     public plasticbag plasticScript;
     public ParticleSystem buble;
     public GameObject endText1;
@@ -132,6 +133,7 @@ public class gamemanager : MonoBehaviour
 
     public IEnumerator outOfPowerGents()
     {
+        speaker2.PlayOneShot(musics[Random.Range(22,24)]);
         shooting.shakeAmount = 0.05f;
         shooting.shakeDuration = 0.25f;
         shooting.shaking = true;
@@ -605,6 +607,7 @@ public class gamemanager : MonoBehaviour
     {
         speaker2.PlayOneShot(musics[10]);
         shooting.hit = true;
+        StartCoroutine(powerFlash());
         if(shooting.canHurt)
         {
             if (maxPower - (5 * dmgMultiplier * damageMultiplier) > 0)
@@ -640,6 +643,18 @@ public class gamemanager : MonoBehaviour
         }
     }
 
+    IEnumerator powerFlash()
+    {
+        Color iloveRed = new Color(1f, 70f/255f, 56f/255f);
+        powerFill.color = iloveRed;
+        yield return new WaitForSeconds(0.075f);
+        powerFill.color = ogColor;
+        yield return new WaitForSeconds(0.075f);
+        powerFill.color = iloveRed;
+        yield return new WaitForSeconds(0.075f);
+        powerFill.color = ogColor;
+    }
+
     void Battery()
     {
         currentPower += powerUpAmount;
@@ -650,7 +665,8 @@ public class gamemanager : MonoBehaviour
     {
         if(canLose)
         {
-            speaker.PlayOneShot(musics[6]);
+            speaker2.PlayOneShot(musics[6]);
+            speaker.Stop();
             shooting.control  = false;
             maxPower = 0;
              spawning = false;
@@ -663,13 +679,15 @@ public class gamemanager : MonoBehaviour
 
     public void Reload()
     {
+       speaker4.PlayOneShot(musics[27]);
+       speaker2.mute = true;
        StartCoroutine(reloadAnime());
     }
 
     IEnumerator reloadAnime()
     {
          black.SetBool("trans", true);
-         yield return new WaitForSeconds(1f);
+         yield return new WaitForSeconds(3.2f);
          PlayerPrefs.SetInt("murder", 0);
          kills = 0;
         Scene scene = SceneManager.GetActiveScene(); SceneManager.LoadScene(scene.name);
