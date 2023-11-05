@@ -35,6 +35,7 @@ public class swordfishai : MonoBehaviour
     {
         amongUs = GameObject.FindWithTag("Player").transform;
         gameManager = GameObject.FindWithTag("GameManager").GetComponent<gamemanager>();
+        HP *= gameManager.healthMultiplier;
     }
 
     void FixedUpdate()
@@ -129,6 +130,7 @@ public class swordfishai : MonoBehaviour
     void die()
     {
         gameManager.kills += 1;
+        gameManager.ComboUp();
         dying = true;
         Generate();
         StopAllCoroutines();

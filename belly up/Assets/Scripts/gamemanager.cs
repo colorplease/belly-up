@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
- 
- using UnityEngine.SceneManagement;
+using UnityEngine.Experimental.Rendering.Universal;
+using UnityEngine.SceneManagement;
 //0: Brake
 //1: Dash
 //2: Auto
@@ -13,7 +13,6 @@ using UnityEngine.UI;
 public class gamemanager : MonoBehaviour
 {
     public Transform cameraTransform;
-    public float currentDepth;
     float currentDepthRounded;
     [SerializeField]TextMeshProUGUI text;
     [SerializeField]TextMeshProUGUI textZone;
@@ -72,8 +71,8 @@ public class gamemanager : MonoBehaviour
     public int howManyAnglers;
     public int anglerSpawns;
     [Header("Difficulty Scaling")]
-    int struggleMinSpawnTime;
-    int struggleMaxSpawnTime;
+    float struggleMinSpawnTime;
+    float struggleMaxSpawnTime;
     int currentMinSpawnTime;
     int currentMaxSpawnTime;
     [Header("Pause")]
@@ -96,19 +95,55 @@ public class gamemanager : MonoBehaviour
     public float powerUpAmount = 35;
     public float scrollSpeed;
     public float descentSpeed;
-    public float powerRegenRate;
-    public float damageMultiplier;
-    public int minEnemyCount;
+    public float powerRegenRate = 9f;
+    public float damageMultiplier = 1f;
+    public float healthMultiplier = 1f;
+    public int minEnemyCount = 0;
     public int enemyLimit;
     [Header("Player Stats")]
     public int kills;
+    public float currentDepth;
+    public int powerNum = 1;
+    [Header("Endless")]
+    public float difficultyLoopTimer;
+    public float difficultyLoopTime;
+    public GameObject screenBigArrowIndicator;
+    public Transform fishBoundary;
+    public Transform spawnBoundary;
+    public Transform bubblesTransform;
+    public CanvasGroup EndlessGameOver;
+    public PixelPerfectCamera cameraBig;
+    bool onlyOnceResults = true; //done to prevent audio clipping during results screen
+    public GameObject COMBO;
+    public TextMeshProUGUI comboNum;
+    public int COMBOCOMBO;
+    public GameObject DEPTHRESULTS;
+    public TextMeshProUGUI depthresultnumber;
+    
 
     void Start()
     {
-        minSpawnTime = 3;
-        maxSpawnTime = 6;
-        struggleMinSpawnTime = 3;
-        struggleMaxSpawnTime = 6;
+        if(!isEndless)
+        {
+            minSpawnTime = 3;
+            maxSpawnTime = 6;
+            struggleMinSpawnTime = 3;
+            struggleMaxSpawnTime = 6;
+        }
+        else
+        {
+            minSpawnTime = 2f;
+            maxSpawnTime = 6f;
+            minEnemyCount = 2;
+            damageMultiplier = 1f;
+            healthMultiplier = 1f;
+            descentSpeed = 10f;
+            struggleMinSpawnTime = minSpawnTime;
+            struggleMaxSpawnTime = maxSpawnTime;
+            limitManage = 5;
+            enemyLimit = 10;
+            difficultyLoopTimer = difficultyLoopTime;
+        }
         currentSpawnTime = Random.Range(minSpawnTime, maxSpawnTime);
         currentPower = maxPower;
          slider.maxValue = maxPower; 
@@ -116,6 +151,10 @@ public class gamemanager : MonoBehaviour
          currentPowerCool = powerCool;
         UpdatePower();
         ogColor = powerFill.color;
+        if(isEndless)
+        {
+            COMBO.SetActive(true);
+        }
     }
 
     void OnEnable()
@@ -230,6 +269,20 @@ public class gamemanager : MonoBehaviour
         }
     }
 
+    public void ComboUp()
+    {
+        COMBO.GetComponentInChildren<Animator>().SetTrigger("comboUp");
+        COMBOCOMBO++;
+        comboNum.SetText(COMBOCOMBO.ToString() + "x");
+    }
+
+    void ComboBreak()
+    {
+        COMBOCOMBO = 0;
+        comboNum.SetText(COMBOCOMBO.ToString() + "x");
+        speaker2.PlayOneShot(musics[31]);
+    }
+
     void Update()
     {
         if(!spawning)
@@ -295,7 +348,7 @@ public class gamemanager : MonoBehaviour
                 break;
             }
         }
-        if (!isTutorial)
+        if (!isTutorial || !isEndless)
         {
             switch(zone)
         {
@@ -364,12 +417,16 @@ public class gamemanager : MonoBehaviour
 
     void LateUpdate()
     {
-         if (currentDepth <= 10935f)
+         if (currentDepth <= 10935f || isEndless)
         {
             cameraTransform.Translate(-Vector2.up * Time.deltaTime * scrollSpeed);
              currentDepth += Time.deltaTime * descentSpeed;
              currentDepthRounded = Mathf.Round(currentDepth);
              text.text = currentDepthRounded.ToString() + "m";
+        }
+        if(textZone.text != "TOTAL FISH MURDERED: " + kills.ToString() && isEndless)
+        {
+            textZone.SetText("TOTAL FISH MURDERED: " + kills.ToString());
         }
     }
     IEnumerator songStart()
@@ -378,6 +435,16 @@ public class gamemanager : MonoBehaviour
         yield return new WaitForSeconds(1);
         speaker.Stop();
         speaker.PlayOneShot(musics[21]);
+    }
+    IEnumerator songStartENDLESS()
+    {
+        speaker.Stop();
+        yield return new WaitForSeconds(1);
+        speaker.Stop();
+        speaker.clip = musics[28];
+        speaker.volume = 0.3f;
+        speaker.Play();
+        speaker.loop = true;
     }
     void FixedUpdate()
     {
@@ -419,6 +486,8 @@ public class gamemanager : MonoBehaviour
                     anglerSpawns++;
                 }
             }
+        if(!isEndless)
+        {
             switch(currentDepthRounded)
         {
             case 0:
@@ -513,7 +582,74 @@ public class gamemanager : MonoBehaviour
             }
         }
         }
+        else
+        {
+            if(currentDepthRounded == 0)
+            {
+                StartCoroutine(songStartENDLESS());
+            }
+            if(difficultyLoopTimer > 0)
+            {
+                if(!isPaused && spawning)
+                {
+                    difficultyLoopTimer -= Time.fixedDeltaTime;
+                    background.color = Color.Lerp(background.color, colors[0], Time.deltaTime * 0.025f);
+                }
+            }
+            else
+            {
+                StartCoroutine(screenBiggeningFlash());
+            }
+
+        }
+        }
+
+            
         
+    }
+
+    IEnumerator screenBiggeningFlash()
+    {
+        difficultyLoopTimer = difficultyLoopTime;
+        speaker2.PlayOneShot(musics[29]);
+        float flashTime = 0.15f;
+        float i = 0;
+        while(i < 4)
+        {
+            screenBigArrowIndicator.SetActive(true);
+            yield return new WaitForSeconds(flashTime);
+            screenBigArrowIndicator.SetActive(false);
+            yield return new WaitForSeconds(flashTime);
+            i++;
+        }
+        cameraBig.assetsPPU -= 1;
+        powerNum += 1;
+        float funnyFishBoundaryScale = fishBoundary.localScale.x + 0.02f;
+        fishBoundary.localScale = new Vector3(funnyFishBoundaryScale, funnyFishBoundaryScale, fishBoundary.localScale.z);
+        float funnySpawnBoundaryScale = spawnBoundary.localScale.x + 0.02f;
+        spawnBoundary.localScale = new Vector3(funnySpawnBoundaryScale, funnySpawnBoundaryScale, spawnBoundary.localScale.z);
+        float funnybubblesScale = bubblesTransform.localScale.x + 0.02f;
+        float funnybubblesPosition = bubblesTransform.localPosition.y - 0.2f;
+        bubblesTransform.localScale = new Vector3(funnybubblesScale, bubblesTransform.localScale.y, bubblesTransform.localScale.z);
+        bubblesTransform.localPosition = new Vector3(bubblesTransform.localPosition.x, funnybubblesPosition, bubblesTransform.localPosition.z);
+        if(minSpawnTime > 0.5f)
+        {
+            minSpawnTime -= 0.015f;
+        }
+
+        if(maxSpawnTime > 0.5f)
+        {
+            maxSpawnTime -= 0.015f;
+        }
+        minEnemyCount += 1;
+        damageMultiplier += 0.08f;
+        healthMultiplier += 0.01f;
+        descentSpeed += 5f;
+        enemyLimit += 1;
+        shooting.maxDistanceTillLoss += 1;
+        struggleMinSpawnTime = minSpawnTime;
+        struggleMaxSpawnTime = maxSpawnTime;
+        print("silly");
     }
 
     IEnumerator boss()
@@ -608,6 +744,7 @@ public class gamemanager : MonoBehaviour
         speaker2.PlayOneShot(musics[10]);
         shooting.hit = true;
         StartCoroutine(powerFlash());
+        ComboBreak();
         if(shooting.canHurt)
         {
             if (maxPower - (5 * dmgMultiplier * damageMultiplier) > 0)
@@ -665,15 +802,66 @@ public class gamemanager : MonoBehaviour
     {
         if(canLose)
         {
-            speaker2.PlayOneShot(musics[6]);
             speaker.Stop();
             shooting.control  = false;
             maxPower = 0;
              spawning = false;
              realUi.alpha  = Mathf.Lerp(realUi.alpha, 0, Time.deltaTime * 5);
-             GameOver.gameObject.SetActive(true);
-            GameOver.alpha  = Mathf.Lerp(GameOver.alpha, 1, Time.deltaTime * 5);
-            totalfishmurderedondeath.SetText("TOTAL FISH MURDERED: " + kills.ToString());
+             if(!isEndless && onlyOnceResults)
+            {
+                GameOver.gameObject.SetActive(true);
+                GameOver.alpha  = Mathf.Lerp(GameOver.alpha, 1, Time.deltaTime * 5);
+                if(onlyOnceResults)
+                {
+                    totalfishmurderedondeath.SetText("TOTAL FISH MURDERED: " + kills.ToString());
+                    speaker2.Stop();
+                    speaker2.PlayOneShot(musics[6]);
+                    onlyOnceResults = false;
+                }
+                
+            }
+            if(isEndless)
+            {
+                EndlessGameOver.gameObject.SetActive(true);
+                EndlessGameOver.alpha  = Mathf.Lerp(EndlessGameOver.alpha, 1, Time.deltaTime * 5);
+                if(onlyOnceResults)
+                {
+                    speaker2.Stop();
+                    speaker2.PlayOneShot(musics[6]);
+                    StartCoroutine(resultsEndless());
+                    onlyOnceResults = false;
+                }
+                
+            }
+            print("yes");
+        }
+    }
+
+    IEnumerator resultsEndless()
+    {
+        float depthTemp = 0;
+        yield return new WaitForSeconds(1.5f);
+        speaker3.Stop();
+        speaker4.clip = musics[30];
+        speaker4.loop = true;
+        speaker4.Play();
+        yield return new WaitForSeconds(0.5f);
+        DEPTHRESULTS.SetActive(true);
+        yield return new WaitForSeconds(1f);
+        while (depthTemp < currentDepth)
+        {
+            yield return new WaitForSeconds(2/currentDepth);
+            speaker3.PlayOneShot(musics[32], 0.25f);
+            depthresultnumber.SetText(depthTemp.ToString() + "M");
+            if((currentDepth - depthTemp) > 1)
+            {
+                depthTemp += 2;
+            }
+            else
+            {
+                depthTemp = currentDepth;
+                depthresultnumber.gameObject.GetComponentInParent<Animator>().SetTrigger("done");
+            }
         }
     }
 

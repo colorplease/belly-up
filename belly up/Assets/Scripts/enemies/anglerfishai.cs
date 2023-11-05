@@ -26,6 +26,7 @@ public class anglerfishai : MonoBehaviour
     {
         amongUs = GameObject.FindWithTag("Player").transform;
         gameManager = GameObject.FindWithTag("GameManager").GetComponent<gamemanager>();
+        HP *= gameManager.healthMultiplier;
 
     }
     void FixedUpdate()
@@ -85,6 +86,7 @@ public class anglerfishai : MonoBehaviour
     void die()
     {
         gameManager.kills += 1;
+        gameManager.ComboUp();
         dying = true;
         Generate();
         StartCoroutine(FadeTo(0f, 0.5f));

@@ -27,6 +27,7 @@ public class blobfishai : MonoBehaviour
     {
         amongUs = GameObject.FindWithTag("Player").transform;
         gameManager = GameObject.FindWithTag("GameManager").GetComponent<gamemanager>();
+        HP *= gameManager.healthMultiplier;
     }
     void FixedUpdate()
     {
@@ -92,6 +93,7 @@ public class blobfishai : MonoBehaviour
     void die()
     {
         gameManager.kills += 1;
+        gameManager.ComboUp();
         if (!dying)
         {
             Generate();

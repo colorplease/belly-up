@@ -45,14 +45,18 @@ public class gameStartManager : MonoBehaviour
    public Button classicButton;
    public Button tutorialButton;
    public Button backButton;
+   public Button endlessButton;
    [SerializeField]Button playButton;
    public GameObject classic;
    public GameObject tutorial;
    public GameObject back;
+   public GameObject ENDLESS;
    public GameObject versionNumber;
    public AudioClip cardFlip;
    public AudioClip buttonSelect;
    public AudioClip buttonPress;
+   [Header("ENDLESS WOOOOOO")]
+   public bool isEndless;
 
    void Start()
    {
@@ -82,9 +86,11 @@ public class gameStartManager : MonoBehaviour
         tutorial.SetActive(false);
         classic.SetActive(false);
         back.SetActive(false);
+        ENDLESS.SetActive(false);
         backButton.interactable = true;
         tutorialButton.interactable = true;
         classicButton.interactable = true;
+        endlessButton.interactable = true;
         playButton.interactable = false;  
         playButton.animator.SetTrigger("Pressed");
         audioSource.PlayOneShot(buttonPress);
@@ -112,6 +118,9 @@ public class gameStartManager : MonoBehaviour
         audioSource.PlayOneShot(cardFlip);
         yield return new WaitForSeconds(0.15f);
         classicButton.interactable = false;
+        audioSource.PlayOneShot(cardFlip);
+        yield return new WaitForSeconds(0.15f);
+        endlessButton.interactable = false;
         audioSource.PlayOneShot(cardFlip);
         yield return new WaitForSeconds(0.15f);
         titleObjects[4].SetActive(true);
@@ -144,6 +153,9 @@ public class gameStartManager : MonoBehaviour
         yield return new WaitForSeconds(0.15f); 
         back.SetActive(true);
         audioSource.PlayOneShot(cardFlip);
+        yield return new WaitForSeconds(0.15f);
+        ENDLESS.SetActive(true);
+        audioSource.PlayOneShot(cardFlip);
    }
 
    public void FishGuide()
@@ -156,9 +168,13 @@ public class gameStartManager : MonoBehaviour
 
    public void StartGame()
    {
-    start.enabled = false;
-    StartCoroutine(startIt());
-    PlayerPrefs.SetInt("lastTip", currentTip);
+     start.enabled = false;
+     StartCoroutine(startIt());
+     PlayerPrefs.SetInt("lastTip", currentTip);
+     endlessButton.interactable = false;
+     classicButton.interactable = false;
+     backButton.interactable = false;
+     tutorialButton.interactable = false;
    }
 
    void OnEnable()
@@ -192,6 +208,10 @@ public class gameStartManager : MonoBehaviour
    {
         StartCoroutine(tutorialIt("tutorial 1"));
         audioSource.PlayOneShot(buttonPress);
+        endlessButton.interactable = false;
+        classicButton.interactable = false;
+        backButton.interactable = false;
+        tutorialButton.interactable = false;
    }
 
    public void Credits()
