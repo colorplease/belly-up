@@ -3293,7 +3293,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -639.1, y: 336.8}
+  m_AnchoredPosition: {x: -931.1, y: 336.8}
   m_SizeDelta: {x: 1044.5, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &317856209
@@ -29261,6 +29261,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: cafe419e983558e4a8807f800afac33b, type: 3}
   - {fileID: 8300000, guid: 3faa1d0377e98a54499cac6b8daacaf9, type: 3}
   - {fileID: 8300000, guid: e9530d5f0ff0f314685ef676b50b87c1, type: 3}
+  - {fileID: 8300000, guid: 904a1d073caaa6846be73acea1c6b460, type: 3}
   speaker: {fileID: 197486059}
   speaker2: {fileID: 1350970319}
   speaker3: {fileID: 629651301}
@@ -29303,6 +29304,7 @@ MonoBehaviour:
   kills: 0
   currentDepth: 0
   powerNum: 1
+  endlessEnds: 0
   difficultyLoopTimer: 0
   difficultyLoopTime: 15
   screenBigArrowIndicator: {fileID: 780974299}

@@ -105,6 +105,7 @@ public class gamemanager : MonoBehaviour
     public float currentDepth;
     public int powerNum = 1;
     [Header("Endless")]
+    public bool endlessEnds;
     public float difficultyLoopTimer;
     public float difficultyLoopTime;
     public GameObject screenBigArrowIndicator;
@@ -419,10 +420,14 @@ public class gamemanager : MonoBehaviour
     {
          if (currentDepth <= 10935f || isEndless)
         {
-            cameraTransform.Translate(-Vector2.up * Time.deltaTime * scrollSpeed);
-             currentDepth += Time.deltaTime * descentSpeed;
-             currentDepthRounded = Mathf.Round(currentDepth);
-             text.text = currentDepthRounded.ToString() + "m";
+            if(!endlessEnds)
+            {
+                cameraTransform.Translate(-Vector2.up * Time.deltaTime * scrollSpeed);
+                currentDepth += Time.deltaTime * descentSpeed;
+                currentDepthRounded = Mathf.Round(currentDepth);
+                text.text = currentDepthRounded.ToString() + "m";
+            }
+            
         }
         if(textZone.text != "TOTAL FISH MURDERED: " + kills.ToString() && isEndless)
         {
@@ -805,8 +810,9 @@ public class gamemanager : MonoBehaviour
             speaker.Stop();
             shooting.control  = false;
             maxPower = 0;
-             spawning = false;
-             realUi.alpha  = Mathf.Lerp(realUi.alpha, 0, Time.deltaTime * 5);
+            spawning = false;
+            endlessEnds = true;
+            realUi.alpha  = Mathf.Lerp(realUi.alpha, 0, Time.deltaTime * 5);
              if(!isEndless && onlyOnceResults)
             {
                 GameOver.gameObject.SetActive(true);
@@ -833,7 +839,7 @@ public class gamemanager : MonoBehaviour
                 }
                 
             }
-            print("yes");
+            //print("yes");
         }
     }
 
@@ -851,19 +857,37 @@ public class gamemanager : MonoBehaviour
         while (depthTemp < currentDepth)
         {
             yield return new WaitForSeconds(2/currentDepth);
-            speaker3.PlayOneShot(musics[32], 0.25f);
             depthresultnumber.SetText(depthTemp.ToString() + "M");
-            if((currentDepth - depthTemp) > 1)
+            if((currentDepth - depthTemp) > 10000)
+            {
+                depthTemp += 250;
+                speaker3.PlayOneShot(musics[32], 0.25f);
+            }
+            else if ((currentDepth - depthTemp) > 1000)
+            {
+                depthTemp += 25;
+                speaker3.PlayOneShot(musics[32], 0.25f);
+            }
+            else if ((currentDepth - depthTemp) > 100)
             {
                 depthTemp += 2;
+                speaker3.PlayOneShot(musics[32], 0.25f);
             }
-            else
+            else if ((currentDepth - depthTemp) > 1)
+            {
+                depthTemp += 1;
+                speaker3.PlayOneShot(musics[32], 0.25f);
+            }
+            else if ((currentDepth - depthTemp) < 1)
             {
                 depthTemp = currentDepth;
-                depthresultnumber.gameObject.GetComponentInParent<Animator>().SetTrigger("done");
+                speaker3.PlayOneShot(musics[32], 0.25f);
             }
         }
-    }
+        //https://youtu.be/qzPxkS2Znmg 
+        DEPTHRESULTS.GetComponent<Animator>().SetTrigger("done");
+        speaker3.PlayOneShot(musics[33]);
+    }   
 
     public void Reload()
     {
