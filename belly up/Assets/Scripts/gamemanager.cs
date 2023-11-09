@@ -103,7 +103,8 @@ public class gamemanager : MonoBehaviour
     [Header("Player Stats")]
     public int kills;
     public float currentDepth;
-    public int powerNum = 1;
+    public int powerNum = 0;
+    public int killreq;
     [Header("Endless")]
     public bool endlessEnds;
     public float difficultyLoopTimer;
@@ -120,6 +121,7 @@ public class gamemanager : MonoBehaviour
     public int COMBOCOMBO;
     public GameObject DEPTHRESULTS;
     public TextMeshProUGUI depthresultnumber;
+    public bool upgrading;
     
 
     void Start()
@@ -422,17 +424,38 @@ public class gamemanager : MonoBehaviour
         {
             if(!endlessEnds)
             {
-                cameraTransform.Translate(-Vector2.up * Time.deltaTime * scrollSpeed);
-                currentDepth += Time.deltaTime * descentSpeed;
-                currentDepthRounded = Mathf.Round(currentDepth);
-                text.text = currentDepthRounded.ToString() + "m";
+                if(!upgrading)
+                {
+                    cameraTransform.Translate(-Vector2.up * Time.deltaTime * scrollSpeed);
+                    currentDepth += Time.deltaTime * descentSpeed;
+                    currentDepthRounded = Mathf.Round(currentDepth);
+                    text.text = currentDepthRounded.ToString() + "m";
+                }
             }
+                
             
         }
-        if(textZone.text != "TOTAL FISH MURDERED: " + kills.ToString() && isEndless)
+        if(textZone.text != kills.ToString() && isEndless)
         {
-            textZone.SetText("TOTAL FISH MURDERED: " + kills.ToString());
+            textZone.SetText(kills.ToString() + "/" + killreq.ToString() + " KILLS");
+            UpgradeCheck();
         }
+    }
+    void UpgradeCheck()
+    {
+        if(kills >= killreq)
+        {
+            UPGRADE();
+            killreq = (int)Mathf.Round(((float)killreq * 1.2f) + 30f);
+        }
+    }
+
+    void UPGRADE()
+    {
+        upgrading = true;
+        spawning = false;
+        shooting.control = false;
+        shooting.player.velocity = Vector2.zero;
     }
     IEnumerator songStart()
     {
