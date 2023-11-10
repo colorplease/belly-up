@@ -78,6 +78,8 @@ public class anglerfishai : MonoBehaviour
                 PolygonCollider2D collider = GetComponentInChildren<PolygonCollider2D>();
                 collider.enabled = false;
                 die();
+                gameManager.kills += 1;
+                gameManager.ComboUp();
                 dying = true;
             }
         }
@@ -85,10 +87,15 @@ public class anglerfishai : MonoBehaviour
 
     void die()
     {
-        gameManager.kills += 1;
-        gameManager.ComboUp();
         dying = true;
         Generate();
+        StartCoroutine(FadeTo(0f, 0.5f));
+        StartCoroutine(death());
+        StartCoroutine(FadeLight(0f, 0.5f));
+    }
+    public void KILLYOURSELF()
+    {
+        dying = true;
         StartCoroutine(FadeTo(0f, 0.5f));
         StartCoroutine(death());
         StartCoroutine(FadeLight(0f, 0.5f));

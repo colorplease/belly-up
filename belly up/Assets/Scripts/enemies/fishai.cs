@@ -63,6 +63,8 @@ public class fishai : MonoBehaviour
             if (HP <= 0)
             {
                 die();
+                gameManager.ComboUp();
+                gameManager.kills += 1;
                 PolygonCollider2D collider = GetComponentInChildren<PolygonCollider2D>();
                 collider.enabled = false;
                 dying = true;
@@ -84,13 +86,18 @@ public class fishai : MonoBehaviour
 
     void die()
     {
-        gameManager.kills += 1;
-        gameManager.ComboUp();
         dying = true;
         Generate();
         StartCoroutine(FadeTo(0f, 0.5f));
         StartCoroutine(death());
     }
+    public void KILLYOURSELF()
+    {
+        dying = true;
+        StartCoroutine(FadeTo(0f, 0.5f));
+        StartCoroutine(death());
+    }
+    
 
     void Generate()
    {

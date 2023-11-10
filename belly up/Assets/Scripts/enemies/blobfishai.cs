@@ -64,6 +64,8 @@ public class blobfishai : MonoBehaviour
             if (HP <= 0)
             {
                 die();
+                gameManager.kills += 1;
+                gameManager.ComboUp();
                 PolygonCollider2D collider = GetComponentInChildren<PolygonCollider2D>();
                 collider.enabled = false;
                 dying = true;
@@ -92,8 +94,6 @@ public class blobfishai : MonoBehaviour
 
     void die()
     {
-        gameManager.kills += 1;
-        gameManager.ComboUp();
         if (!dying)
         {
             Generate();
@@ -102,9 +102,9 @@ public class blobfishai : MonoBehaviour
             if (dupeNumber < 1)
         {
             for(int i = 0; i<Random.Range(2,4);i++)
-         {
-            StartCoroutine(summon());
-         }
+            {
+                StartCoroutine(summon());
+            }
         }
         else
         {
@@ -113,6 +113,13 @@ public class blobfishai : MonoBehaviour
         }
 
         }
+    }
+
+    public void KILLYOURSELF()
+    {
+        dying = true;
+        StartCoroutine(FadeTo(0f, 0.5f));
+        StartCoroutine(death());
     }
    
 

@@ -5,6 +5,7 @@ using TMPro;
 using UnityEngine.UI;
 using UnityEngine.Experimental.Rendering.Universal;
 using UnityEngine.SceneManagement;
+using System.Linq;
 //0: Brake
 //1: Dash
 //2: Auto
@@ -70,6 +71,7 @@ public class gamemanager : MonoBehaviour
     public bool canRegen;
     public int howManyAnglers;
     public int anglerSpawns;
+    [SerializeField]SpriteRenderer[] allChildren;
     [Header("Difficulty Scaling")]
     float struggleMinSpawnTime;
     float struggleMaxSpawnTime;
@@ -456,6 +458,7 @@ public class gamemanager : MonoBehaviour
         spawning = false;
         shooting.control = false;
         shooting.player.velocity = Vector2.zero;
+        Clear();
     }
     IEnumerator songStart()
     {
@@ -746,16 +749,38 @@ public class gamemanager : MonoBehaviour
     {
         if(mommy.childCount > 1)
         {
-            int i = 0;
-            GameObject[] allChildren = new GameObject[mommy.childCount];
-            foreach(Transform child in mommy)
+            allChildren = mommy.GetComponentsInChildren<SpriteRenderer>(); //to exclude the hit box hehehehehe
+            for(int k = 0; k < allChildren.Length; k++)
             {
-                    allChildren[i] = child.gameObject;
-                    i+= 1;
-            }
-            foreach(GameObject child in allChildren)
-            {
-                DestroyImmediate(child.gameObject);
+                print("sus");
+                switch(allChildren[k].transform.tag)
+                {
+                    case "fish":
+                    if(allChildren[k].gameObject.GetComponent<fishai>() != null)
+                    {
+                        allChildren[k].gameObject.GetComponent<fishai>().KILLYOURSELF();
+                    }
+                    break;
+                    case "swordfish":
+                    if(allChildren[k].gameObject.GetComponent<swordfishai>() != null)
+                    {
+                        allChildren[k].gameObject.GetComponent<swordfishai>().KILLYOURSELF();
+                    }
+                    break;
+                    case "angler":
+                    if(allChildren[k].gameObject.GetComponent<anglerfishai>() != null)
+                    {
+                        allChildren[k].gameObject.GetComponent<anglerfishai>().KILLYOURSELF();
+                    }
+                    break;
+                    case "blob":
+                    if(allChildren[k].gameObject.GetComponent<blobfishai>() != null)
+                    {
+                        allChildren[k].gameObject.GetComponent<blobfishai>().KILLYOURSELF();
+                    }
+                    break;
+                }
+                
             }
         }
     }
