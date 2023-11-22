@@ -130,7 +130,7 @@ public class blobfishai : MonoBehaviour
         Destroy(splitEffect, 5f);
         StartCoroutine(FadeTo(0f, 1.25f));
         yield return new WaitForSeconds(0.25f);
-        GameObject fish = Instantiate(underlings, new Vector2(transform.position.x + Random.Range(-0.3f, 0.3f), transform.position.y + Random.Range(-0.1f, 0.1f)), Quaternion.identity);
+        GameObject fish = Instantiate(underlings, new Vector2(transform.position.x + Random.Range(-0.3f, 0.3f), transform.position.y + Random.Range(-0.1f, 0.1f)), Quaternion.identity, gameManager.mommy);
         fish.GetComponent<SpriteRenderer>().enabled = true;
         fish.transform.localScale = new Vector2(transform.localScale.x * 0.75f, transform.localScale.y  * 0.75f);
         Color transparencyFix = new Color(1f, 1f, 1f, 1f);

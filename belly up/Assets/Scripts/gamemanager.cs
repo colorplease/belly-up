@@ -124,6 +124,7 @@ public class gamemanager : MonoBehaviour
     public GameObject DEPTHRESULTS;
     public TextMeshProUGUI depthresultnumber;
     public bool upgrading;
+    public GameObject upgradePanel;
     
 
     void Start()
@@ -148,6 +149,7 @@ public class gamemanager : MonoBehaviour
             limitManage = 5;
             enemyLimit = 10;
             difficultyLoopTimer = difficultyLoopTime;
+            upgradePanel.SetActive(true);
         }
         currentSpawnTime = Random.Range(minSpawnTime, maxSpawnTime);
         currentPower = maxPower;
@@ -417,6 +419,11 @@ public class gamemanager : MonoBehaviour
                 break;
             }
             shooting.usedPower = false;
+        }
+        if(upgrading)
+        {
+            upgradePanel.GetComponent<CanvasGroup>().alpha = Mathf.Lerp(upgradePanel.GetComponent<CanvasGroup>().alpha, 1, Time.deltaTime * 5);
+            Clear();
         }
     }
 
@@ -780,7 +787,7 @@ public class gamemanager : MonoBehaviour
                     }
                     break;
                 }
-                
+                print("1");
             }
         }
     }

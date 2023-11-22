@@ -140,11 +140,14 @@ public class swordfishai : MonoBehaviour
     }
     public void KILLYOURSELF()
     {
-        dying = true;
-        StopAllCoroutines();
-        laser.SetActive(false);
-        StartCoroutine(FadeTo(0f, 0.5f));
-        StartCoroutine(death());
+        if(dying == false)
+        {
+            dying = true;
+            StopAllCoroutines();
+            laser.SetActive(false);
+            StartCoroutine(FadeTo(0f, 0.5f));
+            StartCoroutine(death());
+        }
     }
     void Generate()
    {
