@@ -30,6 +30,8 @@ public class UpgradeCard : MonoBehaviour
     //22 Swordfish Slayer - Deal 15% more damage against swordfish. Fish Spawn Rate increased by 25%.
     //23 Angler Annihilator - Deal 15% more damage against anglerfish. Fish Spawn Rate increased by 25%.
     //24 Blobfish Butcher - Deal 15% more damage against blobfish. Fish Spawn Rate increased by 25%.
+    //25 Attack Up! - Increase Damage by 10%.
+    //26 Max Energy Up! - Increase Max Energy by 10%
     
 
     //1125 Punyama’s Blessing, God of Cowardice - Forfeit all upgrades to reset the difficulty back to the beginning.
