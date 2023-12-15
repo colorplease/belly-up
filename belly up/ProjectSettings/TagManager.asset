@@ -21,6 +21,7 @@ TagManager:
   - bluepikmin
   - buttonClickNoise
   - upgradeCard
+  - upgraderstation
   layers:
   - Default
   - TransparentFX

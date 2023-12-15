@@ -1575,6 +1575,7 @@ GameObject:
   m_Component:
   - component: {fileID: 197486058}
   - component: {fileID: 197486059}
+  - component: {fileID: 197486060}
   m_Layer: 0
   m_Name: Music
   m_TagString: Untagged
@@ -1693,6 +1694,16 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!165 &197486060
+AudioHighPassFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 197486057}
+  m_Enabled: 1
+  m_CutoffFrequency: 10
+  m_HighpassResonanceQ: 1
 --- !u!1 &198286939
 GameObject:
   m_ObjectHideFlags: 0
@@ -4836,9 +4847,10 @@ GameObject:
   m_Component:
   - component: {fileID: 476362678}
   - component: {fileID: 476362679}
+  - component: {fileID: 476362680}
   m_Layer: 5
   m_Name: Upgrade New Card Screen
-  m_TagString: Untagged
+  m_TagString: upgraderstation
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4887,6 +4899,37 @@ MonoBehaviour:
   m_Spacing: {x: 61.3, y: 168.1}
   m_Constraint: 0
   m_ConstraintCount: 2
+--- !u!114 &476362680
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 476362677}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 768f49f481a79774983a066505335117, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  upgradeCards:
+  - {fileID: 7934907713266352216, guid: d5b0d9a11955cbd4e9c62f176b852c68, type: 3}
+  - {fileID: 3114646317330889577, guid: bad63c6fd983ce042861539235021ef1, type: 3}
+  - {fileID: 4808912042021248727, guid: c8f32367b1be3c745b1055331435ccdf, type: 3}
+  godhoodCards:
+  - {fileID: 5992341626915025794, guid: a2b0fb66c3eeb98438182a8cb1c706c3, type: 3}
+  - {fileID: 6048525766654730582, guid: 2609a18a49ef5524fa39840c7a1e5464, type: 3}
+  - {fileID: 2294602761086272714, guid: c5ff3c55ad6a21f479dba43abefce420, type: 3}
+  - {fileID: 1066818724406761579, guid: 94a9c03e271bfb846ba1cdc99a5948ca, type: 3}
+  - {fileID: 8158964281581513492, guid: a9713c0d39dcf454e9531f2becacd0c9, type: 3}
+  - {fileID: 2357911510786623758, guid: 07d3498cd4121d84fafc4dbfe0f1e386, type: 3}
+  - {fileID: 8475313463092847727, guid: 0fdef1a85b0699b49b9c8703c6440dac, type: 3}
+  - {fileID: 7826321991099905875, guid: 0fab4ac3113ee114babfd8ea98ce9cba, type: 3}
+  - {fileID: 2002772505990297097, guid: 4212460f804e7c04ba58bf99e601b929, type: 3}
+  endgameCards:
+  - {fileID: 631001942142543999, guid: ff68d8d1b6c402245b7528c6d83fa32c, type: 3}
+  - {fileID: 8003942916540788099, guid: 06a534c5b169092448c8961f0f0829f5, type: 3}
+  GAMING: {fileID: 2048835607}
+  activeCards: []
 --- !u!1 &515910244
 GameObject:
   m_ObjectHideFlags: 0
@@ -29531,6 +29574,10 @@ MonoBehaviour:
   healthMultiplier: 1
   minEnemyCount: 0
   enemyLimit: 50
+  shotgunKnockback: 1
+  singleShotKnockback: 1
+  singleShotFireRate: 1
+  shotgunFireRate: 1
   kills: 0
   currentDepth: 0
   powerNum: 1
@@ -29551,6 +29598,8 @@ MonoBehaviour:
   depthresultnumber: {fileID: 1957114029}
   upgrading: 0
   upgradePanel: {fileID: 1961131172}
+  upgradeSystem: {fileID: 476362680}
+  audioTransitionUpgrading: {fileID: 197486060}
 --- !u!4 &2048835608
 Transform:
   m_ObjectHideFlags: 0

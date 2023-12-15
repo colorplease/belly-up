@@ -102,6 +102,11 @@ public class gamemanager : MonoBehaviour
     public float healthMultiplier = 1f;
     public int minEnemyCount = 0;
     public int enemyLimit;
+    public float shotgunKnockback = 1;
+    public float singleShotKnockback = 1;
+    public float singleShotFireRate = 1;
+    public float shotgunFireRate = 1;
+
     [Header("Player Stats")]
     public int kills;
     public float currentDepth;
@@ -125,7 +130,8 @@ public class gamemanager : MonoBehaviour
     public TextMeshProUGUI depthresultnumber;
     public bool upgrading;
     public GameObject upgradePanel;
-    
+    public upgrading upgradeSystem;
+    public AudioHighPassFilter audioTransitionUpgrading;
 
     void Start()
     {
@@ -420,11 +426,6 @@ public class gamemanager : MonoBehaviour
             }
             shooting.usedPower = false;
         }
-        if(upgrading)
-        {
-            upgradePanel.GetComponent<CanvasGroup>().alpha = Mathf.Lerp(upgradePanel.GetComponent<CanvasGroup>().alpha, 1, Time.deltaTime * 5);
-            Clear();
-        }
     }
 
     void LateUpdate()
@@ -461,11 +462,59 @@ public class gamemanager : MonoBehaviour
 
     void UPGRADE()
     {
+        StartCoroutine(upgradeScreenTransitionIn());
         upgrading = true;
         spawning = false;
         shooting.control = false;
         shooting.player.velocity = Vector2.zero;
         Clear();
+        upgradeSystem.GenerateCards();
+        StartCoroutine(upgradeAudioTransitionIn());
+    }
+    public void NOTUPGRADE()
+    {
+        StartCoroutine(upgradeScreenTransitionOut());
+        upgrading = false;
+        spawning = true;
+        shooting.control = true;
+        StartCoroutine(upgradeAudioTransitionOut());
+    }
+    IEnumerator upgradeScreenTransitionIn()
+    {
+        float timeToStart = Time.time;
+        while(upgradePanel.GetComponent<CanvasGroup>().alpha < 1)
+        {
+            upgradePanel.GetComponent<CanvasGroup>().alpha = Mathf.Lerp(upgradePanel.GetComponent<CanvasGroup>().alpha, 1, (Time.time - timeToStart) * 4); 
+            yield return null;
+        }
+    }
+    IEnumerator upgradeScreenTransitionOut()
+    {
+        float timeToStart = Time.time;
+        while(upgradePanel.GetComponent<CanvasGroup>().alpha > 0)
+        {
+            upgradePanel.GetComponent<CanvasGroup>().alpha = Mathf.Lerp( upgradePanel.GetComponent<CanvasGroup>().alpha, 0, (Time.time - timeToStart) * 4); 
+            yield return null;
+        }
+    }
+    IEnumerator upgradeAudioTransitionIn()
+    {
+        float timeToStart = Time.time;
+        while(audioTransitionUpgrading.cutoffFrequency < 5000)
+        {
+            audioTransitionUpgrading.cutoffFrequency = Mathf.Lerp(0, 5001, (Time.time - timeToStart) * 2);
+            yield return null;
+        }
+
+    }
+    IEnumerator upgradeAudioTransitionOut()
+    {
+        float timeToStart = Time.time;
+        while(audioTransitionUpgrading.cutoffFrequency > 0)
+        {
+            audioTransitionUpgrading.cutoffFrequency = Mathf.Lerp(5001,0 , (Time.time - timeToStart) * 2);
+            yield return null;
+        }
     }
     IEnumerator songStart()
     {

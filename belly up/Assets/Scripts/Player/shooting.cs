@@ -335,8 +335,8 @@ public class shooting : MonoBehaviour
       if (!outOfPower)
       {
         bubbles.Play();
-        playerKnockbackForce = 0.075f;
-      fireRate = 5;
+        playerKnockbackForce = 0.075f * gameManager.singleShotKnockback;
+      fireRate = 5 * gameManager.singleShotFireRate;
       shakeAmount = 0.025f;
       shakeDuration = 0.25f;
       Shake();
@@ -358,8 +358,8 @@ public class shooting : MonoBehaviour
         usedPower = true;
      if (!outOfPower)
      {
-      playerKnockbackForce = 0.05f;
-           fireRate = 1.5f;
+      playerKnockbackForce = 0.05f * gameManager.shotgunKnockback;
+           fireRate = 1.5f * gameManager.shotgunFireRate;
            bulletForce = 15;
            shakeAmount = 0.075f;
       shakeDuration = 0.25f;

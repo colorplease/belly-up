@@ -47,6 +47,6 @@ public class UpgradeCard : MonoBehaviour
 
     public void UpgradePicked()
     {
-        print("told her get a friend");
+        GameObject.FindGameObjectWithTag("upgraderstation").GetComponent<upgrading>().ApplyUpgrade(id);
     }
 }
