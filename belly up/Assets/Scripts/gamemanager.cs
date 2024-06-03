@@ -87,7 +87,7 @@ public class gamemanager : MonoBehaviour
     [SerializeField]GameObject secretMenu;
     [SerializeField]TextMeshProUGUI confirmation;
     public bool dylanMode;
-    int scheme = 0;
+    [SerializeField]int scheme = 0;
     public bool isPaused;
     [SerializeField]GameObject PToPause;
     [Header("PowerAttributes")]
@@ -123,8 +123,6 @@ public class gamemanager : MonoBehaviour
     public int COMBOCOMBO;
     public GameObject DEPTHRESULTS;
     public TextMeshProUGUI depthresultnumber;
-    public bool upgrading;
-    public GameObject upgradePanel;
     
 
     void Start()
@@ -149,7 +147,6 @@ public class gamemanager : MonoBehaviour
             limitManage = 5;
             enemyLimit = 10;
             difficultyLoopTimer = difficultyLoopTime;
-            upgradePanel.SetActive(true);
         }
         currentSpawnTime = Random.Range(minSpawnTime, maxSpawnTime);
         currentPower = maxPower;
@@ -162,6 +159,7 @@ public class gamemanager : MonoBehaviour
         {
             COMBO.SetActive(true);
         }
+        ControlSwappers();
     }
 
     void OnEnable()
@@ -420,11 +418,6 @@ public class gamemanager : MonoBehaviour
             }
             shooting.usedPower = false;
         }
-        if(upgrading)
-        {
-            upgradePanel.GetComponent<CanvasGroup>().alpha = Mathf.Lerp(upgradePanel.GetComponent<CanvasGroup>().alpha, 1, Time.deltaTime * 5);
-            Clear();
-        }
     }
 
     void LateUpdate()
@@ -433,13 +426,10 @@ public class gamemanager : MonoBehaviour
         {
             if(!endlessEnds)
             {
-                if(!upgrading)
-                {
                     cameraTransform.Translate(-Vector2.up * Time.deltaTime * scrollSpeed);
                     currentDepth += Time.deltaTime * descentSpeed;
                     currentDepthRounded = Mathf.Round(currentDepth);
                     text.text = currentDepthRounded.ToString() + "m";
-                }
             }
                 
             
@@ -447,26 +437,9 @@ public class gamemanager : MonoBehaviour
         if(textZone.text != kills.ToString() && isEndless)
         {
             textZone.SetText(kills.ToString() + "/" + killreq.ToString() + " KILLS");
-            UpgradeCheck();
-        }
-    }
-    void UpgradeCheck()
-    {
-        if(kills >= killreq)
-        {
-            UPGRADE();
-            killreq = (int)Mathf.Round(((float)killreq * 1.2f) + 30f);
         }
     }
 
-    void UPGRADE()
-    {
-        upgrading = true;
-        spawning = false;
-        shooting.control = false;
-        shooting.player.velocity = Vector2.zero;
-        Clear();
-    }
     IEnumerator songStart()
     {
         speaker.Stop();
@@ -759,7 +732,6 @@ public class gamemanager : MonoBehaviour
             allChildren = mommy.GetComponentsInChildren<SpriteRenderer>(); //to exclude the hit box hehehehehe
             for(int k = 0; k < allChildren.Length; k++)
             {
-                print("sus");
                 switch(allChildren[k].transform.tag)
                 {
                     case "fish":
@@ -787,7 +759,6 @@ public class gamemanager : MonoBehaviour
                     }
                     break;
                 }
-                print("1");
             }
         }
     }

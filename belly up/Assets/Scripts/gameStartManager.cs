@@ -57,7 +57,12 @@ public class gameStartManager : MonoBehaviour
    public AudioClip buttonPress;
    [Header("ENDLESS WOOOOOO")]
    public bool isEndless;
-
+   [SerializeField]float barSmoothTime;
+   public Color[] upgradeColors;
+   public Slider[] barUpgrades;
+   public Image[] fills;
+   public Image[] backgrounds;
+   public int maxPowerUpgradeInt;
    void Start()
    {
     versionNumber.SetActive(false);
@@ -96,6 +101,21 @@ public class gameStartManager : MonoBehaviour
         audioSource.PlayOneShot(buttonPress);
         StartCoroutine(gameMenuOpen());   
    }
+
+   public void UpgradeSomething(int upgradeID)
+    {
+        switch(upgradeID)
+        {
+            case 0:
+            maxPowerUpgradeInt += 1;
+            fills[0].color = upgradeColors[maxPowerUpgradeInt];
+            Color stupidDumbBackground = upgradeColors[maxPowerUpgradeInt];
+            stupidDumbBackground = new Color(stupidDumbBackground.r, stupidDumbBackground.g, stupidDumbBackground.b, 0.220f);
+            backgrounds[0].color = stupidDumbBackground;
+            barUpgrades[0].value += 0.067f;
+            break;
+        }
+    }
 
    public void CloseGameModeMenu()
    {
