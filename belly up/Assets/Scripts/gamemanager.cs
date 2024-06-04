@@ -106,7 +106,9 @@ public class gamemanager : MonoBehaviour
     public int kills;
     public float currentDepth;
     public int powerNum = 0;
-    public int killreq;
+    public int maxCombo;
+    public int powerUpsEaten;
+    public int finalScore;
     [Header("Endless")]
     public bool endlessEnds;
     public float difficultyLoopTimer;
@@ -123,6 +125,17 @@ public class gamemanager : MonoBehaviour
     public int COMBOCOMBO;
     public GameObject DEPTHRESULTS;
     public TextMeshProUGUI depthresultnumber;
+    public GameObject KILLRESULTS;
+    public TextMeshProUGUI killResultNumber;
+    public GameObject COMBORESULTS;
+    public TextMeshProUGUI comboResultNumber;
+    public GameObject POWERUPRESULTS;
+    public TextMeshProUGUI powerUpsResultNumber;
+    public GameObject FINALSCORERESULTS;
+    public TextMeshProUGUI finalScoreResultNumber;
+    public GameObject freshStart;
+    [SerializeField]bool canRefresh;
+
     
 
     void Start()
@@ -279,6 +292,10 @@ public class gamemanager : MonoBehaviour
         COMBO.GetComponentInChildren<Animator>().SetTrigger("comboUp");
         COMBOCOMBO++;
         comboNum.SetText(COMBOCOMBO.ToString() + "x");
+        if(COMBOCOMBO > maxCombo)
+        {
+            maxCombo = COMBOCOMBO;
+        }
     }
 
     void ComboBreak()
@@ -290,6 +307,10 @@ public class gamemanager : MonoBehaviour
 
     void Update()
     {
+        if(canRefresh && Input.GetKeyDown(KeyCode.R))
+        {
+            StartCoroutine(reloadAnime());
+        }
         if(!spawning)
         {
             Clear();
@@ -330,7 +351,7 @@ public class gamemanager : MonoBehaviour
         }
         if (powerUpUsed)
         {
-            
+            powerUpsEaten++;
             switch(powerUpType)
             {
                 case 0:
@@ -436,7 +457,7 @@ public class gamemanager : MonoBehaviour
         }
         if(textZone.text != kills.ToString() && isEndless)
         {
-            textZone.SetText(kills.ToString() + "/" + killreq.ToString() + " KILLS");
+            textZone.SetText(kills.ToString() + " KILLS");
         }
     }
 
@@ -775,7 +796,10 @@ public class gamemanager : MonoBehaviour
         speaker2.PlayOneShot(musics[10]);
         shooting.hit = true;
         StartCoroutine(powerFlash());
-        ComboBreak();
+        if(isEndless)
+        {
+            ComboBreak();
+        }
         if(shooting.canHurt)
         {
             if (maxPower - (5 * dmgMultiplier * damageMultiplier) > 0)
@@ -882,38 +906,192 @@ public class gamemanager : MonoBehaviour
         yield return new WaitForSeconds(1f);
         while (depthTemp < currentDepth)
         {
-            yield return new WaitForSeconds(2/currentDepth);
+            yield return new WaitForSeconds(0.025f);
             depthresultnumber.SetText(depthTemp.ToString() + "M");
             if((currentDepth - depthTemp) > 10000)
             {
-                depthTemp += 250;
-                speaker3.PlayOneShot(musics[32], 0.25f);
+                depthTemp += 2500;
             }
             else if ((currentDepth - depthTemp) > 1000)
             {
-                depthTemp += 25;
-                speaker3.PlayOneShot(musics[32], 0.25f);
+                depthTemp += 250;
             }
             else if ((currentDepth - depthTemp) > 100)
             {
+                depthTemp += 25;
+            }
+            else if ((currentDepth - depthTemp) > 10)
+            {
                 depthTemp += 2;
-                speaker3.PlayOneShot(musics[32], 0.25f);
             }
             else if ((currentDepth - depthTemp) > 1)
             {
                 depthTemp += 1;
-                speaker3.PlayOneShot(musics[32], 0.25f);
             }
-            else if ((currentDepth - depthTemp) < 1)
+            else
             {
                 depthTemp = currentDepth;
-                speaker3.PlayOneShot(musics[32], 0.25f);
             }
+             speaker3.PlayOneShot(musics[32], 0.5f);
         }
+        currentDepth = Mathf.Round(currentDepth);
+        depthTemp = currentDepth;
+        depthresultnumber.SetText(depthTemp.ToString() + "M");
+        speaker3.PlayOneShot(musics[32], 0.5f);
         //https://youtu.be/qzPxkS2Znmg 
         DEPTHRESULTS.GetComponent<Animator>().SetTrigger("done");
-        speaker3.PlayOneShot(musics[33]);
+        speaker3.PlayOneShot(musics[33], 1f);
+        StartCoroutine(resultsEndlessKills());
     }   
+
+    IEnumerator resultsEndlessKills()
+    {
+        float killTemp = 0;
+        yield return new WaitForSeconds(0.5f);
+        KILLRESULTS.SetActive(true);
+        yield return new WaitForSeconds(1f);
+        while (killTemp < kills)
+        {
+            yield return new WaitForSeconds(0.025f);
+            killResultNumber.SetText(killTemp.ToString());
+            if((kills - killTemp) > 1000)
+            {
+                killTemp += 250;
+            }
+            else if ((kills - killTemp) > 100)
+            {
+                killTemp += 25;
+            }
+            else if ((kills - killTemp) > 100)
+            {
+                killTemp += 2;
+            }
+            else
+            {
+                killTemp += 1;
+            }
+            speaker3.PlayOneShot(musics[32], 0.5f);
+        }
+        killTemp = kills;
+        killResultNumber.SetText(killTemp.ToString());
+        speaker3.PlayOneShot(musics[32], 0.5f);
+        KILLRESULTS.GetComponent<Animator>().SetTrigger("done");
+        speaker3.PlayOneShot(musics[34], 1f);
+        StartCoroutine(resultsEndlessCombos());
+    }
+
+    IEnumerator resultsEndlessCombos()
+    {
+        float comboTemp = 0;
+        yield return new WaitForSeconds(0.5f);
+        COMBORESULTS.SetActive(true);
+        yield return new WaitForSeconds(1f);
+        while(comboTemp < maxCombo)
+        {
+            yield return new WaitForSeconds(0.025f);
+            comboResultNumber.SetText(comboTemp.ToString());
+            if ((maxCombo - comboTemp) > 100)
+            {
+                comboTemp += 2;
+            }
+            else
+            {
+                comboTemp += 1;
+            }
+            speaker3.PlayOneShot(musics[32], 0.5f);
+        }
+        comboTemp = maxCombo;
+        comboResultNumber.SetText(comboTemp.ToString());
+        speaker3.PlayOneShot(musics[32], 0.5f);
+        COMBORESULTS.GetComponent<Animator>().SetTrigger("done");
+        speaker3.PlayOneShot(musics[35], 1f);
+        StartCoroutine(resultsHitsTaken());
+    }
+
+    IEnumerator resultsHitsTaken()
+    {
+        float hitsTemp = 0;
+        yield return new WaitForSeconds(0.5f);
+        POWERUPRESULTS.SetActive(true);
+        yield return new WaitForSeconds(1f);
+        while(hitsTemp < powerUpsEaten)
+        {
+            yield return new WaitForSeconds(0.025f);
+            powerUpsResultNumber.SetText(hitsTemp.ToString());
+            if((powerUpsEaten - hitsTemp) > 1000)
+            {
+                hitsTemp += 250;
+            }
+            else if ((powerUpsEaten - hitsTemp) > 100)
+            {
+                hitsTemp += 25;
+            }
+            else if ((powerUpsEaten - hitsTemp) > 100)
+            {
+                hitsTemp += 2;
+            }
+            else
+            {
+                hitsTemp += 1;
+            }
+            speaker3.PlayOneShot(musics[32], 0.5f);
+        }
+        hitsTemp = powerUpsEaten;
+        powerUpsResultNumber.SetText(hitsTemp.ToString());
+        speaker3.PlayOneShot(musics[32], 0.5f);
+        POWERUPRESULTS.GetComponent<Animator>().SetTrigger("done");
+        speaker3.PlayOneShot(musics[36], 1f);
+        StartCoroutine(finalScoreCalculationResults());
+    }
+
+    IEnumerator finalScoreCalculationResults()
+    {
+        //oh man
+        //so basically depth * ((kills * 0.05f) + (maxCombo * 0.1f) - (hitsTaken * 0.1f))
+        finalScore = (int)Mathf.Round((int)Mathf.Round(currentDepth) * (1+((kills * 0.05f) + (maxCombo * 0.1f) + (powerUpsEaten * 0.05f))));
+        float scoreTemp = 0;
+        yield return new WaitForSeconds(0.5f);
+        FINALSCORERESULTS.SetActive(true);
+        yield return new WaitForSeconds(1f);
+        while(scoreTemp < finalScore)
+        {
+           yield return new WaitForSeconds(0.025f);
+            finalScoreResultNumber.SetText(scoreTemp.ToString());
+            if((finalScore - scoreTemp) > 10000)
+            {
+                scoreTemp += 2500;
+            }
+            else if ((finalScore - scoreTemp) > 1000)
+            {
+                scoreTemp += 250;
+            }
+            else if ((finalScore - scoreTemp) > 100)
+            {
+                scoreTemp += 25;
+            }
+            else if ((finalScore - scoreTemp) > 10)
+            {
+                scoreTemp += 2;
+            }
+            else if ((finalScore - scoreTemp) > 1)
+            {
+                scoreTemp += 1;
+            }
+            else
+            {
+                scoreTemp = finalScore;
+            }
+             speaker3.PlayOneShot(musics[32], 0.5f); 
+        }
+        scoreTemp = finalScore;
+        finalScoreResultNumber.SetText(scoreTemp.ToString());
+        speaker3.PlayOneShot(musics[32], 0.5f);
+        FINALSCORERESULTS.GetComponent<Animator>().SetTrigger("done");
+        speaker3.PlayOneShot(musics[37], 1f);
+        yield return new WaitForSeconds(1);
+        freshStart.SetActive(true);
+        canRefresh = true;
+    }
 
     public void Reload()
     {

@@ -79,7 +79,10 @@ public class anglerfishai : MonoBehaviour
                 collider.enabled = false;
                 die();
                 gameManager.kills += 1;
-                gameManager.ComboUp();
+                if(gameManager.isEndless)
+                {
+                    gameManager.ComboUp();
+                }
                 dying = true;
             }
         }

@@ -1102,7 +1102,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 269277130}
   m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 0.00999999, y: -3.3200073, z: 8.9217005}
+  m_LocalPosition: {x: 0.00999999, y: -3.65, z: 8.9217005}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1820,7 +1820,7 @@ ParticleSystem:
     donutRadius: 0.2
     m_Position: {x: 0, y: 0, z: 0}
     m_Rotation: {x: 0, y: 0, z: 0}
-    m_Scale: {x: 10, y: 1, z: 1}
+    m_Scale: {x: 14, y: 1, z: 1}
     placementMode: 0
     m_MeshMaterialIndex: 0
     m_MeshNormalOffset: 0
@@ -9902,8 +9902,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: -7
-  m_Sprite: {fileID: 7482667652216324306, guid: 48e93eef0688c4a259cb0eddcd8661f7, type: 3}
-  m_Color: {r: 0.06666667, g: 0.5411765, b: 0.69803923, a: 1}
+  m_Sprite: {fileID: 21300000, guid: 68b3aa8d2f934054daf046cd434ed5d7, type: 3}
+  m_Color: {r: 0.5700427, g: 0.63929933, b: 0.6603774, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -9921,8 +9921,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1277180409}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.11, y: -4.2285, z: -5.5}
-  m_LocalScale: {x: 12.33, y: 16.697016, z: 1.1687204}
+  m_LocalPosition: {x: -0.11, y: 0.25, z: -5.5}
+  m_LocalScale: {x: 0.7, y: 0.7, z: 0.7}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
@@ -9948,6 +9948,11 @@ MonoBehaviour:
   leftArrow: {fileID: 0}
   rightArrow: {fileID: 0}
   index: 0
+  buttonPress: {fileID: 0}
+  audioSource: {fileID: 0}
+  everything: {fileID: 0}
+  everything2: {fileID: 0}
+  assetUsedButtonText: {fileID: 0}
 --- !u!82 &1277180413
 AudioSource:
   m_ObjectHideFlags: 0
@@ -14663,7 +14668,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cameraTransform: {fileID: 1554629353}
-  currentDepth: 30935
   text: {fileID: 1361992655}
   textZone: {fileID: 389636816}
   shooting: {fileID: 1373237219}
@@ -14733,6 +14737,7 @@ MonoBehaviour:
   speaker: {fileID: 2048835609}
   speaker2: {fileID: 1277180413}
   speaker3: {fileID: 2031623351}
+  speaker4: {fileID: 0}
   plasticScript: {fileID: 0}
   buble: {fileID: 0}
   endText1: {fileID: 0}
@@ -14746,6 +14751,7 @@ MonoBehaviour:
   canRegen: 0
   howManyAnglers: 0
   anglerSpawns: 0
+  allChildren: []
   pauseMenu: {fileID: 0}
   pauseMenuMenu: {fileID: 0}
   accessMenu: {fileID: 0}
@@ -14755,6 +14761,7 @@ MonoBehaviour:
   secretMenu: {fileID: 0}
   confirmation: {fileID: 0}
   dylanMode: 0
+  scheme: 0
   isPaused: 0
   PToPause: {fileID: 0}
   isEndless: 0
@@ -14765,9 +14772,39 @@ MonoBehaviour:
   descentSpeed: 18.33
   powerRegenRate: 9
   damageMultiplier: 0
+  healthMultiplier: 1
   minEnemyCount: 0
   enemyLimit: 2
   kills: 0
+  currentDepth: 30935
+  powerNum: 0
+  maxCombo: 0
+  powerUpsEaten: 0
+  finalScore: 0
+  endlessEnds: 0
+  difficultyLoopTimer: 0
+  difficultyLoopTime: 0
+  screenBigArrowIndicator: {fileID: 0}
+  fishBoundary: {fileID: 0}
+  spawnBoundary: {fileID: 0}
+  bubblesTransform: {fileID: 0}
+  EndlessGameOver: {fileID: 0}
+  cameraBig: {fileID: 0}
+  COMBO: {fileID: 0}
+  comboNum: {fileID: 0}
+  COMBOCOMBO: 0
+  DEPTHRESULTS: {fileID: 0}
+  depthresultnumber: {fileID: 0}
+  KILLRESULTS: {fileID: 0}
+  killResultNumber: {fileID: 0}
+  COMBORESULTS: {fileID: 0}
+  comboResultNumber: {fileID: 0}
+  POWERUPRESULTS: {fileID: 0}
+  powerUpsResultNumber: {fileID: 0}
+  FINALSCORERESULTS: {fileID: 0}
+  finalScoreResultNumber: {fileID: 0}
+  freshStart: {fileID: 0}
+  canRefresh: 0
 --- !u!4 &2048835608
 Transform:
   m_ObjectHideFlags: 0

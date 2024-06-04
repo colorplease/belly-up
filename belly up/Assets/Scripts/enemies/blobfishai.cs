@@ -65,7 +65,10 @@ public class blobfishai : MonoBehaviour
             {
                 die();
                 gameManager.kills += 1;
-                gameManager.ComboUp();
+                if(gameManager.isEndless)
+                {
+                    gameManager.ComboUp();
+                }
                 PolygonCollider2D collider = GetComponentInChildren<PolygonCollider2D>();
                 collider.enabled = false;
                 dying = true;

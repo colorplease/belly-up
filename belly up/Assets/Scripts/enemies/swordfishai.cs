@@ -120,7 +120,10 @@ public class swordfishai : MonoBehaviour
             if (HP <= 0)
             {
                 die();
-                gameManager.ComboUp();
+                if(gameManager.isEndless)
+                {
+                    gameManager.ComboUp();
+                }
                 gameManager.kills += 1;
                 PolygonCollider2D collider = GetComponentInChildren<PolygonCollider2D>();
                 collider.enabled = false;
