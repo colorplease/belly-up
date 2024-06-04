@@ -133,11 +133,12 @@ public class gamemanager : MonoBehaviour
     public TextMeshProUGUI powerUpsResultNumber;
     public GameObject FINALSCORERESULTS;
     public TextMeshProUGUI finalScoreResultNumber;
-    public GameObject freshStart;
+    public GameObject newHighScore;
     [SerializeField]bool canRefresh;
+    public GameObject endlessResultNextButton;
+    public GameObject gameOverHolder;
 
     
-
     void Start()
     {
         if(!isEndless)
@@ -178,6 +179,12 @@ public class gamemanager : MonoBehaviour
     void OnEnable()
     {
         StartCoroutine(PToPauseNotif());
+    }
+
+    public void displayLeaderBoard()
+    {
+        gameOverHolder.SetActive(false);
+        canRefresh = true;
     }
     
     IEnumerator PToPauseNotif()
@@ -1088,9 +1095,13 @@ public class gamemanager : MonoBehaviour
         speaker3.PlayOneShot(musics[32], 0.5f);
         FINALSCORERESULTS.GetComponent<Animator>().SetTrigger("done");
         speaker3.PlayOneShot(musics[37], 1f);
-        yield return new WaitForSeconds(1);
-        freshStart.SetActive(true);
-        canRefresh = true;
+        yield return new WaitForSeconds(0.5f);
+        if(PlayerPrefs.GetInt("highScore") < finalScore)
+        {
+            newHighScore.SetActive(true);
+            PlayerPrefs.SetInt("highScore", finalScore);
+        }
+        endlessResultNextButton.SetActive(true);
     }
 
     public void Reload()
