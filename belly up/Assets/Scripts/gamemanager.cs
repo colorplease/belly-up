@@ -134,9 +134,13 @@ public class gamemanager : MonoBehaviour
     public GameObject FINALSCORERESULTS;
     public TextMeshProUGUI finalScoreResultNumber;
     public GameObject newHighScore;
-    [SerializeField]bool canRefresh;
     public GameObject endlessResultNextButton;
     public GameObject gameOverHolder;
+    public GameObject leaderBoardHolder;
+    public TextMeshProUGUI scoreReadout;
+    public TextMeshProUGUI highScoreReadout;
+    public GameObject comboPanel;
+
 
     
     void Start()
@@ -147,6 +151,7 @@ public class gamemanager : MonoBehaviour
             maxSpawnTime = 6;
             struggleMinSpawnTime = 3;
             struggleMaxSpawnTime = 6;
+            comboPanel.SetActive(false);
         }
         else
         {
@@ -184,7 +189,7 @@ public class gamemanager : MonoBehaviour
     public void displayLeaderBoard()
     {
         gameOverHolder.SetActive(false);
-        canRefresh = true;
+        leaderBoardHolder.SetActive(true);
     }
     
     IEnumerator PToPauseNotif()
@@ -314,15 +319,11 @@ public class gamemanager : MonoBehaviour
 
     void Update()
     {
-        if(canRefresh && Input.GetKeyDown(KeyCode.R))
-        {
-            StartCoroutine(reloadAnime());
-        }
         if(!spawning)
         {
             Clear();
         }
-        if(Input.GetKeyDown(KeyCode.P))
+        if(Input.GetKeyDown(KeyCode.P) && !endlessEnds)
         {
             if(!isPaused)
             {
@@ -464,7 +465,7 @@ public class gamemanager : MonoBehaviour
         }
         if(textZone.text != kills.ToString() && isEndless)
         {
-            textZone.SetText(kills.ToString() + " KILLS");
+            textZone.SetText("TOTAL FISH MURDERED: " + kills.ToString());
         }
     }
 
@@ -725,6 +726,7 @@ public class gamemanager : MonoBehaviour
 
     IEnumerator victory()
     {
+        PlayerPrefs.SetInt("progress", 2);
         if(dylanMode == true && PlayerPrefs.GetInt("murder") >= 650)
         {
             PlayerPrefs.SetInt("murder", 80085);
@@ -1102,6 +1104,8 @@ public class gamemanager : MonoBehaviour
             PlayerPrefs.SetInt("highScore", finalScore);
         }
         endlessResultNextButton.SetActive(true);
+        scoreReadout.SetText(finalScore.ToString());
+        highScoreReadout.SetText(PlayerPrefs.GetInt("highScore").ToString());
     }
 
     public void Reload()
@@ -1111,12 +1115,17 @@ public class gamemanager : MonoBehaviour
        StartCoroutine(reloadAnime());
     }
 
+    public void JustReload()
+    {
+        StartCoroutine(reloadAnime());
+    }
+
     IEnumerator reloadAnime()
     {
-         black.SetBool("trans", true);
-         yield return new WaitForSeconds(3.2f);
-         PlayerPrefs.SetInt("murder", 0);
-         kills = 0;
+        black.SetBool("trans", true);
+        yield return new WaitForSeconds(3.2f);
+        PlayerPrefs.SetInt("murder", 0);
+        kills = 0;
         Scene scene = SceneManager.GetActiveScene(); SceneManager.LoadScene(scene.name);
     }
 

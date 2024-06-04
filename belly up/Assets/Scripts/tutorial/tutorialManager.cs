@@ -81,6 +81,7 @@ public class tutorialManager : MonoBehaviour
 
    public IEnumerator leave()
    {
+        PlayerPrefs.SetInt("progress", 1);
         black.SetBool("trans", true);
         yield return new WaitForSeconds(1f);
         PlayerPrefs.SetInt("tutorial", 1);

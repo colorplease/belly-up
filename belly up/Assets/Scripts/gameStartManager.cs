@@ -136,15 +136,18 @@ public class gameStartManager : MonoBehaviour
         yield return new WaitForSeconds(0.15f);
         tutorialButton.interactable = false;
         audioSource.PlayOneShot(cardFlip);
-        yield return new WaitForSeconds(0.15f);
-        classicButton.interactable = false;
-        audioSource.PlayOneShot(cardFlip);
-        yield return new WaitForSeconds(0.15f);
-        endlessButton.interactable = false;
-        audioSource.PlayOneShot(cardFlip);
-        yield return new WaitForSeconds(0.15f);
-        titleObjects[4].SetActive(true);
-        audioSource.PlayOneShot(cardFlip); 
+        if(classic.activeSelf)
+        { 
+          yield return new WaitForSeconds(0.15f);
+          classicButton.interactable = false;
+          audioSource.PlayOneShot(cardFlip);
+        }
+        if(ENDLESS.activeSelf)
+        {
+          yield return new WaitForSeconds(0.15f);
+          endlessButton.interactable = false;
+          audioSource.PlayOneShot(cardFlip);
+        } 
         yield return new WaitForSeconds(0.15f);
         titleObjects[3].SetActive(true);
         audioSource.PlayOneShot(cardFlip); 
@@ -164,18 +167,24 @@ public class gameStartManager : MonoBehaviour
         yield return new WaitForSeconds(0.15f); 
         credits.interactable = false;
         audioSource.PlayOneShot(cardFlip);
-        yield return new WaitForSeconds(0.15f);
-        classic.SetActive(true);
-        audioSource.PlayOneShot(cardFlip); 
-        yield return new WaitForSeconds(0.15f); 
-        tutorial.SetActive(true);
-        audioSource.PlayOneShot(cardFlip);
         yield return new WaitForSeconds(0.15f); 
         back.SetActive(true);
         audioSource.PlayOneShot(cardFlip);
-        yield return new WaitForSeconds(0.15f);
-        ENDLESS.SetActive(true);
+        yield return new WaitForSeconds(0.15f); 
+        tutorial.SetActive(true);
         audioSource.PlayOneShot(cardFlip);
+        if(PlayerPrefs.GetInt("progress") > 0)
+        {
+          yield return new WaitForSeconds(0.15f);
+          classic.SetActive(true);
+          audioSource.PlayOneShot(cardFlip); 
+        }
+        if(PlayerPrefs.GetInt("progress") > 1)
+        {
+          yield return new WaitForSeconds(0.15f);
+          ENDLESS.SetActive(true);
+          audioSource.PlayOneShot(cardFlip);
+        }
    }
 
    public void FishGuide()

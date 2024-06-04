@@ -472,6 +472,7 @@ public class tutorialDialogueManager : MonoBehaviour
     IEnumerator ends()
     {
         yield return new WaitForSeconds(1);
+        PlayerPrefs.SetInt("progress", 1);
         StartCoroutine(leavers.leave());
     }
 
